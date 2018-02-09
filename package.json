@@ -1,0 +1,15 @@
+{
+  "name": "hopeandcure",
+  "version": "1.0.0",
+  "description": "hope and cure software for clinics",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "pkul3003"
+  },
+  "author": "parag",
+  "license": "ISC"
+}
