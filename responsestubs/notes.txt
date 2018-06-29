@@ -1,0 +1,8 @@
+10 jun 2018 changes
+1. Customer search - keep all options on the screen for entering data -
+2. Customer search - start by last name (continuous search)
+3. customer Search - single field search (UHID, FirstName, LastName, Mobile)
+4. Patient creation - keep FirstName, LastName, ContactNumber needs to be unique.
+5. Search Appointment - search by date, consultant
+6. Create appointment - check availability (consultant, date/time)
+7. Staff tables - add employee id field and further normalize

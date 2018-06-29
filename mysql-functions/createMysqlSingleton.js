@@ -1,4 +1,5 @@
 let mysql = require('mysql2/promise');
+//let mysql = require('mysql');
 let config = require("../config.js");
 
 let pool;

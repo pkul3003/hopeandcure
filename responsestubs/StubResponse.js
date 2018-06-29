@@ -17,6 +17,7 @@ var ListOfAppointments = {
 }
 
 
-//exporting all stubs 
+
+//exporting all stubs
 exports.WelcomeStubResponse = WelcomeStubResponse;
 exports.ListOfAppointments = ListOfAppointments;
