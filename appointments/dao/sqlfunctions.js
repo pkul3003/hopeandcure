@@ -52,11 +52,15 @@ async function createAppointment(req) {
   let referred_by = req.body.appointment.referred_by;
   let patient_city = req.body.appointment.patient_city;
   let patient_area = req.body.appointment.patient_area;
+  let relative_name = req.body.appointment.relative_name;
+  let relation_with_patient = req.body.appointment.relation_with_patient;
+  let relative_contact_no = req.body.appointment.relative_contact_no;
 
 
   let query = "INSERT INTO appointments values('" +UHID+ "','" +first_name+ "','"+middle_name+ "','"+last_name+ "','" +birth_date+
   "','" +gender+ "','" +consultant+ "','" +appointment_date+ "','" +appointment_time+ "','" +contact_number+
-  "','" +email_id+ "','" +referred_by+ "','" +patient_city+ "','" +patient_area+ "' , DEFAULT);";
+  "','" +email_id+ "','" +referred_by+ "','" +patient_city+ "','" +patient_area+ "','" +relative_name+
+  "','" +relation_with_patient+ "','" +relative_contact_no+ "',DEFAULT);";
 
   console.log(query);
   try {
