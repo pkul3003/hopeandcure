@@ -35,7 +35,7 @@ async function createNewPatient(req) {
     await con.execute(query1);
     console.log("after createPatient ... fetch UHID");
     query2 = "SELECT UHID FROM patients WHERE FirstName = '" + first_name +"' AND LastName = '" + last_name+ "' AND DOB = '" + birth_date +
-     "' AND ContactNumber = '" + contact_number + "' AND Gender = '" +gender+ "';" ;
+     "' AND ContactNumber = '" + contact_number + "' AND Aadhar = '" +aadhar+ "';" ;
      console.log("select UHID query: ", query2);
     let [result, fields] = await con.execute(query2);
     console.log("result.inserId: " , JSON.parse(JSON.stringify(result)));
@@ -44,7 +44,7 @@ async function createNewPatient(req) {
     console.log(newUHID);
     con.release();
     console.log("Exiting createNewPatient...");
-    var success = {
+    var response = {
       "msgtype": "success",
       "message": "patient created successfully",
       "UHID" : newUHID
@@ -55,10 +55,11 @@ async function createNewPatient(req) {
     console.log("Error ====== createNewPatient");
     console.log("Exiting createNewPatient...");
     if(err.code === "ER_DUP_ENTRY") {
-      var errMessage = {
+      var response = {
+        "msgtype" : "info",
 				"message": "patient already exists"
 			}
-      return errMessage;
+      return response;
     }
     return false;
   }
