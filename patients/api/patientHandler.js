@@ -13,36 +13,38 @@ restService.use(bodyParser.json());
 async function apiHandlerCreatePatient(req,res){
 	console.log("Entering apiHandlerCreatePatient========>");
 
-    let result = await mysqlFunctions.createNewPatient(req);
-    console.log("inside apiHandlerCreatePatient:  ", result);
+    let response = await mysqlFunctions.createNewPatient(req);
+    console.log("inside apiHandlerCreatePatient:  ", response);
 
-		if (result === false) {
-			var returnJsonObj = {
+		if (response === false) {
+			var response = {
+				"msgtype" : "error",
 				"message": "There was an error is fetching customer"
 			}
   	console.log("Exiting apiHandlerCreatePatient========>");
-			res.send(returnJsonObj);
+			res.send(response);
 		}
   	console.log("Exiting apiHandlerCreatePatient========>");
-		return res.json(result);
+		return res.json(response);
 }
 
 // add patient Address
 async function apiHandlerAddPatientAddress(req, res) {
 	console.log("Entering apiHandlerAddPatientAddress========>");
 
-    let result = await mysqlFunctions.addPatientAddress(req);
-    console.log("inside apiHandlerAddPatientAddress:  ", result);
+    let response = await mysqlFunctions.addPatientAddress(req);
+    console.log("inside apiHandlerAddPatientAddress:  ", response);
 
-		if (result === false) {
-			var returnJsonObj = {
+		if (response === false) {
+			var response = {
+				"msgtype" : "error",
 				"message": "There was an error is adding patient address"
 			}
   	console.log("Exiting apiHandlerAddPatientAddress========>");
-			res.send(returnJsonObj);
+			res.send(response);
 		}
   	console.log("Exiting apiHandlerAddPatientAddress========>");
-		return res.json(result);
+		return res.json(response);
 }
 
 // find all patients based on first and last name
@@ -51,46 +53,49 @@ async function apiHandlerFindPatients(req,res){
     console.log(req.body.patient.first_name);
     console.log(req.body.patient.last_name);
 
-    let result = await mysqlFunctions.retrievePatientsByName(req);
-    console.log("inside retrievePatientsByName:  ", result);
-		if (result === false) {
-			var returnJsonObj = {
+    let response = await mysqlFunctions.retrievePatientsByName(req);
+    console.log("inside retrievePatientsByName:  ", response);
+		if (response === false) {
+			var response = {
+				"msgtype" : "error",
 				"message": "There was an error is fetching customer"
 			}
-			res.send(returnJsonObj);
+			res.send(response);
 		}
   console.log("Exiting apiHandlerCreatePatient========>");
-	res.send(JSON.parse(result));
+	res.send(JSON.parse(response));
 }
 
 // find all patients based on either UHID, first_name, last_name or mobile
 async function apiHandlerSearchPatient(req, res) {
 	console.log("Entering apiHandlerSearchPatient========>");
-	let result = await mysqlFunctions.retrievePatients(req);
-	console.log("inside apiHandlerSearchPatient:  ", result);
-	if (result === false) {
-		var returnJsonObj = {
+	let response = await mysqlFunctions.retrievePatients(req);
+	console.log("inside apiHandlerSearchPatient:  ", response);
+	if (response === false) {
+		var response = {
+			"msgtype" : "error",
 			"message": "There was an error is searching the patient"
 		}
-		res.send(returnJsonObj);
+		res.send(response);
 	}
 console.log("Exiting apiHandlerSearchPatient========>");
-res.send(JSON.parse(result));
+res.send(JSON.parse(response));
 }
 
 // find a patient using his/her UHID
 async function apiHandlerFindPatientByUHID(req,res){
 	console.log("Entering apiHandlerFindPatientByUHID========>");
     console.log(req.body.patient.UHID);
-    let result = await mysqlFunctions.retrievePatientsByUHID(req);
-    console.log("inside apiHandlerFindPatientByUHID:  ", result);
-		if (result === false) {
-			var returnJsonObj = {
+    let response = await mysqlFunctions.retrievePatientsByUHID(req);
+    console.log("inside apiHandlerFindPatientByUHID:  ", response);
+		if (response === false) {
+			var response = {
+				"msgtype" : "error",
 				"message": "There was an error is fetching customer"
 			}
-			res.send(returnJsonObj);
+			res.send(response);
 		}
-		res.send(JSON.parse(result));
+		res.send(JSON.parse(response));
   console.log("Exiting apiHandlerFindPatientByUHID========>");
 }
 
@@ -98,73 +103,79 @@ async function apiHandlerFindPatientByUHID(req,res){
 async function apiHandlerFindPatientByMobile(req,res){
 	console.log("Entering apiHandlerFindPatientByMobile========>");
     console.log(req.body.patient.contact_number);
-    let result = await mysqlFunctions.retrievePatientsByMobile(req);
-    console.log("inside apiHandlerFindPatientByMobile:  ", result);
-		if (result === false) {
-			var returnJsonObj = {
+    let response = await mysqlFunctions.retrievePatientsByMobile(req);
+    console.log("inside apiHandlerFindPatientByMobile:  ", response);
+		if (response === false) {
+			var response = {
+				"msgtype" : "error",
 				"message": "There was an error is fetching customer"
 			}
-			res.send(returnJsonObj);
+			res.send(response);
 		}
-		res.send(JSON.parse(result));
+		res.send(JSON.parse(response));
   console.log("Exiting apiHandlerFindPatientByMobile========>");
 }
 
 async function apiHandlerAddMedicalFacts(req, res) {
 		console.log("Entering apiHandlerAddMedicalFacts========>");
-		let result = await mysqlFunctions.createPatientMedicalFacts(req);
-    console.log("inside apiHandlerAddMedicalFacts:  ", result);
+		let response = await mysqlFunctions.createPatientMedicalFacts(req);
+    console.log("inside apiHandlerAddMedicalFacts:  ", response);
 
-		if (result === false) {
-			var returnJsonObj = {
+		if (response === false) {
+			var response = {
+				"msgtype" : "error",
 				"message": "There was an error is adding medical facts for the patient"
 			}
 			console.log("Exiting apiHandlerAddMedicalFacts========>");
-			res.send(returnJsonObj);
+			res.send(response);
 		}
 
-		var returnJsonObj = {
+		var response = {
+			"msgtype" : "success",
 			"message": "patient medical facts added successfully"
 		}
 		console.log("Exiting apiHandlerAddMedicalFacts========>");
-		return res.json(returnJsonObj);
+		return res.json(response);
 }
 
 async function apiHandlerUpdateMedicalFacts(req, res) {
 		console.log("Entering apiHandlerUpdateMedicalFacts========>");
-		let result = await mysqlFunctions.updatePatientMedicalFacts(req);
-    console.log("inside apiHandlerUpdateMedicalFacts:  ", result);
+		let response = await mysqlFunctions.updatePatientMedicalFacts(req);
+    console.log("inside apiHandlerUpdateMedicalFacts:  ", response);
 
-		if (result === false) {
-			var returnJsonObj = {
+		if (response === false) {
+			var response = {
+				"msgtype" : "error",
 				"message": "There was an error is updating medical facts for the patient"
 			}
 			console.log("Exiting apiHandlerUpdateMedicalFacts========>");
-			res.send(returnJsonObj);
+			res.send(response);
 		}
 
-		var returnJsonObj = {
+		var response = {
+			"msgtype" : "success",
 			"message": "patient medical facts updated successfully"
 		}
 		console.log("Exiting apiHandlerUpdateMedicalFacts========>");
-		return res.json(returnJsonObj);
+		return res.json(response);
 }
 
 async function apiHandlerRetrieveMedicalFacts(req,res) {
 	console.log("Entering apiHandlerRetrieveMedicalFacts========>");
-	let result = await mysqlFunctions.retrievePatientMedicalFacts(req);
-	console.log("inside apiHandlerRetrieveMedicalFacts:  ", result);
+	let response = await mysqlFunctions.retrievePatientMedicalFacts(req);
+	console.log("inside apiHandlerRetrieveMedicalFacts:  ", response);
 
-	if (result === false) {
-		var returnJsonObj = {
+	if (response === false) {
+		var response = {
+			"msgtype" : "error",
 			"message": "There was an error in retrieving medical facts for the patient"
 		}
 		console.log("Exiting apiHandlerRetrieveMedicalFacts========>");
-		res.send(returnJsonObj);
+		res.send(response);
 	}
 
 	console.log("Exiting apiHandlerRetrieveMedicalFacts========>");
-	res.send(JSON.parse(result));
+	res.send(JSON.parse(response));
 }
 
 exports.apiHandlerCreatePatient = apiHandlerCreatePatient;
