@@ -9,10 +9,15 @@ CREATE TABLE patients (
     Gender varchar(255) NOT NULL,
     ContactNumber BIGINT NOT NULL,
     EmailId varchar(255),
-    Aadhar BIGINT,
+    Aadhar varchar(20),
     RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (UHID)
 );
+
+ALTER TABLE patients ADD Aadhar varchar(20);
+
+ALTER TABLE patients
+ADD CONSTRAINT UC_Patient UNIQUE (UHID, FirstName, LastName, DOB, ContactNumber, Aadhar);
 
 drop table if exists `patient_address`;
 

@@ -24,17 +24,30 @@ async function createNewPatient(req) {
   let gender = req.body.patient.gender;
   let contact_number = req.body.patient.contact_number;
   let email_id = req.body.patient.email_id;
-  let query = "INSERT INTO patients VALUES (DEFAULT, '"+ first_name +"','" + middle_name + "','"+ last_name + "','"+
-              birth_date +"','" + gender +"', '"+ contact_number +"', '"+ email_id +"', DEFAULT);";
-  console.log(query);
+  let aadhar = req.body.patient.aadhar;
+  let query1 = "INSERT INTO patients (UHID, FirstName, MiddleName, LastName, DOB, Gender, ContactNumber, EmailId, Aadhar, RecordTouchDate) " +
+  "VALUES (DEFAULT,'"+ first_name +"','" + middle_name + "','"+ last_name + "','"+
+              birth_date +"','" + gender +"','"+ contact_number +"','"+ email_id + "','"+ aadhar +"',DEFAULT);";
+  console.log(query1);
   try {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
-    await con.execute(query);
+    await con.execute(query1);
+    console.log("after createPatient ... fetch UHID");
+    query2 = "SELECT UHID FROM patients WHERE FirstName = '" + first_name +"' AND LastName = '" + last_name+ "' AND DOB = '" + birth_date +
+     "' AND ContactNumber = '" + contact_number + "' AND Gender = '" +gender+ "';" ;
+     console.log("select UHID query: ", query2);
+    let [result, fields] = await con.execute(query2);
+    console.log("result.inserId: " , JSON.parse(JSON.stringify(result)));
+    let newUHIDObject = JSON.parse(JSON.stringify(result));
+    newUHID = newUHIDObject[0].UHID;
+    console.log(newUHID);
     con.release();
     console.log("Exiting createNewPatient...");
     var success = {
-      "message": "patient created successfully"
+      "msgtype": "success",
+      "message": "patient created successfully",
+      "UHID" : newUHID
     }
     return success;
   }

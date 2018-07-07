@@ -35,3 +35,9 @@ or LastName like 'kulkarni' or ContactNumber = '' or UHID= '1234';
 
 SELECT * FROM patients where FirstName like 'kulkarni' or Lastname like 'parag' or FirstName like 'parag'
 or LastName like 'kulkarni' or ContactNumber = '' or UHID= '1234';
+
+SELECT * FROM patients where FirstName like 'kulkarni' or Lastname like '' or FirstName like ''
+or LastName like 'kulkarni' or ContactNumber = '' or UHID= '';
+
+
+INSERT INTO appointments values('1236','Prasad','Dattatray','Joshi','1981-06-06','male','Dr Prakash Rasal','2018-05-31','12:00','9567750288','joship18@gmail.com','null','Pune','Dhayari',DEFAULT);

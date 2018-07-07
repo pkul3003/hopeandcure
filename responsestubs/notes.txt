@@ -1,7 +1,7 @@
 10 jun 2018 changes
 1. Customer search - keep all options on the screen for entering data -
 2. Customer search - start by last name (continuous search)
-3. customer Search - single field search (UHID, FirstName, LastName, Mobile)
+3. customer Search - single field search (UHID, FirstName, DOB, LastName, Mobile, Aadhar)
 4. Patient creation - keep FirstName, LastName, ContactNumber needs to be unique.
 5. Search Appointment - search by date, consultant
 6. Create appointment - check availability (consultant, date/time)
