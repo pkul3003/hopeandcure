@@ -49,7 +49,7 @@ async function createNewPatient(req) {
       "message": "patient created successfully",
       "UHID" : newUHID
     }
-    return success;
+    return response;
   }
   catch(err) {
     console.log("Error ====== createNewPatient");

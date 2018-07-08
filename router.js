@@ -14,6 +14,7 @@ console.log('Entering router.js...');
 var express = require('express');
 var session = require('express-session');
 var config = require('./config.js');
+var cors = require('cors');
 var app = express();
 var bodyParser = require("body-parser");
 var apiAppointmentsController = require('./appointments/api/apptHandler.js');
@@ -22,6 +23,8 @@ var apiStaffController = require('./staff/api/staffHandler.js');
 var apiOccularHandler = require('./occular/api/occularHandler.js');
 var sess;
 
+// CORS-enabled for all origins!
+app.use(cors());
 
 var appRouter = function(app) {
 

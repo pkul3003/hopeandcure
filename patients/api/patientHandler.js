@@ -17,12 +17,12 @@ async function apiHandlerCreatePatient(req,res){
     console.log("inside apiHandlerCreatePatient:  ", response);
 
 		if (response === false) {
-			var response = {
+			var returnJsonObj = {
 				"msgtype" : "error",
 				"message": "There was an error is fetching customer"
 			}
   	console.log("Exiting apiHandlerCreatePatient========>");
-			res.send(response);
+			res.send(returnJsonObj);
 		}
   	console.log("Exiting apiHandlerCreatePatient========>");
 		return res.json(response);
@@ -72,11 +72,11 @@ async function apiHandlerSearchPatient(req, res) {
 	let response = await mysqlFunctions.retrievePatients(req);
 	console.log("inside apiHandlerSearchPatient:  ", response);
 	if (response === false) {
-		var response = {
+		var returnJsonObj = {
 			"msgtype" : "error",
 			"message": "There was an error is searching the patient"
 		}
-		res.send(response);
+		res.send(returnJsonObj);
 	}
 console.log("Exiting apiHandlerSearchPatient========>");
 res.send(JSON.parse(response));
