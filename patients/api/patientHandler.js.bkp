@@ -17,12 +17,16 @@ async function apiHandlerCreatePatient(req,res){
     console.log("inside apiHandlerCreatePatient:  ", response);
 
 		if (response === false) {
+<<<<<<< HEAD
 			var returnJsonObj = {
+=======
+			var response = {
+>>>>>>> 3b31f353b81b189896a1d802e82dce342f8376c3
 				"msgtype" : "error",
 				"message": "There was an error is fetching customer"
 			}
   	console.log("Exiting apiHandlerCreatePatient========>");
-			res.send(returnJsonObj);
+			res.send(response);
 		}
   	console.log("Exiting apiHandlerCreatePatient========>");
 		return res.json(response);
@@ -36,12 +40,12 @@ async function apiHandlerAddPatientAddress(req, res) {
     console.log("inside apiHandlerAddPatientAddress:  ", response);
 
 		if (response === false) {
-			var returnJsonObj = {
+			var response = {
 				"msgtype" : "error",
 				"message": "There was an error is adding patient address"
 			}
   	console.log("Exiting apiHandlerAddPatientAddress========>");
-			res.send(returnJsonObj);
+			res.send(response);
 		}
   	console.log("Exiting apiHandlerAddPatientAddress========>");
 		return res.json(response);
@@ -56,11 +60,11 @@ async function apiHandlerFindPatients(req,res){
     let response = await mysqlFunctions.retrievePatientsByName(req);
     console.log("inside retrievePatientsByName:  ", response);
 		if (response === false) {
-			var returnJsonObj = {
+			var response = {
 				"msgtype" : "error",
 				"message": "There was an error is fetching customer"
 			}
-			res.send(returnJsonObj);
+			res.send(response);
 		}
   console.log("Exiting apiHandlerCreatePatient========>");
 	res.send(JSON.parse(response));
@@ -72,11 +76,15 @@ async function apiHandlerSearchPatient(req, res) {
 	let response = await mysqlFunctions.retrievePatients(req);
 	console.log("inside apiHandlerSearchPatient:  ", response);
 	if (response === false) {
+<<<<<<< HEAD
 		var returnJsonObj = {
+=======
+		var response = {
+>>>>>>> 3b31f353b81b189896a1d802e82dce342f8376c3
 			"msgtype" : "error",
 			"message": "There was an error is searching the patient"
 		}
-		res.send(returnJsonObj);
+		res.send(response);
 	}
 console.log("Exiting apiHandlerSearchPatient========>");
 res.send(JSON.parse(response));
@@ -89,11 +97,11 @@ async function apiHandlerFindPatientByUHID(req,res){
     let response = await mysqlFunctions.retrievePatientsByUHID(req);
     console.log("inside apiHandlerFindPatientByUHID:  ", response);
 		if (response === false) {
-			var returnJsonObj = {
+			var response = {
 				"msgtype" : "error",
 				"message": "There was an error is fetching customer"
 			}
-			res.send(returnJsonObj);
+			res.send(response);
 		}
 		res.send(JSON.parse(response));
   console.log("Exiting apiHandlerFindPatientByUHID========>");
@@ -106,11 +114,11 @@ async function apiHandlerFindPatientByMobile(req,res){
     let response = await mysqlFunctions.retrievePatientsByMobile(req);
     console.log("inside apiHandlerFindPatientByMobile:  ", response);
 		if (response === false) {
-			var returnJsonObj = {
+			var response = {
 				"msgtype" : "error",
 				"message": "There was an error is fetching customer"
 			}
-			res.send(returnJsonObj);
+			res.send(response);
 		}
 		res.send(JSON.parse(response));
   console.log("Exiting apiHandlerFindPatientByMobile========>");
@@ -122,12 +130,17 @@ async function apiHandlerAddMedicalFacts(req, res) {
     console.log("inside apiHandlerAddMedicalFacts:  ", response);
 
 		if (response === false) {
-			var returnJsonObj = {
+			var response = {
 				"msgtype" : "error",
 				"message": "There was an error is adding medical facts for the patient"
 			}
 			console.log("Exiting apiHandlerAddMedicalFacts========>");
-			res.send(returnJsonObj);
+			res.send(response);
+		}
+
+		var response = {
+			"msgtype" : "success",
+			"message": "patient medical facts added successfully"
 		}
 		console.log("Exiting apiHandlerAddMedicalFacts========>");
 		return res.json(response);
@@ -139,12 +152,17 @@ async function apiHandlerUpdateMedicalFacts(req, res) {
     console.log("inside apiHandlerUpdateMedicalFacts:  ", response);
 
 		if (response === false) {
-			var returnJsonObj = {
+			var response = {
 				"msgtype" : "error",
 				"message": "There was an error is updating medical facts for the patient"
 			}
 			console.log("Exiting apiHandlerUpdateMedicalFacts========>");
-			res.send(returnJsonObj);
+			res.send(response);
+		}
+
+		var response = {
+			"msgtype" : "success",
+			"message": "patient medical facts updated successfully"
 		}
 		console.log("Exiting apiHandlerUpdateMedicalFacts========>");
 		return res.json(response);
@@ -156,12 +174,12 @@ async function apiHandlerRetrieveMedicalFacts(req,res) {
 	console.log("inside apiHandlerRetrieveMedicalFacts:  ", response);
 
 	if (response === false) {
-		var returnJsonObj = {
+		var response = {
 			"msgtype" : "error",
 			"message": "There was an error in retrieving medical facts for the patient"
 		}
 		console.log("Exiting apiHandlerRetrieveMedicalFacts========>");
-		res.send(returnJsonObj);
+		res.send(response);
 	}
 
 	console.log("Exiting apiHandlerRetrieveMedicalFacts========>");

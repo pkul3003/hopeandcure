@@ -143,7 +143,11 @@ async function createPatientMedicalFacts (req) {
     await con.execute(query);
     con.release();
     console.log("Exiting createPatientMedicalFacts...");
-    return true;
+    var response = {
+      "msgtype" : "success",
+      "message": "patient medical facts added successfully"
+    }
+    return response;
   }
   catch(err) {
     console.log("Error ====== createPatientMedicalFacts");
@@ -177,9 +181,13 @@ async function updatePatientMedicalFacts (req) {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
     await con.execute(query);
+    var response = {
+      "msgtype" : "success",
+      "message": "patient medical facts added successfully"
+    }
     con.release();
     console.log("Exiting updatePatientMedicalFacts...");
-    return true;
+    return response;
   }
   catch(err) {
     console.log("Error ====== updatePatientMedicalFacts");
