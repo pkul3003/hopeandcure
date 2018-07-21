@@ -89,6 +89,7 @@ async function addPatientAddress(req) {
     con.release();
     console.log("Exiting addPatientAddress...");
     var success = {
+      "msgtype" : "success",
       "message": "patient address added successfully"
     }
     return success;
@@ -98,6 +99,7 @@ async function addPatientAddress(req) {
     console.log("Exiting addPatientAddress...");
     if(err.code === "ER_DUP_ENTRY") {
       var errMessage = {
+        "msgtype" : "info",
 				"message": "patient address already exists"
 			}
       return errMessage;
@@ -105,6 +107,7 @@ async function addPatientAddress(req) {
     if(err.code === "ER_NO_REFERENCED_ROW_2") {
 
       var errMessage = {
+        "msgtype" : "info",
         "message": "patient UHID not valid to add address"
       }
       return errMessage;

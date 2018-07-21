@@ -21,3 +21,7 @@ appointments to be shown while editing an appointment or rescheduling
 Consultant drop-down - make a web-service call
 bring appointment date and time in line with Consultant on the create appointment page
 booked on to be removed from create appointment page
+
+
+21 July 2018
+search appointments by date range
