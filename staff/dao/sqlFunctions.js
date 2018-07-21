@@ -53,7 +53,7 @@ async function authenticateStaffLogin(req) {
   try {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
-    let [result,fields] = await con.execute(query,[username, password]);
+    let [result,fields] = await con.execute(query);
     let staffJson = JSON.stringify(result);
     console.log(staffJson);
     con.release();

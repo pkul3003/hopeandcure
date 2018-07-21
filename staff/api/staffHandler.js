@@ -13,12 +13,14 @@ async function apiHandlerCreateStaff(req,res) {
 
 		if (result === false) {
 			var returnJsonObj = {
+				"msgtype" : "error",
 				"message": "There was an error is creating staff member"
 			}
 			res.send(returnJsonObj);
 		}
 
 		var returnJsonObj = {
+			"msgtype" : "success",
 			"message": "staff created successfully"
 		}
 
@@ -35,6 +37,7 @@ async function apiHandlerAuthenticateStaff(req,res) {
 
 		if (result === false) {
 			var returnJsonObj = {
+				"msgtype" : "error",
 				"message": "There was an error is authenticating staff member"
 			}
 			res.send(returnJsonObj);
@@ -43,7 +46,7 @@ async function apiHandlerAuthenticateStaff(req,res) {
     if (result === "[]") {
       console.log("username or password did not match");
       var returnJsonObj = {
-				"msgtype" : "info"
+				"msgtype" : "info",
 				"message": "username or password did not match"
 			}
       res.send(returnJsonObj);
