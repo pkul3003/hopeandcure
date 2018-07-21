@@ -40,9 +40,9 @@ app.get("/ErrorMessages", function(req, res) {
 
 app.post('/login', async function(req,res){
   console.log("insider router app.post/login: ", JSON.stringify(req.body.intentName));
-  sess = req.session;
-  sess.username=req.body.staff.username;
-  console.log("username: ", sess.username);
+  //sess = req.session;
+  //sess.username=req.body.staff.username;
+  //console.log("username: ", sess.username);
   await apiStaffController.apiHandlerAuthenticateStaff(req, res);
   res.end('done');
 });
@@ -63,6 +63,11 @@ app.post('/hook', async function(req, res) {
         console.log("Entering router retrieve-appointments------>");
     	await apiAppointmentsController.apiHandlerForAppointments(req, res);
         console.log("Exiting router retrieve-appointments------>");
+    }
+		if(req.body.intentName === "retrieve-appointments-by-date"){
+        console.log("Entering router retrieve-appointments-by-date------>");
+    	await apiAppointmentsController.apiHandlerForAppointmentsByDate(req, res);
+        console.log("Exiting router retrieve-appointments-by-date------>");
     }
     if(req.body.intentName === "create-patient"){
         console.log("Entering router create-patient------>");

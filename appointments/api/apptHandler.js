@@ -15,6 +15,7 @@ async function apiHandlerForAppointments(req, res) {
 
 	if (result === false) {
 		var returnJsonObj = {
+      "msgtype" : "error",
 			"message": "There was an error is fetching appointments"
 		}
 		res.send(returnJsonObj);
@@ -23,6 +24,22 @@ async function apiHandlerForAppointments(req, res) {
 	res.send(JSON.parse(result));
 }
 
+async function apiHandlerForAppointmentsByDate(req, res) {
+  console.log("Entering apiHandlerForAppointmentsByDate...");
+
+  let result = await mysqlFunctions.retrieveAppointmentsByDate(req);
+  console.log("inside apiHandlerForAppointmentsByDate:  ", result);
+
+  if (result === false) {
+    var returnJsonObj = {
+      "msgtype" : "error",
+      "message": "There was an error is fetching appointments"
+    }
+    res.send(returnJsonObj);
+  }
+  console.log("Exiting apiHandlerForAppointmentsByDate========>");
+  res.send(JSON.parse(result));
+}
 async function apiHandlerCreateAppointment(req, res) {
   console.log("Entering apiHandlerCreateAppointment...");
 
@@ -31,11 +48,13 @@ async function apiHandlerCreateAppointment(req, res) {
 
   if (result === false) {
     var returnJsonObj = {
+      "msgtype" : "error",
       "message": "There was an error is creating the appointment"
     }
     res.send(returnJsonObj);
   }
   var returnJsonObj = {
+    "msgtype" : "success",
     "message": "appointment created successfully"
   }
   console.log("Exiting apiHandlerForAppointments========>");
@@ -46,3 +65,4 @@ async function apiHandlerCreateAppointment(req, res) {
 //exporing all apiHandler functions
 exports.apiHandlerForAppointments = apiHandlerForAppointments;
 exports.apiHandlerCreateAppointment = apiHandlerCreateAppointment;
+exports.apiHandlerForAppointmentsByDate = apiHandlerForAppointmentsByDate;

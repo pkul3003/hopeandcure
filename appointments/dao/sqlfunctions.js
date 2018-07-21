@@ -32,7 +32,27 @@ async function retrieveAppointments(req) {
     console.log("Error ====== retrieveAppointments");
     return false;
   }
+}
 
+async function retrieveAppointmentsByDate(req) {
+  console.log("Entering retrieveAppointmentsByDate...");
+  let appointment_date = req.body.appointments.appointment_date;
+
+  let query = "SELECT * FROM appointments WHERE DateOfAppointment = '" + appointment_date + "';";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let appointmentsJson = JSON.stringify(result);
+    console.log(appointmentsJson);
+    con.release();
+    return appointmentsJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrieveAppointments");
+    return false;
+  }
 }
 
 async function createAppointment(req) {
@@ -79,3 +99,4 @@ async function createAppointment(req) {
 
 exports.retrieveAppointments = retrieveAppointments;
 exports.createAppointment = createAppointment;
+exports.retrieveAppointmentsByDate = retrieveAppointmentsByDate;

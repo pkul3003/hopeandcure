@@ -16,7 +16,7 @@ CREATE TABLE patients (
 
 ALTER TABLE patients ADD Aadhar varchar(20);
 
-#alter table patients drop index UC_Patient;
+--alter table patients drop index UC_Patient;
 
 ALTER TABLE patients
 ADD CONSTRAINT UC_Patient UNIQUE (FirstName, LastName, DOB, ContactNumber, Aadhar);

@@ -43,6 +43,7 @@ async function apiHandlerAuthenticateStaff(req,res) {
     if (result === "[]") {
       console.log("username or password did not match");
       var returnJsonObj = {
+				"msgtype" : "info"
 				"message": "username or password did not match"
 			}
       res.send(returnJsonObj);

@@ -48,7 +48,7 @@ async function authenticateStaffLogin(req) {
   console.log("Entering authenticateStaffLogin...");
   let username = req.body.staff.username;
   let password = req.body.staff.password;
-  let query = "SELECT username, password FROM stafflogin WHERE username = ? AND password = MD5(?);";
+  let query = "SELECT username, password FROM stafflogin WHERE username = '" + username + "' AND password = MD5( '" + password+ "');";
   console.log(query);
   try {
     let pool = await getConnectionPool();
