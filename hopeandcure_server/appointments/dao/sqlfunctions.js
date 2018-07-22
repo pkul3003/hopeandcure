@@ -88,10 +88,24 @@ async function createAppointment(req) {
     let con = await pool.getConnection();
     await con.execute(query);
     con.release();
-    return true;
+    var returnJsonObj = {
+      "msgtype" : "success",
+      "message": "appointment created successfully"
+    }
+    console.log("Exiting createAppointment...");
+    return returnJsonObj;
   }
   catch(err) {
-    console.log("Error ====== createNewPatient");
+    console.log("Error ====== createAppointment");
+    if(err.code === "ER_DUP_ENTRY") {
+      var response = {
+        "msgtype" : "info",
+        "message": "appointment already exists for the patient for the given day."
+      }
+      //con.release();
+      console.log("Exiting createAppointment...");
+      return response;
+    }
     return false;
   }
 

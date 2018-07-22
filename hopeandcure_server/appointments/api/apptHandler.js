@@ -53,12 +53,8 @@ async function apiHandlerCreateAppointment(req, res) {
     }
     res.send(returnJsonObj);
   }
-  var returnJsonObj = {
-    "msgtype" : "success",
-    "message": "appointment created successfully"
-  }
   console.log("Exiting apiHandlerForAppointments========>");
-  res.send(returnJsonObj);
+  res.send(result);
 }
 
 

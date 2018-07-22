@@ -33,7 +33,7 @@ async function createNewPatient(req) {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
     await con.execute(query1);
-    console.log("after createPatient ... fetch UHID");
+    console.log("after createPatient ... now fetching UHID just created");
     query2 = "SELECT UHID FROM patients WHERE FirstName = '" + first_name +"' AND LastName = '" + last_name+ "' AND DOB = '" + birth_date +
      "' AND ContactNumber = '" + contact_number + "' AND Aadhar = '" +aadhar+ "';" ;
      console.log("select UHID query: ", query2);
@@ -43,12 +43,13 @@ async function createNewPatient(req) {
     newUHID = newUHIDObject[0].UHID;
     console.log(newUHID);
     con.release();
-    console.log("Exiting createNewPatient...");
+
     var response = {
       "msgtype": "success",
       "message": "patient created successfully",
       "UHID" : newUHID
     }
+    console.log("Exiting createNewPatient...");
     return response;
   }
   catch(err) {
@@ -59,8 +60,12 @@ async function createNewPatient(req) {
         "msgtype" : "info",
 				"message": "patient already exists"
 			}
+      //con.release();
+      console.log("Exiting createNewPatient...");
       return response;
     }
+  //  con.release();
+    console.log("Exiting createNewPatient...");
     return false;
   }
 }
@@ -102,6 +107,8 @@ async function addPatientAddress(req) {
         "msgtype" : "info",
 				"message": "patient address already exists"
 			}
+      con.release();
+      console.log("Exiting addPatientAddress...");
       return errMessage;
     }
     if(err.code === "ER_NO_REFERENCED_ROW_2") {
@@ -110,8 +117,12 @@ async function addPatientAddress(req) {
         "msgtype" : "info",
         "message": "patient UHID not valid to add address"
       }
+      //con.release();
+      console.log("Exiting addPatientAddress...");
       return errMessage;
     }
+    //con.release();
+    console.log("Exiting addPatientAddress...");
     return false;
   }
 }
@@ -145,14 +156,16 @@ async function createPatientMedicalFacts (req) {
     let con = await pool.getConnection();
     await con.execute(query);
     con.release();
-    console.log("Exiting createPatientMedicalFacts...");
+
     var response = {
       "msgtype" : "success",
       "message": "patient medical facts added successfully"
     }
+    console.log("Exiting createPatientMedicalFacts...");
     return response;
   }
   catch(err) {
+    //con.release();
     console.log("Error ====== createPatientMedicalFacts");
     console.log("Exiting createPatientMedicalFacts...");
     return false;
@@ -193,6 +206,7 @@ async function updatePatientMedicalFacts (req) {
     return response;
   }
   catch(err) {
+    //con.release();
     console.log("Error ====== updatePatientMedicalFacts");
     console.log("Exiting updatePatientMedicalFacts...");
     return false;
@@ -203,12 +217,12 @@ async function retrievePatientMedicalFacts(req) {
   console.log("inside retrievePatientMedicalFacts...");
   let UHID = req.body.patient.UHID;
 
-  let query = `SELECT * FROM patients WHERE UHID = ?;`;
+  let query = "SELECT * FROM patients WHERE UHID = '" +UHID+ "';";
   console.log(query);
   try {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
-    let [result,fields] = await con.execute(query,[UHID]);
+    let [result,fields] = await con.execute(query);
     let patientJson = JSON.stringify(result);
     console.log(patientJson);
     con.release();

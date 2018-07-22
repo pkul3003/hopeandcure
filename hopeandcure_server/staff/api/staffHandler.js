@@ -18,14 +18,8 @@ async function apiHandlerCreateStaff(req,res) {
 			}
 			res.send(returnJsonObj);
 		}
-
-		var returnJsonObj = {
-			"msgtype" : "success",
-			"message": "staff created successfully"
-		}
-
   	console.log("Exiting apiHandlerCreateStaff========>");
-		return res.json(returnJsonObj);
+		return res.json(result);
 }
 
 

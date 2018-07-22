@@ -33,11 +33,27 @@ async function createNewStaff(req) {
     let con = await pool.getConnection();
     await con.execute(query);
     con.release();
+
+    var returnJsonObj = {
+      "msgtype" : "success",
+      "message": "staff created successfully"
+    }
     console.log("Exiting createNewStaff...");
-    return true;
+    return returnJsonObj;
   }
   catch(err) {
     console.log("Error ====== createNewStaff");
+
+    if(err.code === "ER_DUP_ENTRY") {
+      var response = {
+        "msgtype" : "info",
+				"message": "staff username already exists"
+			}
+      //con.release();
+      console.log("Exiting createNewStaff...");
+      return response;
+    }
+    //con.release();
     console.log("Exiting createNewStaff...");
     return false;
   }
@@ -60,6 +76,7 @@ async function authenticateStaffLogin(req) {
     return staffJson;
   }
   catch(err) {
+    //con.release();
     console.log("Error ====== authenticateStaffLogin");
     return false;
   }
