@@ -1,0 +1,134 @@
+body
+{
+  background-color: #bbddec !important;
+  overflow-x: hidden;
+}
+.container
+{
+  margin: 0 !important;
+  max-width: 100% !important;
+}
+#header
+{
+  background-color: #0e1075;
+  color: #fff;
+}
+.hospitalName
+{
+  padding:8px;
+}
+#titleContainer
+{
+  padding: 30px 0 0 50px !important;
+  text-decoration: underline;
+}
+.statusLabel-reported
+{
+  background-color: #0ca00c;
+  border-radius: 4px;
+  border: 1px solid #0ca00c;
+  color: #fff;
+  padding: 5px;
+}
+/* COMMON ELEMENTS */
+input
+{
+  height: 32px;
+  border-radius: 4px;
+  outline-color : #0e1075;
+  width: inherit;
+  border : 1px solid #c3c3c3;
+  background-color: #ffffff;
+  border-radius: 2px;
+  padding: 5px;
+}
+button
+{
+  border-radius: 4px 4px 4px 4px !important;
+  background-color: #0e1075;
+  border: 1px solid #0e1075;
+  color: #ffffff;
+  height: 32px;
+  min-width: 152px;
+  font-size: 14px !important;
+  outline-color: #0e1075 !important;
+  cursor: pointer;
+}
+.card-block
+{
+  padding: 18px;
+}
+thead
+{
+  font-weight: bold;
+  text-align: left;
+}
+td,th
+{
+  width: 154px;
+  border: 1px solid #333;
+  padding:5px;
+}
+
+/* -------------------- COMMON CLASSES OR ID'S ------------------ */
+.labelAligning
+{
+  max-width: 136px !important;
+}
+input[type="radio"]
+{
+  margin-left: 10px !important;
+  width: 16px !important;
+}
+tr
+{
+  cursor: pointer;
+}
+/* ------------------- LOGIN ------------------- */
+#loginCredentials
+{
+	margin-top: 10% !important;
+}
+/* ------------------- SEARCH PAIIENT ----------------------- */
+#searchContainer
+{
+  padding: 30px 0 0 0 !important;
+}
+#searchPatientBar
+{
+  width: inherit;
+}
+#patientInformationContainer,#appointmentsList,#multipleSearchPatients
+{
+  padding-top: 30px;
+}
+#patientInformationModal
+{
+  margin-top: 8%;
+}
+.appointmentStatus
+{
+  background-color: transparent;
+  border-color: transparent;
+}
+.trClass:hover
+{
+  /* transform: scale(1.5) !important; */
+  background-color : rgba(0,123,255,0.14);
+}
+/* ------------------- NEW PAIIENT ----------------------- */
+#newPatientInfoContainer
+{
+  margin-top:2% !important;
+}
+/* .genderLabel
+{
+  margin-top:-28px;
+  margin-left: 34px;
+} */
+
+/* ------------------- BOOK APPOINTMENT ----------------------- */
+#appointmentDetails
+{
+  margin-top: 2% !important;
+}

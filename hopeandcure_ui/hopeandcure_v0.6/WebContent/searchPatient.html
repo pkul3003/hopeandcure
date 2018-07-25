@@ -1,0 +1,248 @@
+<html>
+  <head>
+    <title>Search Patient</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href = "css/style.css" rel="stylesheet"/>
+    <!-- <link href = "css/searchPatient.css" rel="stylesheet"/> -->
+    <script src = "jquery.min.js"></script>
+    <script src = "js/searchPatient.js"></script>
+    <link href = "bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src = "bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+
+    <div class = "container" id="header" >
+      <div class="row">
+        <div class="col-lg-12">
+          <h3 class="hospitalName">Hospital Name</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" id="titleContainer">
+      <div class="row">
+        <div class="col-lg-12">
+          <h4>Appointments</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" id="searchContainer">
+      <div class="row">
+        <div class="col-lg-1">
+        </div>
+        <div class="col-lg-6" style="text-align:center;">
+          <input type="text" placeholder="Search Patient Here..." id="searchPatientBar"/>
+        </div>
+        <div class="col-lg-1">
+          <button style="min-width:fit-content;" onclick="getPatientInformation()"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="col-lg-4">
+          <button onclick="callCreatePatientPage()">New Patient</button>
+        </div>
+      </div>
+    </div>
+
+	<div class = "conatainer" id="multipleSearchPatients" style="padding : 30px 15px 0 15px;">
+		<div class="card">
+			<div class = "card-block">
+				<div class="row" style="margin-top:20px;">
+		            <div class="col-lg-12">
+		              <table>
+		                <thead>
+		                  <tr>
+		                    <th>Sr No.</th>
+		                    <th>UHID</th>
+		                    <th>Patient Name</th>
+		                    <th>Gender</th>
+		                    <th>Date Of Birth</th>
+		                    <th>Contact No.</th>
+		                    <th>Email Id</th>
+		                  </tr>
+		                </thead>
+		                <tbody id="multiplePatientData">
+		                </tbody>
+		              </table>
+		            </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <div class="container" id="patientInformationContainer">
+      <div class="card">
+        <div class="card-block">
+
+          <div class="row">
+            <div class="col-lg-10">
+              <h5 style="text-decoration:underline;">Patient Information</h5>
+            </div>
+            <!-- <div class="col-lg-2">
+              <label id="uhid"></label>
+            </div> -->
+          </div>
+
+          <div class="row" style="margin-top:20px;">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-3">
+              <label id="name"></label>
+            </div>
+            <div class="col-lg-3">
+              <label id="dob"></label>
+            </div>
+            <div class="col-lg-3">
+              <label id="uhid"></label>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:20px;">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-3">
+              <label id="contactNo"></label>
+            </div>
+            <div class="col-lg-3">
+              <label id="emailId"></label>
+            </div>
+            <div class="col-lg-3">
+              <label id=adhaarNo></label>
+            </div>
+          </div>
+
+          <!-- <div class="row">
+            <div class="col-lg-12">
+              <h5 style="text-decoration:underline;">Appointment Details</h5>
+            </div>
+          </div> -->
+
+         <!--  <div class="row" style="margin-top:20px;">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-3">
+              <label>Consultant : Dr. Patil</label>
+            </div>
+            <div class="col-lg-3">
+              <label>Booked On : 24/09/2018</label>
+            </div>
+            <div class="col-lg-3">
+              <label>Booked For : 30/09/2018 -  11.30 am</label>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:20px;">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-3">
+              <label>Case : Cataract surgery</label>
+            </div>
+          </div> -->
+
+          <div class="row" style="margin-top:20px;">
+            <div class="col-lg-4">
+
+            </div>
+            <div class="col-lg-2" style="text-align:center;">
+              <button onclick="bookAppointment()">Book Appointment</button>
+            </div>
+            <div class="col-lg-2" style="text-align:center;">
+              <button onclick="editPatientDetails()">Edit</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container" id="appointmentsList">
+      <div class="card">
+        <div class="card-block">
+
+          <div class="row">
+            <div class="col-lg-9">
+              <h5 style="text-decoration:underline;">Appointments</h5>
+            </div>
+            <div class="col-lg-2">
+              <input type="date" id="searchAppointmentsByDate">
+            </div>
+            <div class="col-lg-1">
+              <button style="min-width:fit-content;" onclick="getAppointmentsByDate()"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:20px;">
+            <div class="col-lg-12">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Sr No.</th>
+                    <th>UHID</th>
+                    <th>Patient Name</th>
+                    <th>Gender</th>
+                    <th>Consultant</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="appointmentData">
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="patientInformationModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Appointment Details</h4>
+          <button class="close" data-dismiss="modal" style="width:fit-content;">&times;</button>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-lg-4">
+              <label id="patientNameModal"></label>
+            </div>
+            <div class="col-lg-4">
+              <label  id="patientDOBModal"></label>
+            </div>
+            <div class="col-lg-4">
+              <label  id="patientUHIDModal"></label>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:20px;">
+            <div class="col-lg-4">
+              <label  id="patientContactNoModal"></label>
+            </div>
+            <div class="col-lg-8">
+              <label  id="patientEmailIdModal"></label>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:20px;">
+            <div class="col-lg-4">
+              <label id="patientAdhaarNoModal"></label>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  </body>
+</html>

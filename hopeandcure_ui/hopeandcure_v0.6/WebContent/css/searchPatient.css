@@ -1,0 +1,20 @@
+#searchContainer
+{
+  padding: 30px 0 0 0 !important;
+}
+#searchPatientBar
+{
+  width: inherit;
+}
+#patientInformationContainer,#appointmentsList
+{
+  padding-top: 30px;
+}
+tr
+{
+  cursor: pointer;
+}
+#patientInformationModal
+{
+  margin-top: 8%;
+}

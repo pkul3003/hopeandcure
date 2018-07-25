@@ -1,0 +1,19 @@
+#newPatientInfoContainer
+{
+  margin-top:2% !important;
+}
+
+/* COMMPONENTS */
+.labelAligning
+{
+  max-width: 134px !important;
+}
+.genderLabel
+{
+  margin-top:-28px;
+  margin-left: 34px;
+}
+input[type="radio"]
+{
+  margin-left: 10px;
+}

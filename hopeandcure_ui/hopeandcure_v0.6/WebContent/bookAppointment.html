@@ -1,0 +1,192 @@
+<!doctype html>
+
+<html>
+  <head>
+    <title>Book Appointment</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href = "css/style.css" rel="stylesheet"/>
+    <!-- <link href = "css/bookAppointment.css" rel="stylesheet"/> -->
+    <script src = "jquery/jquery.min.js"></script>
+    <script src = "js/bookAppointment.js"></script>
+    <link href = "bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src = "bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+
+  </head>
+
+  <body>
+    <div class = "container" id="header" >
+      <div class="row">
+        <div class="col-lg-12">
+          <h3 class="hospitalName">Hospital Name</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" id="titleContainer">
+      <div class="row">
+        <div class="col-lg-10">
+          <h4>Appointment Details</h4>
+        </div>
+        <!-- <div class="col-lg-2">
+          <button onclick="goToAppointments()">Back</button>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="container" id="appointmentDetails">
+      <div class="card" style="margin-bottom:20%;">
+        <div class="card-block" style="padding-bottom:50px;">
+
+          <div class="row" style="margin-top:40px;">
+            <div class="col-lg-12">
+              <h5 style="text-decoration:underline;">Appointment Details</h5>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:20px;">
+            <div class="col-lg-2 labelAligning">
+              <span>*</span><label>Consultant</label>
+            </div>
+            <div class="col-lg-2">
+              <input type="text" id="consultant"/>
+            </div>
+            <div class="col-lg-1">
+            </div>
+            <div class="col-lg-2 labelAligning" style="padding:0;">
+              <span>*</span><label>Appointment Date</label>
+            </div>
+            <div class="col-lg-2">
+              <input type="date" id="appointmentDate"/>
+            </div>
+            <div class="col-lg-1">
+            </div>
+            <div class="col-lg-2 labelAligning"  style="padding:0;">
+              <span>*</span><label>Appointment Time</label>
+            </div>
+            <div class="col-lg-2">
+              <input type="text" id="appointmentTime"/>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:20px;">
+            <div class="col-lg-2 labelAligning">
+              <label>Referred By</label>
+            </div>
+            <div class="col-lg-2">
+              <input type="text" id="referredBy"/>
+            </div>
+            <div class="col-lg-1">
+            </div>
+            <div class="col-lg-2 labelAligning">
+              <label>Case</label>
+            </div>
+            <div class="col-lg-2">
+              <input type="text"/>
+            </div>
+            <div class="col-lg-1">
+            </div>
+          </div>
+<hr style="margin-top:40px;"/>
+          <div class="row" style="margin-top:40px;">
+            <div class="col-lg-12">
+              <h5 style="text-decoration:underline;">Accompany Details</h5>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:20px;">
+            <div class="col-lg-2 labelAligning">
+              <span>*</span><label>Name</label>
+            </div>
+            <div class="col-lg-2">
+              <input type="text" id="patient_relative"/>
+            </div>
+            <div class="col-lg-1">
+            </div>
+            <div class="col-lg-2 labelAligning">
+              <label>Relation</label>
+            </div>
+            <div class="col-lg-2">
+              <input type="text" id="patient_relation"/>
+            </div>
+            <div class="col-lg-1">
+            </div>
+            <div class="col-lg-2 labelAligning">
+              <label>Contact No.</label>
+            </div>
+            <div class="col-lg-2">
+              <input type="number" id="relative_contact"/>
+            </div>
+          </div>
+<hr style="margin-top:40px;"/>
+
+          <div class="row" style="margin-top:50px;">
+            <div class="col-lg-12" style="text-align:center;">
+              <button onclick="bookAppointment()">Book Appointment</button>
+              <button  onclick="goBack()">Cancel</button>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="confirmAppointmentModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Confirm Appointment</h4>
+            <button class="close" data-dismiss="modal" style="width:fit-content;">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-12" style="text-align:center">
+                <button>Yes</button>
+                <button class="close" data-dismiss="modal">No</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" id="appointmentsList" style="margin-top:-226px !important;">
+      <div class="card">
+        <div class="card-block">
+
+          <div class="row">
+            <div class="col-lg-12">
+              <h5 style="text-decoration:underline;">Today's Appointments</h5>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:20px;">
+            <div class="col-lg-12">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Sr No.</th>
+                    <th>UHID</th>
+                    <th>Patient Name</th>
+                    <th>Gender</th>
+                    <th>Consultant</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="appointmentData">
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
