@@ -2,7 +2,12 @@ $(document).ready(function()
 {
 	$("#username").focus();
 });
-
+// $("#pswd").keypress(function(e) {
+// 	alert("entered");
+//     if(e.which == 13) {
+//         alert('You pressed enter!');
+//     }
+// });
 function applicationLogin()
 {
 	var username = $("#username").val();
@@ -27,11 +32,10 @@ function applicationLogin()
 	  	 }
 	  });
 }
-$("#pswd").keypress(function(e)
-{
-	var key = e.which;
-    if (key == 13)
-    {
-        alert('Entered');
+
+var wage = document.getElementById("pswd");
+wage.addEventListener("keydown", function (e) {
+    if (e.keyCode === 13) {  //checks whether the pressed key is "Enter"
+        alert("Entered");
     }
 });
