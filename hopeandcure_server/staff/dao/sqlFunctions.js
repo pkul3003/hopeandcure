@@ -25,13 +25,18 @@ async function createNewStaff(req) {
   let email_id = req.body.staff.email_id;
   let password = req.body.staff.password;
 
-  let query = "INSERT INTO stafflogin VALUES ('" +username+ "', '"+ first_name +"','" + middle_name + "','"+ last_name + "','"+
-              birth_date +"','" + gender +"', '"+ contact_number +"', '"+ email_id + "', MD5('" +password+ "'), DEFAULT);";
-  console.log(query);
+  let query1 = "INSERT INTO staff_login VALUES (DEFAULT, '" +username+ "', MD5('" +password+ "'), DEFAULT);";
+  console.log(query1);
+
+  let query2 = "INSERT INTO staff_details VALUES ('" + first_name +"','" + middle_name + "','"+ last_name + "','"+
+              birth_date +"','" + gender +"', '"+ contact_number +"', '"+ email_id + "', DEFAULT);";
+  console.log(query2);
+
   try {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
-    await con.execute(query);
+    await con.execute(query1);
+    await con.execute(query2);
     con.release();
 
     var returnJsonObj = {
@@ -64,7 +69,7 @@ async function authenticateStaffLogin(req) {
   console.log("Entering authenticateStaffLogin...");
   let username = req.body.staff.username;
   let password = req.body.staff.password;
-  let query = "SELECT username, password FROM stafflogin WHERE username = '" + username + "' AND password = MD5( '" + password+ "');";
+  let query = "SELECT username, password FROM staff_login WHERE username = '" + username + "' AND password = MD5( '" + password+ "');";
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -83,5 +88,31 @@ async function authenticateStaffLogin(req) {
 }
 
 
+async function retrieveConstultants(req) {
+  console.log("Entering retrieveConstultants...");
+  let query = "SELECT CONCAT(FirstName, '_', LastName) from consultants;";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let staffJson = JSON.stringify(result);
+    console.log("printing SQL query result in retrieveConstultants" + JSON.parse(staffJson));
+    let staffJson1 = JSON.parse(staffJson);
+    for (var key in staffJson1) {
+        console.log("key: "+key+", value: " + staffJson1[key]);
+      }
+    con.release();
+    return staffJson;
+  }
+  catch(err) {
+    //con.release();
+    console.log("Error ====== retrieveConstultants");
+    return false;
+  }
+}
+
+
 exports.createNewStaff = createNewStaff;
 exports.authenticateStaffLogin = authenticateStaffLogin;
+exports.retrieveConstultants = retrieveConstultants;

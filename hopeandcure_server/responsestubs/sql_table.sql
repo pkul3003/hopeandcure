@@ -208,9 +208,24 @@ CREATE TABLE patient_complaints (
   FOREIGN KEY (UHID) references patients(UHID)
 );
 
-drop table if exists `stafflogin`;
-CREATE TABLE stafflogin (
-  username varchar(255) NOT NULL,
+
+drop table if exists `staff_login`;
+CREATE TABLE staff_login (
+  staffid bigint NOT NULL AUTO_INCREMENT,
+  username varchar(255) NOT NULL UNIQUE,
+  password varchar(32) NOT NULL,
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (staffid)
+);
+
+ALTER TABLE staff_login AUTO_INCREMENT=1000;
+
+INSERT INTO staff_login VALUES(DEFAULT, 'prakash.rasal', MD5('abcd1234'), DEFAULT);
+INSERT INTO staff_login VALUES(DEFAULT, 'wasant.ambekar', MD5('abcd1234'), DEFAULT);
+
+drop table if exists `staff_details`;
+CREATE TABLE staff_details (
+  staffid bigint NOT NULL,
   FirstName varchar(255) NOT NULL,
   MiddleName varchar(255),
   LastName varchar(255) NOT NULL,
@@ -218,37 +233,37 @@ CREATE TABLE stafflogin (
   Gender varchar(255) NOT NULL,
   ContactNumber BIGINT NOT NULL,
   EmailId varchar(255),
-  password varchar(32) NOT NULL,
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (username)
+  FOREIGN KEY (staffid) REFERENCES staff_login(staffid)
 );
 
-INSERT INTO stafflogin values('pkul3003', 'Parag', null, 'kulkarni', '1981-03-02', 'male', '9922962322',
-  'pkul3003@gmail.com', MD5('abcd1234'), DEFAULT);
+INSERT INTO staff_details values(1001, 'Parag', null, 'kulkarni', '1981-03-02', 'male', '9922962322',
+  'pkul3003@gmail.com', DEFAULT);
 
-INSERT INTO stafflogin VALUES ('pjoshi123', 'Prasad','Dattatray','Jpshi','1981-06-06','male', '9657564333',
-  'joship@gmail.com', MD5('abcd1234)', DEFAULT);
+INSERT INTO staff_details VALUES (1002, 'Prasad','Dattatray','Jpshi','1981-06-06','male', '9657564333',
+  'joship@gmail.com',DEFAULT);
 
 
-drop table if exists `staffroles`;
-CREATE TABLE staffroles (
-  username varchar(255) NOT NULL,
+drop table if exists `staff_roles`;
+CREATE TABLE staff_roles (
+  staffid bigint NOT NULL,
   Admin ENUM('yes', 'no'),
   Receptionist ENUM('yes', 'no'),
   Consultant ENUM('yes', 'no'),
   Optometerist ENUM('yes', 'no'),
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (username) references stafflogin(username)
+  FOREIGN KEY (staffid) REFERENCES staff_login(staffid)
 );
 
-INSERT INTO staffroles VALUES ('pkul3003', 'yes', 'yes', 'no', 'no', DEFAULT);
-INSERT INTO staffroles VALUES ('pkul3003', 'yes', 'yes', 'no', 'no', DEFAULT);
+INSERT INTO staff_roles VALUES ('pkul3003', 'yes', 'yes', 'no', 'no', DEFAULT);
+INSERT INTO staff_roles VALUES ('pkul3003', 'yes', 'yes', 'no', 'no', DEFAULT);
+
 
 
 drop table if exists `staff_address`;
 
 CREATE TABLE staff_address (
-  username varchar(255) NOT NULL,
+  staffid bigint NOT NULL,
   FirstName varchar(255) NOT NULL,
   LastName varchar(255) NOT NULL,
   AddressLine1 varchar(255) NOT NULL,
@@ -259,13 +274,13 @@ CREATE TABLE staff_address (
   PINCode BIGINT,
   EmergencyContactNumber BIGINT,
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (username) references stafflogin(username)
+  FOREIGN KEY (staffid) REFERENCES staff_login(staffid)
 );
 
 drop table if exists `consultants`;
 
 CREATE TABLE consultants (
-  username varchar(255) NOT NULL,
+  staffid bigint NOT NULL,
   FirstName varchar(255) NOT NULL,
   LastName varchar(255) NOT NULL,
   PrimarySpeciality varchar(300) NOT NULL,
@@ -275,5 +290,8 @@ CREATE TABLE consultants (
   Surgeon ENUM('yes', 'no') NOT NULL,
   EmergencyContactNumber BIGINT,
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (username) references stafflogin(username)
+  FOREIGN KEY (staffid) REFERENCES staff_login(staffid)
 );
+
+INSERT INTO consultants VALUES(1000, 'Prakash' , 'Rasal', 'Opthalmologist', '', 'MD', 'yes' , 'yes', 9922962322, DEFAULT);
+INSERT INTO consultants VALUES(1001, 'Wasant' , 'ambekar', 'Opthalmologist', '', 'MD', 'yes' , 'yes', 9922962322, DEFAULT);

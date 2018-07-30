@@ -168,6 +168,24 @@ async function apiHandlerRetrieveMedicalFacts(req,res) {
 	res.send(JSON.parse(response));
 }
 
+async function apiHandlerRetrieveConsultants(req, res) {
+	console.log("Entering apiHandlerRetrieveConsultants========>");
+	let response = await mysqlFunctions.retrieveConsultants(req);
+	console.log("inside apiHandlerRetrieveConsultants:  ", response);
+
+	if (response === false) {
+		var returnJsonObj = {
+			"msgtype" : "error",
+			"message": "There was an error in retrieving consultants"
+		}
+		console.log("Exiting apiHandlerRetrieveConsultants========>");
+		res.send(returnJsonObj);
+	}
+
+	console.log("Exiting apiHandlerRetrieveConsultants========>");
+	res.send(JSON.parse(response));
+}
+
 exports.apiHandlerCreatePatient = apiHandlerCreatePatient;
 exports.apiHandlerFindPatients = apiHandlerFindPatients;
 exports.apiHandlerFindPatientByUHID = apiHandlerFindPatientByUHID;

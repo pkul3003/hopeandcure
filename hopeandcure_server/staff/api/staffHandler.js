@@ -49,5 +49,36 @@ async function apiHandlerAuthenticateStaff(req,res) {
 		res.send(JSON.parse(result));
 }
 
+
+async function apiHandlerRetrieveConsultants(req,res) {
+	console.log("Entering apiHandlerRetrieveConsultants========>");
+
+    let result = await mysqlFunctions.retrieveConstultants(req);
+    console.log("inside apiHandlerRetrieveConsultants:  ", result);
+
+		if (result === false) {
+			var returnJsonObj = {
+				"msgtype" : "error",
+				"message": "There was an error is retrieving consultants"
+			}
+			console.log("Exiting apiHandlerRetrieveConsultants========>");
+			res.send(returnJsonObj);
+		}
+
+    if (result === "[]") {
+      console.log("there were no consultants");
+      var returnJsonObj = {
+				"msgtype" : "info",
+				"message": "there were no consultants"
+			}
+	  console.log("Exiting apiHandlerRetrieveConsultants========>");	
+      res.send(returnJsonObj);
+    }
+  	console.log("Exiting apiHandlerRetrieveConsultants========>");
+		res.send(JSON.parse(result));
+}
+
+
 exports.apiHandlerCreateStaff = apiHandlerCreateStaff;
 exports.apiHandlerAuthenticateStaff = apiHandlerAuthenticateStaff;
+exports.apiHandlerRetrieveConsultants = apiHandlerRetrieveConsultants;

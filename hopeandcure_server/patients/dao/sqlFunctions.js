@@ -376,6 +376,29 @@ async function retrievePatientsByMobile(req) {
   }
 }
 
+async function retrieveConsultants(req){
+
+  console.log("inside retrieveConsultants...");
+  
+  query = "SELECT * FROM consultants;";
+  console.log(query);
+
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query,[contact_number]);
+    let patientJson = JSON.stringify(result);
+    console.log(patientJson);
+    con.release();
+    return patientJson;
+  }
+  catch (err){
+    console.log("Error ====== retrievePatientsByMobile");
+    return false;
+  }
+}
+
+
 exports.retrievePatientsByName = retrievePatientsByName;
 exports.retrievePatientsByUHID = retrievePatientsByUHID;
 exports.createNewPatient = createNewPatient;
