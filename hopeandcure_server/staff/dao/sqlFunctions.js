@@ -90,7 +90,7 @@ async function authenticateStaffLogin(req) {
 
 async function retrieveConstultants(req) {
   console.log("Entering retrieveConstultants...");
-  let query = "SELECT CONCAT(FirstName, '_', LastName) from consultants;";
+  let query = "SELECT CONCAT(FirstName, '_', LastName) consultant from consultants;";
   console.log(query);
   try {
     let pool = await getConnectionPool();
