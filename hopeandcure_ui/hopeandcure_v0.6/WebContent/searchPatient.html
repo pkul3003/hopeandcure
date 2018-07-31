@@ -114,34 +114,6 @@
             </div>
           </div>
 
-          <!-- <div class="row">
-            <div class="col-lg-12">
-              <h5 style="text-decoration:underline;">Appointment Details</h5>
-            </div>
-          </div> -->
-
-         <!--  <div class="row" style="margin-top:20px;">
-            <div class="col-lg-2">
-            </div>
-            <div class="col-lg-3">
-              <label>Consultant : Dr. Patil</label>
-            </div>
-            <div class="col-lg-3">
-              <label>Booked On : 24/09/2018</label>
-            </div>
-            <div class="col-lg-3">
-              <label>Booked For : 30/09/2018 -  11.30 am</label>
-            </div>
-          </div>
-
-          <div class="row" style="margin-top:20px;">
-            <div class="col-lg-2">
-            </div>
-            <div class="col-lg-3">
-              <label>Case : Cataract surgery</label>
-            </div>
-          </div> -->
-
           <div class="row" style="margin-top:20px;">
             <div class="col-lg-4">
 
@@ -245,4 +217,14 @@
   </div>
 
   </body>
+
+  <script>
+    $("#searchPatientBar").keypress(function(e)
+    {
+      if(e.which == 13)
+      {
+          getPatientInformation();
+      }
+    });
+  </script>
 </html>

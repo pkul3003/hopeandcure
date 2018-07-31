@@ -10,6 +10,12 @@ $(document).ready(function()
 	 data : reqJsonObj,
 	 success : function(result)
 	 {
+     if(result.length==0)
+     {
+       $("#patientInformationContainer").hide();
+     }
+     else
+     {
        for(var i=0;i<result.length;i++)
        {
     	 var trId = "trId"+i;
@@ -29,6 +35,7 @@ $(document).ready(function()
       	 if(($("#"+statusId).val() == "consultant") || ($("#"+statusId).val() == "Consultant"))
         		$("#"+statusId).closest("td").css("background-color","rgba(243,193,13,0.84)");
        }
+     }
 	 }
   });
 });

@@ -32,10 +32,3 @@ function applicationLogin()
 	  	 }
 	  });
 }
-
-var wage = document.getElementById("pswd");
-wage.addEventListener("keydown", function (e) {
-    if (e.keyCode === 13) {  //checks whether the pressed key is "Enter"
-        alert("Entered");
-    }
-});

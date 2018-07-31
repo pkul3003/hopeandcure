@@ -15,8 +15,8 @@
 
   </head>
 
-  <!-- <body style="background-image:url('./img/login_bg.jpg');background-repeat: no-repeat;"> -->
-  <body>
+  <body style="background-image:url('./img/login_bg.png');background-repeat: no-repeat;">
+  <!-- <body> -->
     <div class = "container" id="header" >
       <div class="row">
         <div class="col-lg-12">
@@ -74,6 +74,15 @@
     	</div>
     </div>
 
-
   </body>
+
+  <script>
+    $("#pswd").keypress(function(e)
+    {
+      if(e.which == 13)
+      {
+          applicationLogin();
+      }
+    });
+  </script>
 </html>
