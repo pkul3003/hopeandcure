@@ -117,6 +117,8 @@ tr
 {
   background-color: transparent;
   border-color: transparent;
+  width: -webkit-fill-available;
+  outline: none;
 }
 .trClass:hover
 {

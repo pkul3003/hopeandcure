@@ -33,7 +33,6 @@ function createPatient()
 // SAVE PATIENT ADDRESS AND EMERGENCY CONTACT
 function saveAddress()
 {
-	alert("UHID save address:: "+localStorage.getItem("UHID"));
 	var UHID = localStorage.getItem("UHID");
 	var addressLine1 = $('#addressLine1').val();
 	var addressLine2 = $('#addressLine2').val();
@@ -94,9 +93,7 @@ function bookAppointment()
 	  	 {
 	   		 localStorage.setItem("UHID",result.UHID);
 	   		 saveAddress();
-	   		 alert("patient created");
 	   		window.location.href = "bookAppointment.html";
-	   		 //window.history.back();
 	  	 }
 	  });
 }

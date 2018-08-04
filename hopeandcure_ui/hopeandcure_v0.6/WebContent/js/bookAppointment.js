@@ -17,7 +17,7 @@ $(document).ready(function()
       else {
         for(var i=0;i<result.length;i++)
         {
-       	 $("#appointmentData").append("<tr class='trClass' onclick = 'patientInformationModal()'><td>"+(i+1)+"</td><td>"+result[i].UHID+"</td><td>"+result[i].FirstName+" "+result[i].LastName+"</td><td>"+result[i].Gender+"</td><td>"+result[i].Consultant+"</td><td>"+result[i].TimeOfAppointment+"</td><td><select class='appointmentStatus'><option value='registered'>Registered</option><option value='arrived'>Arrived</option><option value='optometrist'>Optometrist</option><option value='consultant'>Consultant</option><option value='investigation'>Investigation</option><option value='completed'>Consultation completed</option><option value='ipd'>IPD</option></select></td></tr>");
+       	 $("#appointmentData").append("<tr class='trClass' onclick = 'patientInformationModal()'><td>"+(i+1)+"</td><td>"+result[i].UHID+"</td><td>"+result[i].FirstName+""+result[i].LastName+"</td><td>"+result[i].Gender+"</td><td>"+result[i].Consultant+"</td><td>"+result[i].TimeOfAppointment+"</td><td><select class='appointmentStatus'><option value='registered'>Registered</option><option value='arrived'>Arrived</option><option value='optometrist'>Optometrist</option><option value='consultant'>Consultant</option><option value='investigation'>Investigation</option><option value='completed'>Consultation completed</option><option value='ipd'>IPD</option></select></td></tr>");
         }
       }
       getConsultants();
@@ -35,7 +35,6 @@ function getConsultants()
     data : reqJsonObj,
     success : function(result)
     {
-      alert(JSON.stringify(result));
       for(var i=0;i<result.length;i++)
       {
         $("#consultant").append("<option>"+result[i].consultant+"</option>");
@@ -46,7 +45,6 @@ function getConsultants()
 // GET PATIENT DATA TO BOOK APPOINTMENT
 function bookAppointment()
 {
-	alert("UHID :: "+localStorage.getItem("UHID"));
 	var uhid = localStorage.getItem("UHID");
 	var reqJsonObj = {"intentName" : "search-patient","patient": {"search_string": uhid}}
 

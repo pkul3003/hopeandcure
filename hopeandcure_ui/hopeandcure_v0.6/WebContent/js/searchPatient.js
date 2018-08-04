@@ -3,6 +3,7 @@ $(document).ready(function()
 {
   $("#patientInformationContainer").hide();
   $("#multipleSearchPatients").hide();
+  $("#searchPatientBar").focus();
   var reqJsonObj ={"intentName" : "retrieve-appointments"}
 
   $.ajax({
@@ -34,7 +35,16 @@ $(document).ready(function()
             $("#"+statusId).closest("td").css("background-color","rgba(243,193,13,0.84)");
 
           if(($("#"+statusId).val() == "consultant") || ($("#"+statusId).val() == "Consultant"))
-            $("#"+statusId).closest("td").css("background-color","rgba(243,193,13,0.84)");
+            $("#"+statusId).closest("td").css("background-color","rgba(236,203,236,1)");
+
+          if(($("#"+statusId).val() == "investigation") || ($("#"+statusId).val() == "Investigation"))
+            $("#"+statusId).closest("td").css("background-color","rgba(237,239,130,1)");
+
+          if(($("#"+statusId).val() == "consultation completed") || ($("#"+statusId).val() == "Consultation completed"))
+            $("#"+statusId).closest("td").css("background-color","rgba(251,157,59,1)");
+
+          if(($("#"+statusId).val() == "ipd") || ($("#"+statusId).val() == "IPD"))
+            $("#"+statusId).closest("td").css("background-color","rgba(144,226,204,1)");
        }
      }
 	 }
@@ -55,7 +65,16 @@ function getStatusVal(sel)
    		$("#"+statusId).closest("td").css("background-color","rgba(243,193,13,0.84)");
 
   	 if((statusValue == "consultant") || (statusValue == "Consultant"))
-    		$("#"+statusId).closest("td").css("background-color","rgba(243,193,13,0.84)");
+    		$("#"+statusId).closest("td").css("background-color","rgba(236,203,236,1)");
+
+    if(($("#"+statusId).val() == "investigation") || ($("#"+statusId).val() == "Investigation"))
+      $("#"+statusId).closest("td").css("background-color","rgba(237,239,130,1)");
+
+    if(($("#"+statusId).val() == "consultation completed") || ($("#"+statusId).val() == "Consultation completed"))
+      $("#"+statusId).closest("td").css("background-color","rgba(251,157,59,1)");
+
+    if(($("#"+statusId).val() == "ipd") || ($("#"+statusId).val() == "IPD"))
+      $("#"+statusId).closest("td").css("background-color","rgba(144,226,204,1)");
 }
 
 // function hidePatientInformationContainer()
@@ -98,11 +117,15 @@ function getPatientInformation()
 		}
   		 else
   		{
+        if(result[0].DOB.includes("T") || result[0].DOB.includes("t"))
+        {
+          var date_of_birth = result[0].DOB.substring(0, result[0].DOB.indexOf('T'));
+        }
   			 $("#uhid").html("Patient Id : "+result[0].UHID);
   			 localStorage.setItem("UHID",result[0].UHID);
   			 $("#name").html("Name : "+result[0].FirstName+" "+result[0].MiddleName+" "+result[0].LastName);
 
-  			 $("#dob").html("Date Of Birth : "+result[0].DOB)
+  			 $("#dob").html("Date Of Birth : "+date_of_birth)
 
   			 $("#contactNo").html("Contact No. : "+result[0].ContactNumber);
 
@@ -133,11 +156,15 @@ function displayPatientInformationContainer(uhid)
 	  	 data : reqJsonObj,
 	  	 success : function(result)
 	  	 {
+         if(result[0].DOB.includes("T") || result[0].DOB.includes("t"))
+         {
+           var date_of_birth = result[0].DOB.substring(0, result[0].DOB.indexOf('T'));
+         }
 			  $("#uhid").html("Patient Id : "+result[0].UHID);
 			  localStorage.setItem("UHID",result[0].UHID);
 		      $("#name").html("Name : "+result[0].FirstName+" "+result[0].MiddleName+" "+result[0].LastName);
 
-		      $("#dob").html("Date Of Birth : "+result[0].DOB)
+		      $("#dob").html("Date Of Birth : "+date_of_birth)
 
 		      $("#contactNo").html("Contact No. : "+result[0].ContactNumber);
 
@@ -147,11 +174,10 @@ function displayPatientInformationContainer(uhid)
 	 	 }
 	 });
 	  $("#patientInformationContainer").show();
-
+}
 // GET INFORMATION OF BOOKED APPOINTMENT PATIENT
 function patientInformationModal(uhid)
 {
-  alert("uhid :: "+uhid);
   var reqJsonObj = {"intentName" : "search-patient","patient": {"search_string": uhid}}
 	console.log(JSON.stringify(reqJsonObj));
 	  $.ajax({
@@ -160,17 +186,14 @@ function patientInformationModal(uhid)
 	  	 data : reqJsonObj,
 	  	 success : function(result)
 	  	 {
-         // var dob="result[0].DOB";
-         // var n = dob.includes("T");
-         // if(n== true)
-         // {
-         //   var dob = str.substr(0, 10);
-         //   alert(dob);
-         // }
+         if(result[0].DOB.includes("T") || result[0].DOB.includes("t"))
+         {
+           var date_of_birth = result[0].DOB.substring(0, result[0].DOB.indexOf('T'));
+         }
 			  $("#patientUHIDModal").html("UHID : "+result[0].UHID);
 		      $("#patientNameModal").html("Name : "+result[0].FirstName+" "+result[0].MiddleName+" "+result[0].LastName);
 
-		      $("#patientDOBModal").html("Date Of Birth : "+result[0].DOB);
+		      $("#patientDOBModal").html("Date Of Birth : "+date_of_birth);
 
 		      $("#patientContactNoModal").html("Contact No. : "+result[0].ContactNumber);
 
@@ -191,7 +214,6 @@ function patientInformationModal(uhid)
 function getAppointmentsByDate()
 {
 	var dateSelected = $("#searchAppointmentsByDate").val()
-	alert("date selected :: "+dateSelected);
 	var reqJsonObj = {"intentName" : "retrieve-appointments-by-date","appointments" : {"appointment_date" : dateSelected}}
 	console.log(JSON.stringify(reqJsonObj));
 
@@ -201,7 +223,6 @@ function getAppointmentsByDate()
 	  	 data : reqJsonObj,
 	  	 success : function(result)
 	  	 {
-			  alert(JSON.stringify(result));
         if(result.length==0)
         {
           alert("No appointments for selected date !!");
@@ -225,22 +246,18 @@ function getAppointmentsByDate()
               $("#"+statusId).closest("td").css("background-color","rgba(243,193,13,0.84)");
 
             if(($("#"+statusId).val() == "consultant") || ($("#"+statusId).val() == "Consultant"))
-              $("#"+statusId).closest("td").css("background-color","rgba(243,193,13,0.84)");
+              $("#"+statusId).closest("td").css("background-color","rgba(236,203,236,1)");
+
+            if(($("#"+statusId).val() == "investigation") || ($("#"+statusId).val() == "Investigation"))
+              $("#"+statusId).closest("td").css("background-color","rgba(237,239,130,1)");
+
+            if(($("#"+statusId).val() == "consultation completed") || ($("#"+statusId).val() == "Consultation completed"))
+              $("#"+statusId).closest("td").css("background-color","rgba(251,157,59,1)");
+
+            if(($("#"+statusId).val() == "ipd") || ($("#"+statusId).val() == "IPD"))
+              $("#"+statusId).closest("td").css("background-color","rgba(144,226,204,1)");
           }
         }
 	 	 }
 	 });
-
 }
-/* ------------------------------------------------------------------------------------- */
-$('#searchPatientBar').keypress(function(event)
-{
-    if (event.keyCode == 13)
-    {
-        alert('Entered');
-    }
-});
-// function bookAppointment()
-// {
-//   window.location.href = "bookAppointment.html";
-// }
