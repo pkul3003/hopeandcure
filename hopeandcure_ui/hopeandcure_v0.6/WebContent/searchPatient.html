@@ -3,18 +3,18 @@
     <title>Search Patient</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous"> -->
+    <link href = "vendor/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href = "css/style.css" rel="stylesheet"/>
     <!-- <link href = "css/searchPatient.css" rel="stylesheet"/> -->
-    <script src = "jquery.min.js"></script>
+    <script src = "jquery/jquery.min.js"></script>
     <script src = "js/searchPatient.js"></script>
     <link href = "bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
     <script src = "bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
   </head>
 
   <body>
-
+<!-- HEADER BAR -->
     <div class = "container" id="header" >
       <div class="row">
         <div class="col-lg-12">
@@ -22,31 +22,34 @@
         </div>
       </div>
     </div>
-
+<!-- HEADER BAR END -->
+<!-- TITLE (APPOINTMENTS AND NEW PATIENT BUTTON) -->
     <div class="container" id="titleContainer">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-10">
           <h4>Appointments</h4>
+        </div>
+        <div class="col-lg-2">
+          <button onclick="window.location.href = 'newPatient.html'">New Patient</button>
         </div>
       </div>
     </div>
-
+<!-- TITLE (APPOINTMENTS AND NEW PATIENT BUTTON) END -->
+<!-- SEARCH BAR -->
     <div class="container" id="searchContainer">
       <div class="row">
-        <div class="col-lg-1">
+        <div class="col-lg-2">
         </div>
-        <div class="col-lg-6" style="text-align:center;">
+        <div class="col-lg-7" style="text-align:center;">
           <input type="text" placeholder="Search Patient Here..." id="searchPatientBar"/>
         </div>
         <div class="col-lg-1">
           <button style="min-width:fit-content;" onclick="getPatientInformation()"><i class="fas fa-search"></i></button>
         </div>
-        <div class="col-lg-4">
-          <button onclick="callCreatePatientPage()">New Patient</button>
-        </div>
       </div>
     </div>
-
+<!-- SEARCH BAR END -->
+<!-- IF MULTIPLE PATIENTS FOUND DISPLAY TABLE -->
 	<div class = "conatainer" id="multipleSearchPatients" style="padding : 30px 15px 0 15px;">
 		<div class="card">
 			<div class = "card-block">
@@ -72,7 +75,8 @@
 			</div>
 		</div>
 	</div>
-
+<!-- IF MULTIPLE PATIENTS FOUND DISPLAY TABLE END -->
+<!-- DISPLAY INFORMATION OF SEARCHED PATIENT -->
     <div class="container" id="patientInformationContainer">
       <div class="card">
         <div class="card-block">
@@ -81,9 +85,6 @@
             <div class="col-lg-10">
               <h5 style="text-decoration:underline;">Patient Information</h5>
             </div>
-            <!-- <div class="col-lg-2">
-              <label id="uhid"></label>
-            </div> -->
           </div>
 
           <div class="row" style="margin-top:20px;">
@@ -119,17 +120,18 @@
 
             </div>
             <div class="col-lg-2" style="text-align:center;">
-              <button onclick="bookAppointment()">Book Appointment</button>
+              <button onclick="window.location.href = 'bookAppointment.html'">Book Appointment</button>
             </div>
             <div class="col-lg-2" style="text-align:center;">
-              <button onclick="editPatientDetails()">Edit</button>
+              <button>Edit</button>
             </div>
           </div>
 
         </div>
       </div>
     </div>
-
+<!-- DISPLAY INFORMATION OF SEARCHED PATIENT END -->
+<!-- APPOINTMENT LIST -->
     <div class="container" id="appointmentsList">
       <div class="card">
         <div class="card-block">
@@ -148,7 +150,7 @@
 
           <div class="row" style="margin-top:20px;">
             <div class="col-lg-12">
-              <table>
+              <table id="appointmentsTable_01">
                 <thead>
                   <tr>
                     <th>Sr No.</th>
@@ -169,8 +171,8 @@
         </div>
       </div>
     </div>
-
-  <!-- Modal -->
+<!-- APPOINTMENT LIST END -->
+<!-- PATIENT INFORMATION OF BOOKED APPOINTMENT -->
   <div class="modal fade" id="patientInformationModal" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -215,7 +217,7 @@
 
     </div>
   </div>
-
+<!-- PATIENT INFORMATION OF BOOKED APPOINTMENT END -->
   </body>
 
   <script>

@@ -5,17 +5,17 @@
     <title>Book Appointment</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous"> -->
+    <link href = "vendor/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href = "css/style.css" rel="stylesheet"/>
-    <!-- <link href = "css/bookAppointment.css" rel="stylesheet"/> -->
-    <script src = "jquery/jquery.min.js"></script>
+    <script src = "vendor/jquery/jquery.min.js"></script>
     <script src = "js/bookAppointment.js"></script>
-    <link href = "bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <script src = "bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-
+    <link href = "vendor/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src = "vendor/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
   </head>
 
   <body>
+<!-- HEADER BAR -->
     <div class = "container" id="header" >
       <div class="row">
         <div class="col-lg-12">
@@ -23,18 +23,17 @@
         </div>
       </div>
     </div>
-
+<!-- HEADER BAR END -->
+<!-- TITLE (APPOINTMENTS) -->
     <div class="container" id="titleContainer">
       <div class="row">
         <div class="col-lg-10">
           <h4>Appointment Details</h4>
         </div>
-        <!-- <div class="col-lg-2">
-          <button onclick="goToAppointments()">Back</button>
-        </div> -->
       </div>
     </div>
-
+<!-- TITLE (APPOINTMENTS) END -->
+<!-- APPOINTMENT DETAILS CONTAINER -->
     <div class="container" id="appointmentDetails">
       <div class="card" style="margin-bottom:20%;">
         <div class="card-block" style="padding-bottom:50px;">
@@ -50,7 +49,8 @@
               <span>*</span><label>Consultant</label>
             </div>
             <div class="col-lg-2">
-              <input type="text" id="consultant"/>
+              <!-- <input type="text" id="consultant"/> -->
+              <select id="consultant"></select>
             </div>
             <div class="col-lg-1">
             </div>
@@ -132,9 +132,8 @@
         </div>
       </div>
     </div>
-
-
-    <!-- Modal -->
+<!-- APPOINTMENT DETAILS CONTAINER END -->
+<!-- CONFIRM APPOINTMENT MODAL (NOT USED) -->
     <div class="modal fade" id="confirmAppointmentModal" role="dialog">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -153,14 +152,21 @@
         </div>
       </div>
     </div>
-
+<!-- CONFIRM APPOINTMENT MODAL (NOT USED) END -->
+<!-- APPOINTMENTS LIST FOR REFERRENCE ONLY -->
     <div class="container" id="appointmentsList" style="margin-top:-226px !important;">
       <div class="card">
         <div class="card-block">
 
           <div class="row">
-            <div class="col-lg-12">
-              <h5 style="text-decoration:underline;">Today's Appointments</h5>
+            <div class="col-lg-9">
+              <h5 style="text-decoration:underline;">Appointments</h5>
+            </div>
+            <div class="col-lg-2">
+              <input type="date" id="searchAppointmentsByDate">
+            </div>
+            <div class="col-lg-1">
+              <button style="min-width:fit-content;" onclick="getAppointmentsByDate()"><i class="fas fa-search"></i></button>
             </div>
           </div>
 
@@ -187,6 +193,6 @@
         </div>
       </div>
     </div>
-
+<!-- APPOINTMENTS LIST FOR REFERRENCE ONLY END -->
   </body>
 </html>

@@ -1,8 +1,9 @@
+// GO TO PREVIOUS PAGE
 function goBack()
 {
-    //window.location.href = "searchPatient.html"
     window.history.back();
 }
+// ON SAVE CLICK ONLY CREATE PATIENT
 function createPatient()
 {
   var first_name = $('#firstName').val();
@@ -24,14 +25,12 @@ function createPatient()
   	 {
    		 localStorage.setItem("UHID",result.UHID);
    		 saveAddress();
-   		 alert("patient created");
-   		 window.location.href = "searchPatient.html"
-   		 //window.history.back();
+   		 window.location.href = "searchPatient.html";
   	 }
   });
 
 }
-
+// SAVE PATIENT ADDRESS AND EMERGENCY CONTACT
 function saveAddress()
 {
 	alert("UHID save address:: "+localStorage.getItem("UHID"));
@@ -72,6 +71,7 @@ function saveAddress()
 	  });
 }
 
+// BOOK APPOINTMENT CLICK
 function bookAppointment()
 {
 	var first_name = $('#firstName').val();

@@ -1,3 +1,4 @@
+// ON PAGE LOAD GET APPOINTMENTS
 $(document).ready(function()
 {
   $("#patientInformationContainer").hide();
@@ -12,34 +13,34 @@ $(document).ready(function()
 	 {
      if(result.length==0)
      {
-       $("#patientInformationContainer").hide();
+       $("#appointmentsTable_01").hide();
      }
      else
      {
        for(var i=0;i<result.length;i++)
        {
-    	 var trId = "trId"+i;
-       var uhid = result[i].UHID;
-      	 $("#appointmentData").append("<tr id='"+trId+"' class='trClass'><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+(i+1)+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].UHID+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].FirstName+" "+result[i].LastName+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].Gender+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].Consultant+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].TimeOfAppointment+"</td><td><select  id='appointmentStatus"+i+"' class='appointmentStatus' onchange = 'getStatusVal(this)'><option value='registered'>Registered</option><option value='arrived'>Arrived</option><option value='optometrist'>Optometrist</option><option value='consultant'>Consultant</option><option value='investigation'>Investigation</option><option value='completed'>Consultation completed</option><option value='ipd'>IPD</option></select></td></tr>");
+          var trId = "trId"+i;
+          var uhid = result[i].UHID;
+          $("#appointmentData").append("<tr id='"+trId+"' class='trClass'><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+(i+1)+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].UHID+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].FirstName+" "+result[i].LastName+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].Gender+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].Consultant+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].TimeOfAppointment+"</td><td><select  id='appointmentStatus"+i+"' class='appointmentStatus' onchange = 'getStatusVal(this)'><option value='registered'>Registered</option><option value='arrived'>Arrived</option><option value='optometrist'>Optometrist</option><option value='consultant'>Consultant</option><option value='investigation'>Investigation</option><option value='completed'>Consultation completed</option><option value='ipd'>IPD</option></select></td></tr>");
 
-      	 var statusId = "appointmentStatus"+i;
-      	 if(($("#"+statusId).val() == "registered") || ($("#"+statusId).val() == "Registered"))
-      		$("#"+statusId).closest("td").css("background-color","rgba(247,20,20,0.84)");
+          var statusId = "appointmentStatus"+i;
+          if(($("#"+statusId).val() == "registered") || ($("#"+statusId).val() == "Registered"))
+            $("#"+statusId).closest("td").css("background-color","rgba(247,20,20,0.84)");
 
-      	 if(($("#"+statusId).val() == "arrived") || ($("#"+statusId).val() == "Arrived"))
-      		$("#"+statusId).closest("td").css("background-color","rgba(68,236,65,0.84)");
+          if(($("#"+statusId).val() == "arrived") || ($("#"+statusId).val() == "Arrived"))
+            $("#"+statusId).closest("td").css("background-color","rgba(68,236,65,0.84)");
 
-      	 if(($("#"+statusId).val() == "optometrist") || ($("#"+statusId).val() == "Optometrist"))
-       		$("#"+statusId).closest("td").css("background-color","rgba(243,193,13,0.84)");
+          if(($("#"+statusId).val() == "optometrist") || ($("#"+statusId).val() == "Optometrist"))
+            $("#"+statusId).closest("td").css("background-color","rgba(243,193,13,0.84)");
 
-      	 if(($("#"+statusId).val() == "consultant") || ($("#"+statusId).val() == "Consultant"))
-        		$("#"+statusId).closest("td").css("background-color","rgba(243,193,13,0.84)");
+          if(($("#"+statusId).val() == "consultant") || ($("#"+statusId).val() == "Consultant"))
+            $("#"+statusId).closest("td").css("background-color","rgba(243,193,13,0.84)");
        }
      }
 	 }
   });
 });
-
+// TOGGLE APPOINTMENT STATUS COLOR
 function getStatusVal(sel)
 {
 	var statusValue = sel.value;
@@ -57,11 +58,12 @@ function getStatusVal(sel)
     		$("#"+statusId).closest("td").css("background-color","rgba(243,193,13,0.84)");
 }
 
-function hidePatientInformationContainer()
-{
-  $("#patientInformationContainer").hide();
-}
+// function hidePatientInformationContainer()
+// {
+//   $("#patientInformationContainer").hide();
+// }
 
+// GET INFORMATION OF SEARCHED PATIENT
 function getPatientInformation()
 {
   $("#uhid").html('');
@@ -114,6 +116,7 @@ function getPatientInformation()
   });
 }
 
+// WHEN MULTIPLE SEARCH RESULT GET INFORMTION OF SPECIFIC SEARCH PATIENT
 function displayPatientInformationContainer(uhid)
 {
 	$("#uhid").html('');
@@ -144,7 +147,8 @@ function displayPatientInformationContainer(uhid)
 	 	 }
 	 });
 	  $("#patientInformationContainer").show();
-}
+
+// GET INFORMATION OF BOOKED APPOINTMENT PATIENT
 function patientInformationModal(uhid)
 {
   alert("uhid :: "+uhid);
@@ -178,11 +182,12 @@ function patientInformationModal(uhid)
     $("#patientInformationModal").modal("show");
 }
 
-function callCreatePatientPage()
-{
-    window.location.href = "newPatient.html";
-}
+// function callCreatePatientPage()
+// {
+//     window.location.href = "newPatient.html";
+// }
 
+// GET APPOINTMENTS BY SPECIFIC DATE
 function getAppointmentsByDate()
 {
 	var dateSelected = $("#searchAppointmentsByDate").val()
@@ -197,25 +202,31 @@ function getAppointmentsByDate()
 	  	 success : function(result)
 	  	 {
 			  alert(JSON.stringify(result));
-        $("#appointmentData").html('');
-        for(var i=0;i<result.length;i++)
+        if(result.length==0)
         {
-     	 var trId = "trId"+i;
-        var uhid = result[i].UHID;
-       	 $("#appointmentData").append("<tr id='"+trId+"' class='trClass'><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+(i+1)+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].UHID+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].FirstName+" "+result[i].LastName+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].Gender+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].Consultant+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].TimeOfAppointment+"</td><td><select  id='appointmentStatus"+i+"' class='appointmentStatus' onchange = 'getStatusVal(this)'><option value='registered'>Registered</option><option value='arrived'>Arrived</option><option value='optometrist'>Optometrist</option><option value='consultant'>Consultant</option><option value='investigation'>Investigation</option><option value='completed'>Consultation completed</option><option value='ipd'>IPD</option></select></td></tr>");
+          alert("No appointments for selected date !!");
+        }
+        else {
+          $("#appointmentData").html('');
+          for(var i=0;i<result.length;i++)
+          {
+            var trId = "trId"+i;
+            var uhid = result[i].UHID;
+            $("#appointmentData").append("<tr id='"+trId+"' class='trClass'><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+(i+1)+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].UHID+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].FirstName+" "+result[i].LastName+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].Gender+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].Consultant+"</td><td onclick = 'patientInformationModal(\""+uhid+"\")'>"+result[i].TimeOfAppointment+"</td><td><select  id='appointmentStatus"+i+"' class='appointmentStatus' onchange = 'getStatusVal(this)'><option value='registered'>Registered</option><option value='arrived'>Arrived</option><option value='optometrist'>Optometrist</option><option value='consultant'>Consultant</option><option value='investigation'>Investigation</option><option value='completed'>Consultation completed</option><option value='ipd'>IPD</option></select></td></tr>");
 
-       	 var statusId = "appointmentStatus"+i;
-       	 if(($("#"+statusId).val() == "registered") || ($("#"+statusId).val() == "Registered"))
-       		$("#"+statusId).closest("td").css("background-color","rgba(247,20,20,0.84)");
+            var statusId = "appointmentStatus"+i;
+            if(($("#"+statusId).val() == "registered") || ($("#"+statusId).val() == "Registered"))
+              $("#"+statusId).closest("td").css("background-color","rgba(247,20,20,0.84)");
 
-       	 if(($("#"+statusId).val() == "arrived") || ($("#"+statusId).val() == "Arrived"))
-       		$("#"+statusId).closest("td").css("background-color","rgba(68,236,65,0.84)");
+            if(($("#"+statusId).val() == "arrived") || ($("#"+statusId).val() == "Arrived"))
+              $("#"+statusId).closest("td").css("background-color","rgba(68,236,65,0.84)");
 
-       	 if(($("#"+statusId).val() == "optometrist") || ($("#"+statusId).val() == "Optometrist"))
-        		$("#"+statusId).closest("td").css("background-color","rgba(243,193,13,0.84)");
+            if(($("#"+statusId).val() == "optometrist") || ($("#"+statusId).val() == "Optometrist"))
+              $("#"+statusId).closest("td").css("background-color","rgba(243,193,13,0.84)");
 
-       	 if(($("#"+statusId).val() == "consultant") || ($("#"+statusId).val() == "Consultant"))
-         		$("#"+statusId).closest("td").css("background-color","rgba(243,193,13,0.84)");
+            if(($("#"+statusId).val() == "consultant") || ($("#"+statusId).val() == "Consultant"))
+              $("#"+statusId).closest("td").css("background-color","rgba(243,193,13,0.84)");
+          }
         }
 	 	 }
 	 });
@@ -229,12 +240,7 @@ $('#searchPatientBar').keypress(function(event)
         alert('Entered');
     }
 });
-function bookAppointment()
-{
-  window.location.href = "bookAppointment.html";
-}
-
-function editPatientDetails()
-{
-
-}
+// function bookAppointment()
+// {
+//   window.location.href = "bookAppointment.html";
+// }
