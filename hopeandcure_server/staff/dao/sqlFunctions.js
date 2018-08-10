@@ -28,7 +28,7 @@ async function createNewStaff(req) {
   let query1 = "INSERT INTO staff_login VALUES (DEFAULT, '" +username+ "', MD5('" +password+ "'), DEFAULT);";
   console.log(query1);
 
-  let query2 = "INSERT INTO staff_details VALUES ('" + first_name +"','" + middle_name + "','"+ last_name + "','"+
+  let query2 = "INSERT INTO staff_details VALUES ((SELECT LAST_INSERT_ID()), '" + first_name +"','" + middle_name + "','"+ last_name + "','"+
               birth_date +"','" + gender +"', '"+ contact_number +"', '"+ email_id + "', DEFAULT);";
   console.log(query2);
 
@@ -47,7 +47,7 @@ async function createNewStaff(req) {
     return returnJsonObj;
   }
   catch(err) {
-    console.log("Error ====== createNewStaff");
+    console.log("Error ====== createNewStaff" + err.code);
 
     if(err.code === "ER_DUP_ENTRY") {
       var response = {
