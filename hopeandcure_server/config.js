@@ -17,8 +17,8 @@ let ErrorMessages = ErrorMessagesNew.ErrorMessages;
 let senderUsername = "pkul3003";
 
 let mysqlUrl = "localhost";
-let mysqlUser = "root";
-let mysqlPassword = "root@123";
+let mysqlUser = "hms_admin";
+let mysqlPassword = "Hope&Cure@123";
 let mysqldb = "hmsdb";
 
 let JSONObjects = require('./reflookup/JSONObjects.js');
