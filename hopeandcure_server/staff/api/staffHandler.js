@@ -16,7 +16,7 @@ async function apiHandlerCreateStaff(req,res) {
 				"msgtype" : "error",
 				"message": "There was an error is creating staff member"
 			}
-			res.send(returnJsonObj);
+			return res.send(returnJsonObj);
 		}
   	console.log("Exiting apiHandlerCreateStaff========>");
 		return res.json(result);
@@ -34,7 +34,7 @@ async function apiHandlerAuthenticateStaff(req,res) {
 				"msgtype" : "error",
 				"message": "There was an error is authenticating staff member"
 			}
-			res.send(returnJsonObj);
+			return res.send(returnJsonObj);
 		}
 
     if (result === "[]") {
@@ -43,10 +43,10 @@ async function apiHandlerAuthenticateStaff(req,res) {
 				"msgtype" : "info",
 				"message": "username or password did not match"
 			}
-      res.send(returnJsonObj);
+      return res.send(returnJsonObj);
     }
   	console.log("Exiting apiHandlerAuthenticateStaff========>");
-		res.send(JSON.parse(result));
+		return res.send(JSON.parse(result));
 }
 
 
@@ -62,7 +62,7 @@ async function apiHandlerRetrieveConsultants(req,res) {
 				"message": "There was an error is retrieving consultants"
 			}
 			console.log("Exiting apiHandlerRetrieveConsultants========>");
-			res.send(returnJsonObj);
+			return res.send(returnJsonObj);
 		}
 
     if (result === "[]") {
@@ -72,10 +72,10 @@ async function apiHandlerRetrieveConsultants(req,res) {
 				"message": "there were no consultants"
 			}
 	  console.log("Exiting apiHandlerRetrieveConsultants========>");	
-      res.send(returnJsonObj);
+      return res.send(returnJsonObj);
     }
   	console.log("Exiting apiHandlerRetrieveConsultants========>");
-		res.send(JSON.parse(result));
+		return res.send(JSON.parse(result));
 }
 
 
