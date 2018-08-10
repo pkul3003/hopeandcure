@@ -22,7 +22,7 @@ async function apiHandlerCreatePatient(req,res){
 				"message": "There was an error is fetching customer"
 			}
   	console.log("Exiting apiHandlerCreatePatient========>");
-			res.send(returnJsonObj);
+			return res.send(returnJsonObj);
 		}
   	console.log("Exiting apiHandlerCreatePatient========>");
 		return res.json(response);
@@ -41,7 +41,7 @@ async function apiHandlerAddPatientAddress(req, res) {
 				"message": "There was an error is adding patient address"
 			}
   	console.log("Exiting apiHandlerAddPatientAddress========>");
-			res.send(returnJsonObj);
+			return res.send(returnJsonObj);
 		}
   	console.log("Exiting apiHandlerAddPatientAddress========>");
 		return res.json(response);
@@ -60,10 +60,10 @@ async function apiHandlerFindPatients(req,res){
 				"msgtype" : "error",
 				"message": "There was an error is fetching customer"
 			}
-			res.send(returnJsonObj);
+			return res.send(returnJsonObj);
 		}
   console.log("Exiting apiHandlerCreatePatient========>");
-	res.send(JSON.parse(response));
+	return res.send(JSON.parse(response));
 }
 
 // find all patients based on either UHID, first_name, last_name or mobile
@@ -76,10 +76,10 @@ async function apiHandlerSearchPatient(req, res) {
 			"msgtype" : "error",
 			"message": "There was an error is searching the patient"
 		}
-		res.send(returnJsonObj);
+		return res.send(returnJsonObj);
 	}
 console.log("Exiting apiHandlerSearchPatient========>");
-res.send(JSON.parse(response));
+return res.send(JSON.parse(response));
 }
 
 // find a patient using his/her UHID
@@ -93,10 +93,11 @@ async function apiHandlerFindPatientByUHID(req,res){
 				"msgtype" : "error",
 				"message": "There was an error is fetching customer"
 			}
-			res.send(returnJsonObj);
+			return res.send(returnJsonObj);
 		}
-		res.send(JSON.parse(response));
-  console.log("Exiting apiHandlerFindPatientByUHID========>");
+	console.log("Exiting apiHandlerFindPatientByUHID========>");
+	return res.send(JSON.parse(response));
+  
 }
 
 // find a patient by his/her mobile number
@@ -110,10 +111,11 @@ async function apiHandlerFindPatientByMobile(req,res){
 				"msgtype" : "error",
 				"message": "There was an error is fetching customer"
 			}
-			res.send(returnJsonObj);
+			return res.send(returnJsonObj);
 		}
-		res.send(JSON.parse(response));
+		
   console.log("Exiting apiHandlerFindPatientByMobile========>");
+  return res.send(JSON.parse(response));
 }
 
 async function apiHandlerAddMedicalFacts(req, res) {
@@ -127,7 +129,7 @@ async function apiHandlerAddMedicalFacts(req, res) {
 				"message": "There was an error is adding medical facts for the patient"
 			}
 			console.log("Exiting apiHandlerAddMedicalFacts========>");
-			res.send(returnJsonObj);
+			return res.send(returnJsonObj);
 		}
 		console.log("Exiting apiHandlerAddMedicalFacts========>");
 		return res.json(response);
@@ -144,7 +146,7 @@ async function apiHandlerUpdateMedicalFacts(req, res) {
 				"message": "There was an error is updating medical facts for the patient"
 			}
 			console.log("Exiting apiHandlerUpdateMedicalFacts========>");
-			res.send(returnJsonObj);
+			return res.send(returnJsonObj);
 		}
 		console.log("Exiting apiHandlerUpdateMedicalFacts========>");
 		return res.json(response);
@@ -161,11 +163,11 @@ async function apiHandlerRetrieveMedicalFacts(req,res) {
 			"message": "There was an error in retrieving medical facts for the patient"
 		}
 		console.log("Exiting apiHandlerRetrieveMedicalFacts========>");
-		res.send(returnJsonObj);
+		return res.send(returnJsonObj);
 	}
 
 	console.log("Exiting apiHandlerRetrieveMedicalFacts========>");
-	res.send(JSON.parse(response));
+	return res.send(JSON.parse(response));
 }
 
 async function apiHandlerRetrieveConsultants(req, res) {
