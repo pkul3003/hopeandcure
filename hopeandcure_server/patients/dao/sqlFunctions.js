@@ -97,6 +97,7 @@ async function addPatientAddress(req) {
       "msgtype" : "success",
       "message": "patient address added successfully"
     }
+    console.log("Exiting addPatientAddress...");
     return success;
   }
   catch(err) {
@@ -107,7 +108,6 @@ async function addPatientAddress(req) {
         "msgtype" : "info",
 				"message": "patient address already exists"
 			}
-      con.release();
       console.log("Exiting addPatientAddress...");
       return errMessage;
     }
@@ -117,11 +117,9 @@ async function addPatientAddress(req) {
         "msgtype" : "info",
         "message": "patient UHID not valid to add address"
       }
-      //con.release();
       console.log("Exiting addPatientAddress...");
       return errMessage;
     }
-    //con.release();
     console.log("Exiting addPatientAddress...");
     return false;
   }
