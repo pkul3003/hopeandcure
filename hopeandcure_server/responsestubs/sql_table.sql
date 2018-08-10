@@ -1,3 +1,6 @@
+CREATE USER 'hms_admin'@'localhost' identified by 'Hope&Cure@123';
+grant all privileges on 'hmsdb'.* to 'hms_admin'@'localhost';
+
 drop table if exists `patients`;
 
 CREATE TABLE patients (
