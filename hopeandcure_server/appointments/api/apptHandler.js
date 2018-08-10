@@ -18,10 +18,10 @@ async function apiHandlerForAppointments(req, res) {
       "msgtype" : "error",
 			"message": "There was an error is fetching appointments"
 		}
-		res.send(returnJsonObj);
+		return res.send(returnJsonObj);
 	}
 	console.log("Exiting apiHandlerForAppointments========>");
-	res.send(JSON.parse(result));
+	return res.send(JSON.parse(result));
 }
 
 async function apiHandlerForAppointmentsByDate(req, res) {
@@ -35,10 +35,10 @@ async function apiHandlerForAppointmentsByDate(req, res) {
       "msgtype" : "error",
       "message": "There was an error is fetching appointments"
     }
-    res.send(returnJsonObj);
+    return res.send(returnJsonObj);
   }
   console.log("Exiting apiHandlerForAppointmentsByDate========>");
-  res.send(JSON.parse(result));
+  return res.send(JSON.parse(result));
 }
 async function apiHandlerCreateAppointment(req, res) {
   console.log("Entering apiHandlerCreateAppointment...");
@@ -51,10 +51,10 @@ async function apiHandlerCreateAppointment(req, res) {
       "msgtype" : "error",
       "message": "There was an error is creating the appointment"
     }
-    res.send(returnJsonObj);
+    return res.send(returnJsonObj);
   }
   console.log("Exiting apiHandlerForAppointments========>");
-  res.send(result);
+  return res.send(result);
 }
 
 
