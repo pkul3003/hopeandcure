@@ -16,7 +16,7 @@ async function apiHandlerAddOccularFacts(req, res) {
       "message": "There was an error is adding patient occular facts"
     }
     console.log("Exiting apiHandlerAddOccularFacts========>");
-    res.send(returnJsonObj);
+    return res.send(returnJsonObj);
   }
   var returnJsonObj = {
     "msgtype" : "success",
@@ -37,10 +37,10 @@ async function apiHandlerRetrieveOccularFacts(req, res) {
         "message": "There was an error is fetching patient occular facts"
       }
       console.log("Exiting apiHandlerRetrieveOccularFacts========>");
-      res.send(returnJsonObj);
+      return res.send(returnJsonObj);
     }
   console.log("Exiting apiHandlerRetrieveOccularFacts========>");
-  res.send(JSON.parse(result));
+  return res.send(JSON.parse(result));
 
 }
 
@@ -56,7 +56,7 @@ async function apiHandlerAddOptometeryResults(req, res) {
       "message": "There was an error is adding patient optometary results"
     }
     console.log("Exiting apiHandlerAddOptometeryResults========>");
-    res.send(returnJsonObj);
+    return res.send(returnJsonObj);
   }
   var returnJsonObj = {
     "msgtype" : "success",
@@ -77,10 +77,10 @@ async function apiHandlerRetrieveOptometeryResults(req, res) {
       "message": "There was an error is fetching patient optometary results"
     }
     console.log("Exiting apiHandlerRetrieveOptometeryResults========>");
-    res.send(returnJsonObj);
+    return res.send(returnJsonObj);
   }
   console.log("Exiting apiHandlerRetrieveOptometeryResults========>");
-  res.send(JSON.parse(result));
+  return res.send(JSON.parse(result));
 }
 
 
