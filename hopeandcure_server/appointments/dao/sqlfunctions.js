@@ -76,6 +76,9 @@ async function createAppointment(req) {
   let relation_with_patient = req.body.appointment.relation_with_patient;
   let relative_contact_no = req.body.appointment.relative_contact_no;
 
+  // format date of birth
+  birth_date = birth_date.substring(0,10);
+
 
   let query = "INSERT INTO appointments values('" +UHID+ "','" +first_name+ "','"+middle_name+ "','"+last_name+ "','" +birth_date+
   "','" +gender+ "','" +consultant+ "','" +appointment_date+ "','" +appointment_time+ "','" +contact_number+
