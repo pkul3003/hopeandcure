@@ -15,7 +15,7 @@ function applicationLogin()
 
 	  $.ajax({
 		 type : "POST",
-	  	 url : "https://localhost:7443/login",
+	  	 url : "http://localhost:8082/login",
 	  	 data : reqJsonObj,
 	  	 success : function(result)
 	  	 {

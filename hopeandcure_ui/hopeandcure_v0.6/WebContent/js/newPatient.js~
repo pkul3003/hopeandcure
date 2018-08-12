@@ -19,7 +19,7 @@ function createPatient()
 
   $.ajax({
 	 type : "POST",
-  	 url : "https://localhost:7443/hook",
+  	 url : "http://localhost:8082/hook",
   	 data : reqJsonObj,
   	 success : function(result)
   	 {
@@ -61,7 +61,7 @@ function saveAddress()
 		}
 	  $.ajax({
 		 type : "POST",
-	  	 url : "https://localhost:7443/hook",
+	  	 url : "http://localhost:8082/hook",
 	  	 data : reqJsonObj,
 	  	 success : function(result)
 	  	 {
@@ -87,7 +87,7 @@ function bookAppointment()
 
 	  $.ajax({
 		 type : "POST",
-	  	 url : "https://localhost:7443/hook",
+	  	 url : "http://localhost:8082/hook",
 	  	 data : reqJsonObj,
 	  	 success : function(result)
 	  	 {

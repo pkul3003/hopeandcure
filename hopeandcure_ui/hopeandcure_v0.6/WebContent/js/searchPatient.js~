@@ -8,7 +8,7 @@ $(document).ready(function()
 
   $.ajax({
 	 type : "POST",
-	 url : "https://localhost:7443/hook",
+	 url : "http://localhost:8082/hook",
 	 data : reqJsonObj,
 	 success : function(result)
 	 {
@@ -96,7 +96,7 @@ function getPatientInformation()
 
   $.ajax({
      type : "POST",
-  	 url : "https://localhost:7443/hook",
+  	 url : "http://localhost:8082/hook",
   	 data : reqJsonObj,
   	 success : function(result)
   	 {
@@ -152,7 +152,7 @@ function displayPatientInformationContainer(uhid)
 	console.log(JSON.stringify(reqJsonObj));
 	  $.ajax({
 	     type : "POST",
-	  	 url : "https://localhost:7443/hook",
+	  	 url : "http://localhost:8082/hook",
 	  	 data : reqJsonObj,
 	  	 success : function(result)
 	  	 {
@@ -182,7 +182,7 @@ function patientInformationModal(uhid)
 	console.log(JSON.stringify(reqJsonObj));
 	  $.ajax({
 	     type : "POST",
-	  	 url : "https://localhost:7443/hook",
+	  	 url : "http://localhost:8082/hook",
 	  	 data : reqJsonObj,
 	  	 success : function(result)
 	  	 {
@@ -219,7 +219,7 @@ function getAppointmentsByDate()
 
 	$.ajax({
 	     type : "POST",
-	  	 url : "https://localhost:7443/hook",
+	  	 url : "http://localhost:8082/hook",
 	  	 data : reqJsonObj,
 	  	 success : function(result)
 	  	 {
