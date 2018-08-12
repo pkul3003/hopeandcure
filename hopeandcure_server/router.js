@@ -23,10 +23,21 @@ app.use(cors());
 
 var appRouter = function(app) {
 
+	// bodyParser for incoming json REST requests
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+  });
+
+
 app.get("/DaysOfWeek", function(req, res) {
 	 var DaysOfWeek = config.DaysOfWeek;
 	 res.send(DaysOfWeek);
 });
+
 
 app.post('/login', async function(req,res){
   console.log("insider router app.post/login: ", JSON.stringify(req.body.intentName));
@@ -34,9 +45,7 @@ app.post('/login', async function(req,res){
   //res.end('done');
 });
 
-// bodyParser for incoming json REST requests
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+;
 
 app.post('/hook', async function(req, res) {
     console.log("inside router app.post/hook: "+ JSON.stringify(req.body.intentName));
