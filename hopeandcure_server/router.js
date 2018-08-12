@@ -11,7 +11,7 @@ console.log('Entering router.js...');
 var express = require('express');
 var config = require('./config.js');
 var cors = require('cors');
-var app = express();
+//var app = express();
 var bodyParser = require("body-parser");
 var apiAppointmentsController = require('./appointments/api/apptHandler.js');
 var apiPatientController = require('./patients/api/patientHandler.js');
@@ -19,10 +19,10 @@ var apiStaffController = require('./staff/api/staffHandler.js');
 var apiOccularHandler = require('./occular/api/occularHandler.js');
 
 // CORS-enabled for all origins!
-app.use(cors());
+
 
 var appRouter = function(app) {
-
+	app.use(cors());
 	// bodyParser for incoming json REST requests
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
