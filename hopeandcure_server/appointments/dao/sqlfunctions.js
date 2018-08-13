@@ -78,6 +78,9 @@ async function createAppointment(req) {
 
   // format date of birth
   birth_date = birth_date.substring(0,10);
+  if (relative_contact_no === "") {
+    relative_contact_no = null;
+  }
 
 
   let query = "INSERT INTO appointments values('" +UHID+ "','" +first_name+ "','"+middle_name+ "','"+last_name+ "','" +birth_date+
@@ -89,7 +92,7 @@ async function createAppointment(req) {
   try {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
-    await con.execute(query);
+    await con.query(query);
     con.release();
     var returnJsonObj = {
       "msgtype" : "success",
