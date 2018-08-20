@@ -21,13 +21,9 @@ async function addPatientOccularFacts(req) {
   let right_prescription = req.body.patient.right_prescription;
   let left_prescription = req.body.patient.left_prescription;
   let eye_color = req.body.patient.eye_color;
-  let previous_treatment1 = req.body.patient.previous_treatment1;
-  let previous_treatment2 = req.body.patient.previous_treatment2;
-  let previous_treatment3 = req.body.patient.previous_treatment3;
 
   let query = "INSERT INTO patient_occular_facts VALUES ('"+ UHID +"','" + using_specs + "','"+ using_contacts + "','"+
-              right_prescription +"','" + left_prescription +"', '"+ eye_color +"', '"+ previous_treatment1 +
-              "', '"+ previous_treatment2 +"', '"+ previous_treatment3 +"', DEFAULT);";
+              right_prescription +"','" + left_prescription +"', '"+ eye_color +"', DEFAULT);";
   console.log(query);
   try {
     let pool = await getConnectionPool();

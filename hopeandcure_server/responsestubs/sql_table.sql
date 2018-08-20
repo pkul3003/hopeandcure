@@ -88,20 +88,23 @@ CREATE TABLE patient_medical_facts (
   FOREIGN KEY (UHID) references patients(UHID)
 );
 
-drop table if exists `patient_occular_history`;
+drop table if exists `patient_previous_occular_illness`;
 CREATE TABLE patient_occular_history (
   UHID int NOT NULL,
-  FirstName varchar(255) NOT NULL,
-  LastName varchar(255) NOT NULL,
-  KnownOccularCondition1 varchar(300),
-  KnownOccularCondition2 varchar(300),
-  KnownOccularCondition3 varchar(300),
-  OpticalSurgeryHistory1 varchar(300),
-  OpticalSurgeryHistory2 varchar(300),
-  OpticalSurgeryHistory3 varchar(300),
+  KnownOccularCondition varchar(300),
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (UHID) references patients(UHID)
 );
+
+drop table if exists `occular_complaint_types`;
+CREATE TABLE occular_complaint_types (
+  ComplaintType varchar(100) NOT NULL,
+  ComplaintDescription varchar(300),
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (ComplaintType)
+);
+
+drop table if exists `patient_systemic_history`
 
 drop table if exists `patient_occular_facts`;
 CREATE TABLE patient_occular_facts (
@@ -111,9 +114,6 @@ CREATE TABLE patient_occular_facts (
   RightGlassPrescription varchar(100),
   LeftGlassPrescription varchar(100),
   EyeColor varchar(100),
-  PreviousTreatment1 varchar(300),
-  PreviousTreatment2 varchar(300),
-  PreviousTreatment3 varchar(300),
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (UHID) references patients(UHID)
 );
@@ -298,3 +298,5 @@ CREATE TABLE consultants (
 
 INSERT INTO consultants VALUES(1000, 'Prakash' , 'Rasal', 'Opthalmologist', '', 'MD', 'yes' , 'yes', 9922962322, DEFAULT);
 INSERT INTO consultants VALUES(1001, 'Wasant' , 'ambekar', 'Opthalmologist', '', 'MD', 'yes' , 'yes', 9922962322, DEFAULT);
+
+
