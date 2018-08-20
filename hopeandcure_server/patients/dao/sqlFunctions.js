@@ -129,24 +129,22 @@ async function createPatientMedicalFacts (req) {
   console.log("Entering createPatientMedicalFacts...");
 
   let UHID = req.body.patient.UHID;
-  let first_name = req.body.patient.first_name;
-  let last_name = req.body.patient.last_name;
   let blood_group = req.body.patient.blood_group;
   let bp_systolic = req.body.patient.bp_systolic;
   let bp_diastolic = req.body.patient.bp_diastolic;
-  let known_medical_condition1 = req.body.patient.known_medical_condition1;
-  let known_medical_condition2 = req.body.patient.known_medical_condition2;
-  let known_medical_condition3 = req.body.patient.known_medical_condition3;
-  let drug_allergy1 = req.body.patient.drug_allergy1;
-  let drug_allergy2 = req.body.patient.drug_allergy2;
-  let previous_treatment1 = req.body.patient.previous_treatment1;
-  let previous_treatment2 = req.body.patient.previous_treatment2;
-  let previous_treatment3 = req.body.patient.previous_treatment3;
+  let isDiabetic = req.body.patient.isDiabetic;
+  let isHighBPPatient = req.body.patient.isHighBPPatient;
+  let isHeartPatient = req.body.patient.isHeartPatient;
+  let patient_weight = req.body.patient.patient_weight;
+  let sugar_level_fasting = req.body.patient.sugar_level_fasting;
+  let sugar_level_random = req.body.patient.sugar_level_random;
+  let sugar_level_postlunch = req.body.patient.sugar_level_postlunch;
 
-  let query = "INSERT INTO patient_medical_facts VALUES ('"+UHID+ "','"+ first_name +"','"+ last_name + "','"+ blood_group + "','"+
-              bp_systolic +"','" + bp_diastolic +"', '"+ known_medical_condition1 +"', '"+ known_medical_condition2 +
-              "', '"+ known_medical_condition3 + "', '"+ drug_allergy1 + "', '"+ drug_allergy2 + "', '"+ previous_treatment1 +
-              "', '"+ previous_treatment2 + "', '"+ previous_treatment3 + "', DEFAULT);";
+
+  let query = "INSERT INTO patient_medical_facts VALUES ('"+UHID+ "','"+ blood_group + "','"+
+              bp_systolic +"','" + bp_diastolic +"', '"+ isDiabetic +"', '"+ isHighBPPatient +
+              "', '"+ isHeartPatient + "', '"+ patient_weight + "', '"+ sugar_level_fasting + "', '"+ sugar_level_random +
+              "', '"+ sugar_level_postlunch + "', '"+ previous_treatment3 + "', DEFAULT);";
 
   console.log(query);
   try {
@@ -174,21 +172,22 @@ async function updatePatientMedicalFacts (req) {
   console.log("Entering updatePatientMedicalFacts...");
 
   let UHID = req.body.patient.UHID;
-  let first_name = req.body.patient.first_name;
-  let last_name = req.body.patient.last_name;
   let blood_group = req.body.patient.blood_group;
   let bp_systolic = req.body.patient.bp_systolic;
   let bp_diastolic = req.body.patient.bp_diastolic;
-  let known_medical_condition1 = req.body.patient.known_medical_condition1;
-  let known_medical_condition2 = req.body.patient.known_medical_condition2;
-  let known_medical_condition3 = req.body.patient.known_medical_condition3;
-  let drug_allergy1 = req.body.patient.drug_allergy1;
-  let drug_allergy2 = req.body.patient.drug_allergy2;
-  let previous_treatment1 = req.body.patient.previous_treatment1;
-  let previous_treatment2 = req.body.patient.previous_treatment2;
-  let previous_treatment3 = req.body.patient.previous_treatment3;
+  let isDiabetic = req.body.patient.isDiabetic;
+  let isHighBPPatient = req.body.patient.isHighBPPatient;
+  let isHeartPatient = req.body.patient.isHeartPatient;
+  let patient_weight = req.body.patient.patient_weight;
+  let sugar_level_fasting = req.body.patient.sugar_level_fasting;
+  let sugar_level_random = req.body.patient.sugar_level_random;
+  let sugar_level_postlunch = req.body.patient.sugar_level_postlunch;
 
-  let query = "";
+  let query = "update table patient_medical_facts set BloodGroup = '" + blood_group + "', BloodPressureSystolic = '" +
+      bp_systolic + "', BloodPressureDiastolic = '" + bp_diastolic + "', isDiabetic = '" + isDiabetic + "', isHighBPPatient =" +
+      isHighBPPatient + "', isHeartPatient = '" +isHeartPatient + "',   PatientWeight = '" + patient_weight +
+      "', SugarLevelFasting = '" + sugar_level_fasting + "' SugarLeaveRandom = '" + sugar_level_random +     
+      "', SugarLevelPostLunch = '" + sugar_level_postlunch+ "', DEFAULT) ";
 
   console.log(query);
   try {

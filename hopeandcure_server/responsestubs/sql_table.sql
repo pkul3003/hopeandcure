@@ -66,45 +66,75 @@ CREATE TABLE appointments (
     FOREIGN KEY (UHID) references patients(UHID)
 );
 
+KnownMedicalCondition1 varchar(300),
+  KnownMedicalCondition2 varchar(300),
+  KnownMedicalCondition3 varchar(300),
+PreviousSystemicTreatment1 varchar(300),
+  PreviousSystemicTreatment2 varchar(300),
+  PreviousSystemicTreatment3 varchar(300),
+    DrugAllergy1 varchar(300),
+  DrugAllergy2 varchar(300),
 
 drop table if exists `patient_medical_facts`;
-
 CREATE TABLE patient_medical_facts (
   UHID int NOT NULL,
-  FirstName varchar(255) NOT NULL,
-  LastName varchar(255) NOT NULL,
   BloodGroup varchar(255) NOT NULL,
   BloodPressureSystolic varchar(255),
   BloodPressureDiastolic varchar(255),
-  KnownMedicalCondition1 varchar(300),
-  KnownMedicalCondition2 varchar(300),
-  KnownMedicalCondition3 varchar(300),
-  DrugAllergy1 varchar(300),
-  DrugAllergy2 varchar(300),
-  PreviousSystemicTreatment1 varchar(300),
-  PreviousSystemicTreatment2 varchar(300),
-  PreviousSystemicTreatment3 varchar(300),
+  isDiabetic ENUM('YES', 'NO'),
+  isHighBBPatient ENUM('YES', 'NO'),
+  isHeartPatient ENUM('YES', 'NO'),
+  PatientWeight float (2,2),
+  SugarLevelFasting int,
+  SugarLeaveRandom int,
+  SugarLevelPostLunch int,
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (UHID) references patients(UHID)
 );
 
 drop table if exists `patient_previous_occular_illness`;
-CREATE TABLE patient_occular_history (
+CREATE TABLE patient_previous_occular_illness (
   UHID int NOT NULL,
-  KnownOccularCondition varchar(300),
+  KnownOcularCondition varchar(300),
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (UHID) references patients(UHID)
 );
 
-drop table if exists `occular_complaint_types`;
-CREATE TABLE occular_complaint_types (
+drop table if exists `ocular_complaint_types`;
+CREATE TABLE ocular_complaint_types (
   ComplaintType varchar(100) NOT NULL,
   ComplaintDescription varchar(300),
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (ComplaintType)
 );
 
-drop table if exists `patient_systemic_history`
+drop table if exists `systemic_complaint_types`;
+CREATE TABLE systemic_complaint_types (
+  ComplaintType varchar(100) NOT NULL,
+  ComplaintDescription varchar(300),
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (ComplaintType)
+);
+
+drop table if exists `patient_complaints_history`; 
+create table patient_complaints_history(
+  UHID int NOT NULL,
+  ComplaintType varchar(100) NOT NULL,
+  ComplaintDescription varchar(300),
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (UHID) references patients(UHID),
+  FOREIGN KEY (ComplaintType) references occular_complaint_types(ComplaintType)
+);
+
+drop table if exists `patient_systemic_history`;
+CREATE TABLE patient_systemic_history (
+  UHID int NOT NULL,
+  ComplaintType varchar(100) NOT NULL,
+  ComplaintDescription varchar(300),
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (UHID) references patients(UHID),
+  FOREIGN KEY (ComplaintType) references systemic_complaint_types(ComplaintType)
+);
 
 drop table if exists `patient_occular_facts`;
 CREATE TABLE patient_occular_facts (
