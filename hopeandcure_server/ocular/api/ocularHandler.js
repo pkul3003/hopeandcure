@@ -29,7 +29,8 @@ async function apiHandlerAddOcularFacts(req, res) {
 async function apiHandlerRetrieveOcularFacts(req, res) {
     console.log("Entering apiHandlerRetrieveOcularFacts========>");
 
-    let result = await mysqlFunctions.retrievePatientocularFacts(req);
+    let result = await mysqlFunctions.retrievePatientOcularFacts(req);
+    
     console.log("inside apiHandlerRetrieveocularFacts:  ", result);
     if (result === false) {
       var returnJsonObj = {

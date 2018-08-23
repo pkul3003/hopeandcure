@@ -39,6 +39,29 @@ async function addPatientOcularFacts(req) {
   }
 }
 
+async function retrievePatientOcularFacts(req) {
+  console.log("Entering retrievePatientocularFacts...");
+  let UHID = req.body.patient.UHID;
+
+  let query = "SELECT * FROM patient_ocular_facts WHERE UHID = ?;";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query,[UHID]);
+    let patientJson = JSON.stringify(result);
+    console.log(patientJson);
+    con.release();
+    console.log("Exiting retrievePatientocularFacts...");
+    return patientJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrievePatientocularFacts");
+    console.log("Exiting retrievePatientocularFacts...");
+    return false;
+  }
+}
+
 
 async function addOptometaryResults(req) {
   console.log("Entering addOptometaryResults...");
@@ -94,30 +117,6 @@ async function retrieveRetrieveOptometaryResults(req) {
   catch(err) {
     console.log("Error ====== retrieveOptometaryResults");
     console.log("Exiting retrieveRetrieveOptometaryResults...");
-    return false;
-  }
-}
-
-
-async function retrievePatientOcularFacts(req) {
-  console.log("Entering retrievePatientocularFacts...");
-  let UHID = req.body.patient.UHID;
-
-  let query = "SELECT * FROM patient_ocular_facts WHERE UHID = ?;";
-  console.log(query);
-  try {
-    let pool = await getConnectionPool();
-    let con = await pool.getConnection();
-    let [result,fields] = await con.execute(query,[UHID]);
-    let patientJson = JSON.stringify(result);
-    console.log(patientJson);
-    con.release();
-    console.log("Exiting retrievePatientocularFacts...");
-    return patientJson;
-  }
-  catch(err) {
-    console.log("Error ====== retrievePatientocularFacts");
-    console.log("Exiting retrievePatientocularFacts...");
     return false;
   }
 }

@@ -144,7 +144,7 @@ async function createPatientMedicalFacts (req) {
   let query = "INSERT INTO patient_medical_facts VALUES ('"+UHID+ "','"+ blood_group + "','"+
               bp_systolic +"','" + bp_diastolic +"', '"+ isDiabetic +"', '"+ isHighBPPatient +
               "', '"+ isHeartPatient + "', '"+ patient_weight + "', '"+ sugar_level_fasting + "', '"+ sugar_level_random +
-              "', '"+ sugar_level_postlunch + "', '"+ previous_treatment3 + "', DEFAULT);";
+              "', '"+ sugar_level_postlunch + "', DEFAULT);";
 
   console.log(query);
   try {
@@ -183,11 +183,11 @@ async function updatePatientMedicalFacts (req) {
   let sugar_level_random = req.body.patient.sugar_level_random;
   let sugar_level_postlunch = req.body.patient.sugar_level_postlunch;
 
-  let query = "update table patient_medical_facts set BloodGroup = '" + blood_group + "', BloodPressureSystolic = '" +
-      bp_systolic + "', BloodPressureDiastolic = '" + bp_diastolic + "', isDiabetic = '" + isDiabetic + "', isHighBPPatient =" +
+  let query = "update patient_medical_facts set BloodGroup = '" + blood_group + "', BloodPressureSystolic = '" +
+      bp_systolic + "', BloodPressureDiastolic = '" + bp_diastolic + "', isDiabetic = '" + isDiabetic + "', isHighBPPatient ='" +
       isHighBPPatient + "', isHeartPatient = '" +isHeartPatient + "',   PatientWeight = '" + patient_weight +
-      "', SugarLevelFasting = '" + sugar_level_fasting + "' SugarLeaveRandom = '" + sugar_level_random +     
-      "', SugarLevelPostLunch = '" + sugar_level_postlunch+ "', DEFAULT) ";
+      "', SugarLevelFasting = '" + sugar_level_fasting + "', SugarLeaveRandom = '" + sugar_level_random +     
+      "', SugarLevelPostLunch = '" + sugar_level_postlunch+ "', RecordTouchDate = DEFAULT where UHID = " +UHID+ "; ";
 
   console.log(query);
   try {
@@ -196,7 +196,7 @@ async function updatePatientMedicalFacts (req) {
     await con.execute(query);
     var response = {
       "msgtype" : "success",
-      "message": "patient medical facts added successfully"
+      "message": "patient medical facts updated successfully"
     }
     con.release();
     console.log("Exiting updatePatientMedicalFacts...");
