@@ -4,42 +4,42 @@ let config = require("../../config.js");
 let globalsqlFunctions = require('../../mysql-functions/mysqlFunctions.js');
 let mysqlFunctions = require('../dao/sqlFunctions.js');
 
-async function apiHandlerAddOccularFacts(req, res) {
-  console.log("Entering apiHandlerAddOccularFacts ====> ");
+async function apiHandlerAddOcularFacts(req, res) {
+  console.log("Entering apiHandlerAddOcularFacts ====> ");
 
-  let result = await mysqlFunctions.addPatientOccularFacts(req);
-  console.log("inside apiHandlerAddOccularFacts:  ", result);
+  let result = await mysqlFunctions.addPatientOcularFacts(req);
+  console.log("inside apiHandlerAddOcularFacts:  ", result);
 
   if (result === false) {
     var returnJsonObj = {
       "msgtype" : "error",
-      "message": "There was an error is adding patient occular facts"
+      "message": "There was an error is adding patient ocular facts"
     }
-    console.log("Exiting apiHandlerAddOccularFacts========>");
+    console.log("Exiting apiHandlerAddocularFacts========>");
     return res.send(returnJsonObj);
   }
   var returnJsonObj = {
     "msgtype" : "success",
-    "message": "patient occular facts created successfully"
+    "message": "patient ocular facts created successfully"
   }
-  console.log("Exiting apiHandlerAddOccularFacts========>");
+  console.log("Exiting apiHandlerAddocularFacts========>");
   return res.json(returnJsonObj);
 }
 
-async function apiHandlerRetrieveOccularFacts(req, res) {
-    console.log("Entering apiHandlerRetrieveOccularFacts========>");
+async function apiHandlerRetrieveOcularFacts(req, res) {
+    console.log("Entering apiHandlerRetrieveOcularFacts========>");
 
-    let result = await mysqlFunctions.retrievePatientOccularFacts(req);
-    console.log("inside apiHandlerRetrieveOccularFacts:  ", result);
+    let result = await mysqlFunctions.retrievePatientocularFacts(req);
+    console.log("inside apiHandlerRetrieveocularFacts:  ", result);
     if (result === false) {
       var returnJsonObj = {
         "msgtype" : "error",
-        "message": "There was an error is fetching patient occular facts"
+        "message": "There was an error is fetching patient ocular facts"
       }
-      console.log("Exiting apiHandlerRetrieveOccularFacts========>");
+      console.log("Exiting apiHandlerRetrieveOcularFacts========>");
       return res.send(returnJsonObj);
     }
-  console.log("Exiting apiHandlerRetrieveOccularFacts========>");
+  console.log("Exiting apiHandlerRetrieveOcularFacts========>");
   return res.send(JSON.parse(result));
 
 }
@@ -70,7 +70,7 @@ async function apiHandlerRetrieveOptometeryResults(req, res) {
   console.log("Entering apiHandlerRetrieveOptometeryResults========>");
 
   let result = await mysqlFunctions.retrieveRetrieveOptometaryResults(req);
-  console.log("inside apiHandlerRetrieveOccularFacts:  ", result);
+  console.log("inside apiHandlerRetrieveOptometeryResults:  ", result);
   if (result === false) {
     var returnJsonObj = {
       "msgtype" : "error",
@@ -83,8 +83,7 @@ async function apiHandlerRetrieveOptometeryResults(req, res) {
   return res.send(JSON.parse(result));
 }
 
-
-exports.apiHandlerAddOccularFacts = apiHandlerAddOccularFacts;
-exports.apiHandlerRetrieveOccularFacts = apiHandlerRetrieveOccularFacts;
 exports.apiHandlerAddOptometeryResults = apiHandlerAddOptometeryResults;
 exports.apiHandlerRetrieveOptometeryResults = apiHandlerRetrieveOptometeryResults;
+exports.apiHandlerAddOcularFacts = apiHandlerAddOcularFacts;
+exports.apiHandlerRetrieveOcularFacts = apiHandlerRetrieveOcularFacts;

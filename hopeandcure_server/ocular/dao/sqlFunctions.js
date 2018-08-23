@@ -13,8 +13,8 @@ async function getConnectionPool() {
   }
 }
 
-async function addPatientOccularFacts(req) {
-  console.log("Entering addPatientOccularFacts...");
+async function addPatientOcularFacts(req) {
+  console.log("Entering addPatientOcularFacts...");
   let UHID = req.body.patient.UHID;
   let using_specs = req.body.patient.using_specs;
   let using_contacts = req.body.patient.using_contacts;
@@ -22,7 +22,7 @@ async function addPatientOccularFacts(req) {
   let left_prescription = req.body.patient.left_prescription;
   let eye_color = req.body.patient.eye_color;
 
-  let query = "INSERT INTO patient_occular_facts VALUES ('"+ UHID +"','" + using_specs + "','"+ using_contacts + "','"+
+  let query = "INSERT INTO patient_ocular_facts VALUES ('"+ UHID +"','" + using_specs + "','"+ using_contacts + "','"+
               right_prescription +"','" + left_prescription +"', '"+ eye_color +"', DEFAULT);";
   console.log(query);
   try {
@@ -30,37 +30,15 @@ async function addPatientOccularFacts(req) {
     let con = await pool.getConnection();
     await con.execute(query);
     con.release();
-    console.log("Exiting addPatientOccularFacts...");
+    console.log("Exiting addPatientOcularFacts...");
     return true;
   }
   catch(err) {
-    console.log("Error ====== addPatientOccularFacts");
+    console.log("Error ====== addPatientOcularFacts");
     return false;
   }
 }
 
-async function retrievePatientOccularFacts(req) {
-    console.log("Entering retrievePatientOccularFacts...");
-    let UHID = req.body.patient.UHID;
-
-    let query = "SELECT * FROM patient_occular_facts WHERE UHID = ?;";
-    console.log(query);
-    try {
-      let pool = await getConnectionPool();
-      let con = await pool.getConnection();
-      let [result,fields] = await con.execute(query,[UHID]);
-      let patientJson = JSON.stringify(result);
-      console.log(patientJson);
-      con.release();
-      console.log("Exiting retrievePatientOccularFacts...");
-      return patientJson;
-    }
-    catch(err) {
-      console.log("Error ====== retrievePatientOccularFacts");
-      console.log("Exiting retrievePatientOccularFacts...");
-      return false;
-    }
-}
 
 async function addOptometaryResults(req) {
   console.log("Entering addOptometaryResults...");
@@ -74,13 +52,13 @@ async function addOptometaryResults(req) {
   let VisionWithPinhole = req.body.patient.VisionWithPinhole;
   let Retinoscopy = req.body.patient.Retinoscopy;
   let Acceptance = req.body.patient.Acceptance;
-  let IntraOccularPressure = req.body.patient.IntraOccularPressure;
+  let IntraocularPressure = req.body.patient.IntraocularPressure;
   let SAC = req.body.patient.SAC;
 
   let query = "INSERT INTO optometary_results VALUES ('"+ UHID +"','" + AutorefactrometerReadingRight + "','"+
               AutorefactrometerReadingLeft + "','"+ KeratometryReadingRight +"', '"+
               KeratometryReadingLeft +"','" + UnaidedVisionRight +"', '"+ UnaidedVisionLeft +"', '"+ VisionWithPinhole +
-              "', '"+ Retinoscopy +"', '"+ Acceptance +"', '"+ IntraOccularPressure + "', '"+ SAC +"', DEFAULT);";
+              "', '"+ Retinoscopy +"', '"+ Acceptance +"', '"+ IntraocularPressure + "', '"+ SAC +"', DEFAULT);";
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -120,7 +98,31 @@ async function retrieveRetrieveOptometaryResults(req) {
   }
 }
 
-exports.addPatientOccularFacts = addPatientOccularFacts;
-exports.retrievePatientOccularFacts = retrievePatientOccularFacts;
+
+async function retrievePatientOcularFacts(req) {
+  console.log("Entering retrievePatientocularFacts...");
+  let UHID = req.body.patient.UHID;
+
+  let query = "SELECT * FROM patient_ocular_facts WHERE UHID = ?;";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query,[UHID]);
+    let patientJson = JSON.stringify(result);
+    console.log(patientJson);
+    con.release();
+    console.log("Exiting retrievePatientocularFacts...");
+    return patientJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrievePatientocularFacts");
+    console.log("Exiting retrievePatientocularFacts...");
+    return false;
+  }
+}
+
+exports.addPatientOcularFacts = addPatientOcularFacts;
 exports.addOptometaryResults = addOptometaryResults;
 exports.retrieveRetrieveOptometaryResults = retrieveRetrieveOptometaryResults;
+exports.retrievePatientOcularFacts = retrievePatientOcularFacts;

@@ -16,7 +16,7 @@ var bodyParser = require("body-parser");
 var apiAppointmentsController = require('./appointments/api/apptHandler.js');
 var apiPatientController = require('./patients/api/patientHandler.js');
 var apiStaffController = require('./staff/api/staffHandler.js');
-var apiOccularHandler = require('./occular/api/occularHandler.js');
+var apiOcularHandler = require('./ocular/api/ocularHandler.js');
 
 // CORS-enabled for all origins!
 
@@ -81,17 +81,17 @@ app.post('/hook', async function(req, res) {
 			case 'retrieve-medical-facts':
 				await apiPatientController.apiHandlerRetrieveMedicalFacts(req, res);
 				break;
-			case 'add-patient-occular-facts':
-				await apiOccularHandler.apiHandlerAddOccularFacts(req, res);
+			case 'add-patient-ocular-facts':
+				await apiOcularHandler.apiHandlerAddOcularFacts(req, res);
 				break;
-			case 'retrieve-patient-occular-facts':
-				await apiOccularHandler.apiHandlerRetrieveOccularFacts(req, res);
+			case 'retrieve-patient-ocular-facts':
+				await apiOcularHandler.apiHandlerRetrieveOcularFacts(req, res);
 				break;
 			case 'add-optometary-results':
-				await apiOccularHandler.apiHandlerAddOptometeryResults(req, res);
+				await apiOcularHandler.apiHandlerAddOptometeryResults(req, res);
 				break;
 			case 'retrieve-optometary-results':
-				await apiOccularHandler.apiHandlerRetrieveOptometeryResults(req, res);
+				await apiOcularHandler.apiHandlerRetrieveOptometeryResults(req, res);
 				break;
 			case 'retrieve-consultants':
 				await apiStaffController.apiHandlerRetrieveConsultants(req, res);

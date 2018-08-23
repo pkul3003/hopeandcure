@@ -92,8 +92,8 @@ CREATE TABLE patient_medical_facts (
   FOREIGN KEY (UHID) references patients(UHID)
 );
 
-drop table if exists `patient_previous_occular_illness`;
-CREATE TABLE patient_previous_occular_illness (
+drop table if exists `patient_previous_ocular_illness`;
+CREATE TABLE patient_previous_ocular_illness (
   UHID int NOT NULL,
   KnownOcularCondition varchar(300),
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -123,7 +123,7 @@ create table patient_complaints_history(
   ComplaintDescription varchar(300),
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (UHID) references patients(UHID),
-  FOREIGN KEY (ComplaintType) references occular_complaint_types(ComplaintType)
+  FOREIGN KEY (ComplaintType) references ocular_complaint_types(ComplaintType)
 );
 
 drop table if exists `patient_systemic_history`;
@@ -136,8 +136,8 @@ CREATE TABLE patient_systemic_history (
   FOREIGN KEY (ComplaintType) references systemic_complaint_types(ComplaintType)
 );
 
-drop table if exists `patient_occular_facts`;
-CREATE TABLE patient_occular_facts (
+drop table if exists `patient_ocular_facts`;
+CREATE TABLE patient_ocular_facts (
   UHID int NOT NULL,
   UsingSpectacles ENUM('YES', 'NO'),
   UsingContacts ENUM('YES', 'NO'),
@@ -161,7 +161,7 @@ CREATE TABLE optometary_results (
   VisionWithPinhole varchar(100),
   Retinoscopy varchar(100),
   Acceptance varchar(100),
-  IntraOccularPressure ENUM('SCHIOTZ', 'NCT', 'APPLANATION', 'DIGITALLY'),
+  IntraocularPressure ENUM('SCHIOTZ', 'NCT', 'APPLANATION', 'DIGITALLY'),
   SAC varchar(100),
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (UHID) references patients(UHID)
@@ -182,9 +182,9 @@ CREATE TABLE optical_investigation (
   FOREIGN KEY (UHID) references patients(UHID)
 );
 
-drop table if exists `occular_prescription`;
+drop table if exists `ocular_prescription`;
 
-CREATE TABLE occular_prescription (
+CREATE TABLE ocular_prescription (
   UHID int NOT NULL,
   OpticalPrescription1 varchar(300),
   OpticalPrescription2 varchar(300),
