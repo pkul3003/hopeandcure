@@ -42,7 +42,42 @@ async function apiHandlerRetrieveOcularFacts(req, res) {
     }
   console.log("Exiting apiHandlerRetrieveOcularFacts========>");
   return res.send(JSON.parse(result));
+}
 
+async function apiHandlerRetrievePreviousOcularIllness(req, res) {
+  console.log("Entering apiHandlerRetrievePreviousOcularIllness========>");
+
+  let result = await mysqlFunctions.retrievePreviousOcularIllness(req);
+  
+  console.log("inside apiHandlerRetrievePreviousOcularIllness:  ", result);
+  if (result === false) {
+    var returnJsonObj = {
+      "msgtype" : "error",
+      "message": "There was an error is fetching previous ocular illnesses"
+    }
+    console.log("Exiting apiHandlerRetrievePreviousOcularIllness========>");
+    return res.send(returnJsonObj);
+  }
+console.log("Exiting apiHandlerRetrievePreviousOcularIllness========>");
+return res.send(JSON.parse(result));
+}
+
+async function apiHandlerRetrieveOcularComplaintTypes(req, res) {
+  console.log("Entering apiHandlerRetrieveOcularComplaintTypes========>");
+
+  let result = await mysqlFunctions.retrieveOcularComplaintTypes(req);
+  
+  console.log("inside apiHandlerRetrieveOcularComplaintTypes:  ", result);
+  if (result === false) {
+    var returnJsonObj = {
+      "msgtype" : "error",
+      "message": "There was an error is fetching ocular complaint types"
+    }
+    console.log("Exiting apiHandlerRetrieveOcularComplaintTypes========>");
+    return res.send(returnJsonObj);
+  }
+console.log("Exiting apiHandlerRetrieveOcularComplaintTypes========>");
+return res.send(JSON.parse(result));
 }
 
 async function apiHandlerAddOptometeryResults(req, res) {
@@ -88,3 +123,5 @@ exports.apiHandlerAddOptometeryResults = apiHandlerAddOptometeryResults;
 exports.apiHandlerRetrieveOptometeryResults = apiHandlerRetrieveOptometeryResults;
 exports.apiHandlerAddOcularFacts = apiHandlerAddOcularFacts;
 exports.apiHandlerRetrieveOcularFacts = apiHandlerRetrieveOcularFacts;
+exports.apiHandlerRetrievePreviousOcularIllness = apiHandlerRetrievePreviousOcularIllness;
+exports.apiHandlerRetrieveOcularComplaintTypes = apiHandlerRetrieveOcularComplaintTypes;

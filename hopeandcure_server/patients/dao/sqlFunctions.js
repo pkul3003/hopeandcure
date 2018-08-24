@@ -11,6 +11,7 @@ async function getConnectionPool() {
   }
   catch (err) {
     console.log("Error in creating Mysql Pool");
+    console.log("Error code is: ", err.code);
     return false;
   }
 }
@@ -54,7 +55,7 @@ async function createNewPatient(req) {
   }
   catch(err) {
     console.log("Error ====== createNewPatient");
-    console.log("Exiting createNewPatient...");
+    console.log("Error code is: ", err.code);
     if(err.code === "ER_DUP_ENTRY") {
       var response = {
         "msgtype" : "info",
@@ -163,6 +164,7 @@ async function createPatientMedicalFacts (req) {
   catch(err) {
     //con.release();
     console.log("Error ====== createPatientMedicalFacts");
+    console.log("Error code is: ", err.code);
     console.log("Exiting createPatientMedicalFacts...");
     return false;
   }
@@ -205,6 +207,7 @@ async function updatePatientMedicalFacts (req) {
   catch(err) {
     //con.release();
     console.log("Error ====== updatePatientMedicalFacts");
+    console.log("Error code is: ", err.code);
     console.log("Exiting updatePatientMedicalFacts...");
     return false;
   }
@@ -227,6 +230,7 @@ async function retrievePatientMedicalFacts(req) {
   }
   catch(err) {
     console.log("Error ====== retrievePatientsByName");
+    console.log("Error code is: ", err.code);
     return false;
   }
 }
@@ -294,20 +298,22 @@ async function retrievePatients(req) {
           }
           returnJsonObj[0] = NoPatientsFound;
           //icount++;
-          return JSON.stringify(returnJsonObj);
+          return JSON.stringify(NoPatientsFound);
         }
         return patientJson;
       }
       catch(err) {
         console.log("Error ====== retrievePatientsByName");
+        console.log("error code is: " + err.code);
         var ErrorFromDB = {
           "msgtype" : "failed",
           "message": "There was an error while searching the patient"
         }
         returnJsonObj[0] = ErrorFromDB;
+        return JSON.stringify(ErrorFromDB);
         //icount++;
       }
-  return JSON.stringify(returnJsonObj);
+  return false;
 }
 
 
@@ -328,6 +334,7 @@ async function retrievePatientsByName(req) {
   }
   catch(err) {
     console.log("Error ====== retrievePatientsByName");
+    console.log("Error code is: ", err.code);
     return false;
   }
 }
@@ -348,6 +355,7 @@ async function retrievePatientsByUHID(req) {
   }
   catch (err){
     console.log("Error ====== retrievePatientsByUHID");
+    console.log("Error code is: ", err.code);
     return false;
   }
 }
@@ -391,6 +399,7 @@ async function retrieveConsultants(req){
   }
   catch (err){
     console.log("Error ====== retrievePatientsByMobile");
+    console.log("Error code is: ", err.code);
     return false;
   }
 }

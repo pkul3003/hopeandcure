@@ -9,6 +9,7 @@ async function getConnectionPool() {
   }
   catch (err) {
     console.log("Error in creating Mysql Pool");
+    console.log("Error code is: ", err.code);
     return false;
   }
 }
@@ -30,6 +31,7 @@ async function retrieveAppointments(req) {
   }
   catch(err) {
     console.log("Error ====== retrieveAppointments");
+    console.log("Error code is: ", err.code);
     return false;
   }
 }
@@ -51,6 +53,7 @@ async function retrieveAppointmentsByDate(req) {
   }
   catch(err) {
     console.log("Error ====== retrieveAppointments");
+    console.log("Error code is: ", err.code);
     return false;
   }
 }
@@ -103,6 +106,7 @@ async function createAppointment(req) {
   }
   catch(err) {
     console.log("Error ====== createAppointment");
+    console.log("Error code is: ", err.code);
     if(err.code === "ER_DUP_ENTRY") {
       var response = {
         "msgtype" : "info",

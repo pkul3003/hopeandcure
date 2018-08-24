@@ -9,6 +9,7 @@ async function getConnectionPool() {
   }
   catch (err) {
     console.log("Error in creating Mysql Pool");
+    console.log("Error code is: ", err.code);
     return false;
   }
 }
@@ -54,11 +55,9 @@ async function createNewStaff(req) {
         "msgtype" : "info",
 				"message": "staff username already exists"
 			}
-      //con.release();
       console.log("Exiting createNewStaff...");
       return response;
     }
-    //con.release();
     console.log("Exiting createNewStaff...");
     return false;
   }
@@ -81,8 +80,8 @@ async function authenticateStaffLogin(req) {
     return staffJson;
   }
   catch(err) {
-    //con.release();
     console.log("Error ====== authenticateStaffLogin");
+    console.log("Error code is: ", err.code);
     return false;
   }
 }
@@ -106,8 +105,8 @@ async function retrieveConstultants(req) {
     return staffJson;
   }
   catch(err) {
-    //con.release();
     console.log("Error ====== retrieveConstultants");
+    console.log("Error code is: ", err.code);
     return false;
   }
 }

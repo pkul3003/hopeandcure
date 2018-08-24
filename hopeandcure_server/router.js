@@ -96,6 +96,12 @@ app.post('/hook', async function(req, res) {
 			case 'retrieve-consultants':
 				await apiStaffController.apiHandlerRetrieveConsultants(req, res);
 				break;
+			case 'retrieve-previous-ocular-illness':
+				await apiOcularHandler.apiHandlerRetrievePreviousOcularIllness(req, res);
+				break;
+			case 'retrieve-ocular-complaint-types' :
+				await apiOcularHandler.apiHandlerRetrieveOcularComplaintTypes(req, res);
+				break;
 			default:
 				var returnJsonObj = {
 					"msgtype" : "info",
