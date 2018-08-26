@@ -119,9 +119,54 @@ async function apiHandlerRetrieveOptometeryResults(req, res) {
   return res.send(JSON.parse(result));
 }
 
+
+async function apiHandlerRetrieveSystemicComplaintTypes(req, res) {
+  console.log("Entering apiHandlerRetrieveSystemicComplaintTypes========>");
+
+  let result = await mysqlFunctions.retrieveSystemicComplaintTypes(req);
+  
+  console.log("inside apiHandlerRetrieveSystemicComplaintTypes:  ", result);
+  if (result === false) {
+    var returnJsonObj = {
+      "msgtype" : "error",
+      "message": "There was an error is fetching systemic complaint types"
+    }
+    console.log("Exiting apiHandlerRetrieveSystemicComplaintTypes========>");
+    return res.send(returnJsonObj);
+  }
+console.log("Exiting apiHandlerRetrieveSystemicComplaintTypes========>");
+return res.send(JSON.parse(result));
+}
+
+async function apiHandlerAddPreviousOcularIllness(req,res) {
+	console.log("Entering apiHandlerAddPreviousOcularIllness========>");
+	let response = await mysqlFunctions.addPreviousOcularIllness(req);
+	console.log("inside apiHandlerAddPreviousOcularIllness:  ", response);
+
+	if (response === false) {
+		var returnJsonObj = {
+			"msgtype" : "error",
+			"message": "There was an error in adding previous ocular illness for the patient"
+		}
+		console.log("Exiting apiHandlerAddPreviousOcularIllness========>");
+		return res.send(returnJsonObj);
+	}
+
+	var returnJsonObj = {
+		"msgtype" : "success",
+		"message": "patient previous ocular illness added successfully"
+	  }
+	  console.log("Exiting apiHandlerAddPreviousOcularIllness========>");
+	  return res.json(returnJsonObj);
+}
+
+
+
 exports.apiHandlerAddOptometeryResults = apiHandlerAddOptometeryResults;
 exports.apiHandlerRetrieveOptometeryResults = apiHandlerRetrieveOptometeryResults;
 exports.apiHandlerAddOcularFacts = apiHandlerAddOcularFacts;
 exports.apiHandlerRetrieveOcularFacts = apiHandlerRetrieveOcularFacts;
 exports.apiHandlerRetrievePreviousOcularIllness = apiHandlerRetrievePreviousOcularIllness;
 exports.apiHandlerRetrieveOcularComplaintTypes = apiHandlerRetrieveOcularComplaintTypes;
+exports.apiHandlerRetrieveSystemicComplaintTypes = apiHandlerRetrieveSystemicComplaintTypes;
+exports.apiHandlerAddPreviousOcularIllness = apiHandlerAddPreviousOcularIllness;

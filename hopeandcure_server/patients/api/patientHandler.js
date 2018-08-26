@@ -170,22 +170,44 @@ async function apiHandlerRetrieveMedicalFacts(req,res) {
 	return res.send(JSON.parse(response));
 }
 
-async function apiHandlerRetrieveConsultants(req, res) {
-	console.log("Entering apiHandlerRetrieveConsultants========>");
-	let response = await mysqlFunctions.retrieveConsultants(req);
-	console.log("inside apiHandlerRetrieveConsultants:  ", response);
+async function apiHandlerRetrieveSystemicHistory(req,res) {
+	console.log("Entering apiHandlerRetrieveSystemicHistory========>");
+	let response = await mysqlFunctions.retrievePatientSystemicHistory(req);
+	console.log("inside apiHandlerRetrieveSystemicHistory:  ", response);
 
 	if (response === false) {
 		var returnJsonObj = {
 			"msgtype" : "error",
-			"message": "There was an error in retrieving consultants"
+			"message": "There was an error in retrieving systemic history for the patient"
 		}
-		console.log("Exiting apiHandlerRetrieveConsultants========>");
-		res.send(returnJsonObj);
+		console.log("Exiting apiHandlerRetrieveSystemicHistory========>");
+		return res.send(returnJsonObj);
 	}
 
-	console.log("Exiting apiHandlerRetrieveConsultants========>");
-	res.send(JSON.parse(response));
+	console.log("Exiting apiHandlerRetrieveSystemicHistory========>");
+	return res.send(JSON.parse(response));
+}
+
+async function apiHandlerAddSystemicHistory(req,res) {
+	console.log("Entering apiHandlerAddSystemicHistory========>");
+	let response = await mysqlFunctions.addPatientSystemicHistory(req);
+	console.log("inside apiHandlerAddSystemicHistory:  ", response);
+
+	if (response === false) {
+		var returnJsonObj = {
+			"msgtype" : "error",
+			"message": "There was an error in adding systemic history for the patient"
+		}
+		console.log("Exiting apiHandlerAddSystemicHistory========>");
+		return res.send(returnJsonObj);
+	}
+
+	var returnJsonObj = {
+		"msgtype" : "success",
+		"message": "patient systemtic history added successfully"
+	  }
+	  console.log("Exiting apiHandlerAddSystemicHistory========>");
+	  return res.json(returnJsonObj);
 }
 
 exports.apiHandlerCreatePatient = apiHandlerCreatePatient;
@@ -197,3 +219,5 @@ exports.apiHandlerUpdateMedicalFacts = apiHandlerUpdateMedicalFacts;
 exports.apiHandlerRetrieveMedicalFacts = apiHandlerRetrieveMedicalFacts;
 exports.apiHandlerAddPatientAddress = apiHandlerAddPatientAddress;
 exports.apiHandlerSearchPatient = apiHandlerSearchPatient;
+exports.apiHandlerRetrieveSystemicHistory = apiHandlerRetrieveSystemicHistory;
+exports.apiHandlerAddSystemicHistory = apiHandlerAddSystemicHistory;

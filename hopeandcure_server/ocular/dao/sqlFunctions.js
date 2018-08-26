@@ -192,9 +192,68 @@ async function retrieveOcularComplaintTypes(Req) {
   }
 }
 
+async function retrieveSystemicComplaintTypes(Req) {
+  
+  console.log("Entering retrieveSystemicComplaintTypes...");
+
+  let query = "SELECT * FROM systemic_complaint_types; ";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let complaintsJson = JSON.stringify(result);
+    console.log("stringified json object is: ", complaintsJson);
+    if(complaintsJson === "[]") {
+      console.log(" it seems no previous complaints were found .........");
+      var NoComplaintTypesFound = {
+        "msgtype" : "info",
+        "message": "no complaint types found"
+      }
+      return JSON.stringify(NoComplaintTypesFound);
+    }
+    con.release();
+    console.log("Exiting retrieveSystemicComplaintTypes...");
+    return complaintsJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrieveSystemicComplaintTypes");
+    console.log("Error code is: ", err.code);
+
+    console.log("Exiting retrieveSystemicComplaintTypes...");
+    return false;
+  }
+}
+
+async function addPreviousOcularIllness(req) {
+  console.log("Entering addPreviousOcularIllness...");
+  let UHID = req.body.patient.UHID;
+  let KnownOcularCondition = req.body.patient.KnownOcularCondition;
+  let DurationOfCondition = req.body.patient.DurationOfCondition;
+
+  let query = "INSERT into patient_previous_ocular_illness VALUES ('" +UHID+ "','" + 
+  KnownOcularCondition + "', '" +DurationOfCondition+ "', DEFAULT);";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    await con.execute(query);
+    con.release();
+    return true;
+  }
+  catch(err) {
+    console.log("Error ====== addPreviousOcularIllness");
+    console.log("Error code is: ", err.code);
+    console.log("Exiting addPreviousOcularIllness...");
+    return false;
+  }
+}
+
 exports.addPatientOcularFacts = addPatientOcularFacts;
 exports.addOptometaryResults = addOptometaryResults;
 exports.retrieveRetrieveOptometaryResults = retrieveRetrieveOptometaryResults;
 exports.retrievePatientOcularFacts = retrievePatientOcularFacts;
 exports.retrievePreviousOcularIllness = retrievePreviousOcularIllness;
 exports.retrieveOcularComplaintTypes = retrieveOcularComplaintTypes;
+exports.retrieveSystemicComplaintTypes = retrieveSystemicComplaintTypes;
+exports.addPreviousOcularIllness = addPreviousOcularIllness;

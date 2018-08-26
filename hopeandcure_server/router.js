@@ -72,14 +72,20 @@ app.post('/hook', async function(req, res) {
 			case 'create-new-staff':
 				await apiStaffController.apiHandlerCreateStaff(req, res);
 				break;
-			case 'add-medical-facts':
+			case 'add-patient-medical-facts':
 				await apiPatientController.apiHandlerAddMedicalFacts(req, res);
 				break;
-			case 'update-medical-facts':
+			case 'update-patient-medical-facts':
 				await apiPatientController.apiHandlerUpdateMedicalFacts(req, res);
 				break;
-			case 'retrieve-medical-facts':
+			case 'retrieve-patient-medical-facts':
 				await apiPatientController.apiHandlerRetrieveMedicalFacts(req, res);
+				break;
+			case 'retrieve-patient-systemic-history':
+				await apiPatientController.apiHandlerRetrieveSystemicHistory(req, res);
+				break;
+			case 'add-patient-systemic-history':
+				await apiPatientController.apiHandlerAddSystemicHistory(req, res);
 				break;
 			case 'add-patient-ocular-facts':
 				await apiOcularHandler.apiHandlerAddOcularFacts(req, res);
@@ -99,8 +105,14 @@ app.post('/hook', async function(req, res) {
 			case 'retrieve-previous-ocular-illness':
 				await apiOcularHandler.apiHandlerRetrievePreviousOcularIllness(req, res);
 				break;
+			case 'add-previous-ocular-illness':
+				await apiOcularHandler.apiHandlerAddPreviousOcularIllness(req, res);
+				break;
 			case 'retrieve-ocular-complaint-types' :
 				await apiOcularHandler.apiHandlerRetrieveOcularComplaintTypes(req, res);
+				break;
+			case 'retrieve-systemic-complaint-types' :
+				await apiOcularHandler.apiHandlerRetrieveSystemicComplaintTypes(req, res);
 				break;
 			default:
 				var returnJsonObj = {

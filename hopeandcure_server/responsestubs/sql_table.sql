@@ -96,6 +96,7 @@ drop table if exists `patient_previous_ocular_illness`;
 CREATE TABLE patient_previous_ocular_illness (
   UHID int NOT NULL,
   KnownOcularCondition varchar(300),
+  DurationOfCondition varchar(100),
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (UHID) references patients(UHID)
 );
@@ -120,6 +121,7 @@ drop table if exists `patient_complaints_history`;
 create table patient_complaints_history(
   UHID int NOT NULL,
   ComplaintType varchar(100) NOT NULL,
+  ComplaintDuration varchar(100),
   ComplaintDescription varchar(300),
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (UHID) references patients(UHID),
@@ -130,6 +132,7 @@ drop table if exists `patient_systemic_history`;
 CREATE TABLE patient_systemic_history (
   UHID int NOT NULL,
   ComplaintType varchar(100) NOT NULL,
+  ComplaintDuration varchar(100),
   ComplaintDescription varchar(300),
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (UHID) references patients(UHID),
