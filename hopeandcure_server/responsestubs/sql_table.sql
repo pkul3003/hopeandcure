@@ -66,6 +66,16 @@ CREATE TABLE appointments (
     FOREIGN KEY (UHID) references patients(UHID)
 );
 
+drop table if exists patient_progress_tracker;
+CREATE TABLE patient_progress_tracker (
+  UHID int NOT NULL,
+  PatientProgressStatus varchar(100),
+  RunningNotes varchar(500),
+  DateOfAppointment Date NOT NULL,
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (UHID, DateOfAppointment) references appointments(UHID, DateOfAppointment)
+);
+
 KnownMedicalCondition1 varchar(300),
   KnownMedicalCondition2 varchar(300),
   KnownMedicalCondition3 varchar(300),
@@ -101,6 +111,15 @@ CREATE TABLE patient_previous_ocular_illness (
   FOREIGN KEY (UHID) references patients(UHID)
 );
 
+drop table if exists `patient_previous_ocular_treatment`;
+CREATE TABLE patient_previous_ocular_illness (
+  UHID int NOT NULL,
+  OcularTreatment varchar(300),
+  OcularTreatmentMonthYear varchar(100),
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (UHID) references patients(UHID)
+);
+
 drop table if exists `ocular_complaint_types`;
 CREATE TABLE ocular_complaint_types (
   ComplaintType varchar(100) NOT NULL,
@@ -117,8 +136,8 @@ CREATE TABLE systemic_complaint_types (
   PRIMARY KEY (ComplaintType)
 );
 
-drop table if exists `patient_complaints_history`; 
-create table patient_complaints_history(
+drop table if exists `patient_ocular_complaints`; 
+create table patient_ocular_complaints(
   UHID int NOT NULL,
   ComplaintType varchar(100) NOT NULL,
   ComplaintDuration varchar(100),
@@ -147,6 +166,15 @@ CREATE TABLE patient_ocular_facts (
   RightGlassPrescription varchar(100),
   LeftGlassPrescription varchar(100),
   EyeColor varchar(100),
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (UHID) references patients(UHID)
+);
+
+drop table if exists `patient_drug_allergies`;
+CREATE TABLE patient_drug_allergies (
+  UHID int NOT NULL,
+  DrugName varchar(100),
+  AllergicReaction varchar(100),
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (UHID) references patients(UHID)
 );

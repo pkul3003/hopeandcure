@@ -16,7 +16,7 @@ var bodyParser = require("body-parser");
 var apiAppointmentsController = require('./appointments/api/apptHandler.js');
 var apiPatientController = require('./patients/api/patientHandler.js');
 var apiStaffController = require('./staff/api/staffHandler.js');
-var apiOcularHandler = require('./ocular/api/ocularHandler.js');
+var apiOcularController = require('./ocular/api/ocularHandler.js');
 
 // CORS-enabled for all origins!
 
@@ -88,31 +88,40 @@ app.post('/hook', async function(req, res) {
 				await apiPatientController.apiHandlerAddSystemicHistory(req, res);
 				break;
 			case 'add-patient-ocular-facts':
-				await apiOcularHandler.apiHandlerAddOcularFacts(req, res);
+				await apiOcularController.apiHandlerAddOcularFacts(req, res);
 				break;
 			case 'retrieve-patient-ocular-facts':
-				await apiOcularHandler.apiHandlerRetrieveOcularFacts(req, res);
+				await apiOcularController.apiHandlerRetrieveOcularFacts(req, res);
 				break;
 			case 'add-optometary-results':
-				await apiOcularHandler.apiHandlerAddOptometeryResults(req, res);
+				await apiOcularController.apiHandlerAddOptometeryResults(req, res);
 				break;
 			case 'retrieve-optometary-results':
-				await apiOcularHandler.apiHandlerRetrieveOptometeryResults(req, res);
+				await apiOcularController.apiHandlerRetrieveOptometeryResults(req, res);
 				break;
 			case 'retrieve-consultants':
 				await apiStaffController.apiHandlerRetrieveConsultants(req, res);
 				break;
 			case 'retrieve-previous-ocular-illness':
-				await apiOcularHandler.apiHandlerRetrievePreviousOcularIllness(req, res);
+				await apiOcularController.apiHandlerRetrievePreviousOcularIllness(req, res);
 				break;
 			case 'add-previous-ocular-illness':
-				await apiOcularHandler.apiHandlerAddPreviousOcularIllness(req, res);
+				await apiOcularController.apiHandlerAddPreviousOcularIllness(req, res);
 				break;
 			case 'retrieve-ocular-complaint-types' :
-				await apiOcularHandler.apiHandlerRetrieveOcularComplaintTypes(req, res);
+				await apiOcularController.apiHandlerRetrieveOcularComplaintTypes(req, res);
+				break;
+			case 'add-current-ocular-complaints':
+				await apiOcularController.apiHandlerAddCurrentOcularComplaints(req, res);
 				break;
 			case 'retrieve-systemic-complaint-types' :
-				await apiOcularHandler.apiHandlerRetrieveSystemicComplaintTypes(req, res);
+				await apiOcularController.apiHandlerRetrieveSystemicComplaintTypes(req, res);
+				break;
+			case 'update-patient-progress-status' :
+				await apiAppointmentsController.apiHandlerUpdatePatientProgressStatus(req, res);
+				break;
+			case 'add-patient-drug-allergies':
+				await apiPatientController.apiHandlerAddPatientDrugAllergies(req, res);
 				break;
 			default:
 				var returnJsonObj = {

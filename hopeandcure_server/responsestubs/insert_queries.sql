@@ -22,3 +22,14 @@ insert into patients VALUES (DEFAULT, 'mangesh', 'kulkarni', '1981-11-06', 'male
     'Dr Prakash Rasal','2018-07-31','12:00','9567750288','joship18@gmail.com','null','Pune','Dhayari' , DEFAULT);
 
     INSERT INTO patient_medical_facts VALUES('1234', 'sujay', 'kulkarni','AB+', 'black', 'gloucoma', 'high blood pressure', 'AIDS');
+
+
+update patient_progress_tracker set RunningNotes = 'Patient complaints a lot, may be hypochondriac ' , PatientProgressStatus = 'optometary', RecordTouchDate = DEFAULT where UHID = '1277' AND DateOfAppointment = '2018-12-21';
+
+insert into patient_progress_tracker values (1235, 'registered', 'patient needs a wheel chain', '2018-08-26', DEFAULT);
+insert into patient_progress_tracker values (1272, 'registered', 'patient complains a lot', '2018-08-29', DEFAULT);
+
+
+insert into ocular_complaint_types values ('nearsightedness', 'cannot see far-off things', DEFAULT);
+insert into ocular_complaint_types values ('farsignthedness', 'cannot see nearby things', DEFAULT);
+insert into ocular_complaint_types values ('sore eyes', 'cannot see nearby things', DEFAULT);

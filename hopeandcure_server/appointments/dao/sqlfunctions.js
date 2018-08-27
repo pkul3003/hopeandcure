@@ -18,7 +18,7 @@ async function getConnectionPool() {
 async function retrieveAppointments(req) {
   console.log("Entering retrieveAppointments...");
 
-  let query = `SELECT * FROM appointments WHERE DateOfAppointment >= CURDATE();`;
+  let query = "SELECT * FROM appointments_view WHERE DateOfAppointment >= CURDATE();";
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -38,9 +38,9 @@ async function retrieveAppointments(req) {
 
 async function retrieveAppointmentsByDate(req) {
   console.log("Entering retrieveAppointmentsByDate...");
-  let appointment_date = req.body.appointments.appointment_date;
+  let DateOfAppointment = req.body.appointments.appointment_date;
 
-  let query = "SELECT * FROM appointments WHERE DateOfAppointment = '" + appointment_date + "';";
+  let query = "SELECT * FROM appointments_view WHERE DateOfAppointment = '" + DateOfAppointment + "';";
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -78,6 +78,7 @@ async function createAppointment(req) {
   let relative_name = req.body.appointment.relative_name;
   let relation_with_patient = req.body.appointment.relation_with_patient;
   let relative_contact_no = req.body.appointment.relative_contact_no;
+  let RunningNotes = req.body.appointment.RunningNotes;
 
   // format date of birth
   birth_date = birth_date.substring(0,10);
@@ -86,23 +87,23 @@ async function createAppointment(req) {
   }
 
 
-  let query = "INSERT INTO appointments values('" +UHID+ "','" +first_name+ "','"+middle_name+ "','"+last_name+ "','" +birth_date+
+  let query1 = "INSERT INTO appointments values('" +UHID+ "','" +first_name+ "','"+middle_name+ "','"+last_name+ "','" +birth_date+
   "','" +gender+ "','" +consultant+ "','" +appointment_date+ "','" +appointment_time+ "','" +contact_number+
   "','" +email_id+ "','" +referred_by+ "','" +patient_city+ "','" +patient_area+ "','" +relative_name+
   "','" +relation_with_patient+ "','" +relative_contact_no+ "',DEFAULT);";
 
-  console.log(query);
+  //let query2 = "INSERT INTO patient_progress_tracker values('" +UHID+ "', '" +PatientProgressStatus+ "', '" +RunningNotes+ "', DEFAULT);";
+
+  console.log(query1);
+ // console.log(query2);
+
   try {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
-    await con.query(query);
+    await con.query(query1);
+    //await con.query(query2);
     con.release();
-    var returnJsonObj = {
-      "msgtype" : "success",
-      "message": "appointment created successfully"
-    }
-    console.log("Exiting createAppointment...");
-    return returnJsonObj;
+    return true;
   }
   catch(err) {
     console.log("Error ====== createAppointment");
@@ -121,6 +122,92 @@ async function createAppointment(req) {
 
 }
 
+async function addPatientProgressStatus(req) {
+  console.log("Entering addPatientProgressStatus...");
+
+  let UHID = req.body.appointment.UHID;
+  let RunningNotes = req.body.appointment.RunningNotes;
+  let PatientProgressStatus = 'Registered';
+  let DateOfAppointment = req.body.appointment.appointment_date;
+
+  let query = "INSERT INTO patient_progress_tracker values('" +UHID+ "', '" +PatientProgressStatus+ 
+  "', '" +RunningNotes+ "', '" +DateOfAppointment+ "', DEFAULT);";
+
+  console.log(query);
+
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    await con.query(query);
+    con.release();
+    return true;
+  }
+  catch(err) {
+    console.log("Error ====== addPatientProgressStatus");
+    console.log("Error code is: ", err.code);
+    return false;
+  }
+}
+
+async function updatePatientProgressStatus(req) {
+
+  console.log("Entering updatePatientProgressStatus...");
+
+  let UHID = req.body.appointment.UHID;
+  let RunningNotes = req.body.appointment.RunningNotes;
+  let PatientProgressStatus = req.body.appointment.PatientProgressStatus;
+  let DateOfAppointment = req.body.appointment.DateOfAppointment;
+  let UpdatedRunningNotes = "";
+
+  let query1 = "SELECT RunningNotes FROM patient_progress_tracker WHERE UHID = '" +UHID+"' AND DateOfAppointment = '" +DateOfAppointment+ "';";
+  console.log(query1);
+  
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let ExistingNotesJson = {};
+    let ExistingNotes = "";
+    
+    let [result,fields] = await con.query(query1);
+    let ExistingNotesResult = JSON.stringify(result);
+    console.log ("printing stringified result: ", ExistingNotesResult);
+
+    let ExistingNotesJsonArray = JSON.parse(ExistingNotesResult);
+    for (count in ExistingNotesJsonArray) {
+      console.log("json object is : " , ExistingNotesJsonArray[count]);
+      ExistingNotesJson = ExistingNotesJsonArray[count];
+    }
+    for (key in ExistingNotesJson) {
+      console.log("key is:" , key);
+      console.log("value is: ", ExistingNotesJson[key]);
+      ExistingNotes = ExistingNotesJson[key];
+    }
+
+    console.log("existing notes : ", ExistingNotes);
+    UpdatedRunningNotes = RunningNotes + ";" + ExistingNotes;
+    console.log("updated notes : ", UpdatedRunningNotes);
+
+    let query2 = "update patient_progress_tracker set RunningNotes = '" +UpdatedRunningNotes+ 
+    "' , PatientProgressStatus = '" +PatientProgressStatus+ "', RecordTouchDate = DEFAULT where UHID = '" +UHID+ 
+    "' AND DateOfAppointment = '" +DateOfAppointment+ "';" 
+
+    console.log("query2: ", query2);
+    await con.query(query2);
+    con.release();
+    console.log("Exiting updatePatientProgressStatus...");
+    return true;
+  }
+  catch(err) {
+    console.log("Error ====== addPatientProgressStatus");
+    console.log("Error code is: ", err.code);
+    console.log("Exiting updatePatientProgressStatus...");
+    return false;
+  }
+
+}
+
 exports.retrieveAppointments = retrieveAppointments;
 exports.createAppointment = createAppointment;
 exports.retrieveAppointmentsByDate = retrieveAppointmentsByDate;
+exports.addPatientProgressStatus = addPatientProgressStatus;
+exports.updatePatientProgressStatus = updatePatientProgressStatus;

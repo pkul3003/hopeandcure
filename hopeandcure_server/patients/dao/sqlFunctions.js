@@ -252,7 +252,7 @@ async function retrievePatients(req) {
   //var validReqObjects = {};
 
   for (var key in parsedSearchString) {
-        console.log("key: "+key+", vvalue: " + parsedSearchString[key]);
+        console.log("key: "+key+", value: " + parsedSearchString[key]);
         switch (key) {
           case 'mobile':
               mobile = parsedSearchString[key];
@@ -395,6 +395,29 @@ async function addPatientSystemicHistory(req) {
   }
 }
 
+async function addPatientDrugAllergies(req) {
+  console.log("Entering addPatientDrugAllergies...");
+  let UHID = req.body.patient.UHID;
+  let DrugName = req.body.patient.DrugName;
+  let AllergicReaction = req.body.patient.AllergicReaction;
+  
+  let query = "INSERT into patient_drug_allergies VALUES ('" +UHID+ "','" + 
+  DrugName + "', '" +AllergicReaction+ "', DEFAULT);";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    await con.execute(query);
+    con.release();
+    return true;
+  }
+  catch(err) {
+    console.log("Error ====== addPatientDrugAllergies");
+    console.log("Error code is: ", err.code);
+    console.log("Exiting addPatientDrugAllergies...");
+    return false;
+  }
+}
 
 exports.retrievePatientsByUHID = retrievePatientsByUHID;
 exports.createNewPatient = createNewPatient;
@@ -405,3 +428,4 @@ exports.addPatientAddress = addPatientAddress;
 exports.retrievePatients = retrievePatients;
 exports.retrievePatientSystemicHistory = retrievePatientSystemicHistory;
 exports.addPatientSystemicHistory = addPatientSystemicHistory;
+exports.addPatientDrugAllergies = addPatientDrugAllergies;

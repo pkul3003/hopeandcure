@@ -210,6 +210,28 @@ async function apiHandlerAddSystemicHistory(req,res) {
 	  return res.json(returnJsonObj);
 }
 
+async function apiHandlerAddPatientDrugAllergies(req, res) {
+	console.log("Entering apiHandlerAddPatientDrugAllergies========>");
+	let response = await mysqlFunctions.addPatientDrugAllergies(req);
+	console.log("inside apiHandlerAddPatientDrugAllergies:  ", response);
+
+	if (response === false) {
+		var returnJsonObj = {
+			"msgtype" : "error",
+			"message": "There was an error in adding drug allergies for the patient"
+		}
+		console.log("Exiting apiHandlerAddPatientDrugAllergies========>");
+		return res.send(returnJsonObj);
+	}
+
+	var returnJsonObj = {
+		"msgtype" : "success",
+		"message": "patient drug allergies added successfully"
+	  }
+	  console.log("Exiting apiHandlerAddPatientDrugAllergies========>");
+	  return res.json(returnJsonObj);
+}
+
 exports.apiHandlerCreatePatient = apiHandlerCreatePatient;
 exports.apiHandlerFindPatients = apiHandlerFindPatients;
 exports.apiHandlerFindPatientByUHID = apiHandlerFindPatientByUHID;
@@ -221,3 +243,4 @@ exports.apiHandlerAddPatientAddress = apiHandlerAddPatientAddress;
 exports.apiHandlerSearchPatient = apiHandlerSearchPatient;
 exports.apiHandlerRetrieveSystemicHistory = apiHandlerRetrieveSystemicHistory;
 exports.apiHandlerAddSystemicHistory = apiHandlerAddSystemicHistory;
+exports.apiHandlerAddPatientDrugAllergies = apiHandlerAddPatientDrugAllergies;
