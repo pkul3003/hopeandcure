@@ -123,6 +123,9 @@ app.post('/hook', async function(req, res) {
 			case 'add-patient-drug-allergies':
 				await apiPatientController.apiHandlerAddPatientDrugAllergies(req, res);
 				break;
+			case 'add-consultant-examination-record':
+				await apiOcularController.apiHandlerAddConsultantResults(req, res);
+				break;
 			default:
 				var returnJsonObj = {
 					"msgtype" : "info",

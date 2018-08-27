@@ -278,6 +278,77 @@ async function addCurrentOcularComplaints(req) {
   }
 }
 
+async function addConsultantResults(req) {
+  console.log("Entering addConsultantResults...");
+  let UHID = req.body.patient.UHID;
+  let VisionRight = req.body.patient.VisionRight;
+  let VisionLeft = req.body.patient.VisionLeft;
+  let AcceptanceRight = req.body.patient.AcceptanceRight;
+  let AcceptanceLeft = req.body.patient.AcceptanceLeft;
+  let Finalglass_presRight  = req.body.patient.Finalglass_presRight ;
+  let Finalglass_presLeft = req.body.patient.Finalglass_presLeft;
+  let EyebrowRight  = req.body.patient.EyebrowRight ;
+  let EyebrowLeft  = req.body.patient.EyebrowLeft ;
+  let Extraocular_moveRight  = req.body.patient.Extraocular_moveRight ;
+  let Extraocular_moveLeft  = req.body.patient.Extraocular_moveLeft ;
+
+  let Pupillary_ReactionRight  = req.body.patient.Pupillary_ReactionRight ;
+  let Pupillary_ReactionLeft  = req.body.patient.Pupillary_ReactionLeft ;
+  let Other_FindingRight  = req.body.patient.Other_FindingRight ;
+  let Other_FindingLeft  = req.body.patient.Other_FindingLeft ;
+  let Intraocular_PressureType   = req.body.patient.Intraocular_PressureType  ;
+  let Intraocular_PressureRight  = req.body.patient.Intraocular_PressureRight ;
+  let Intraocular_PressureLeft   = req.body.patient.Intraocular_PressureLeft  ;
+  let GonioscopyRight   = req.body.patient.GonioscopyRight  ;
+  let GonioscopyLeft   = req.body.patient.GonioscopyLeft  ;
+  let SlitLamp_ExamRight   = req.body.patient.SlitLamp_ExamRight  ;
+  let SlitLamp_ExamLeft   = req.body.patient.SlitLamp_ExamLeft  ;
+
+  let ConjuctivaRight  = req.body.patient.ConjuctivaRight ;
+  let ConjuctivaLeft  = req.body.patient.ConjuctivaLeft ;
+  let CorneaRight  = req.body.patient.CorneaRight ;
+  let CorneaLeft  = req.body.patient.CorneaLeft ;
+  let Anterior_ChamberRight   = req.body.patient.Anterior_ChamberRight ;
+  let Anterior_ChamberLeft  = req.body.patient.Anterior_ChamberLeft ;
+  let Lenticular_statusRight   = req.body.patient.Lenticular_statusRight ;
+  let Lenticular_statusLeft   = req.body.patient.Lenticular_statusLeft  ;
+  let GlowRight   = req.body.patient.GlowRight  ;
+  let GlowLeft   = req.body.patient.GlowLeft  ;
+
+  let Direct_OpthalmRight   = req.body.patient.Direct_OpthalmRight  ;
+  let Direct_OpthalmLeft   = req.body.patient.Direct_OpthalmLeft  ;
+  let Inirect_OpthalmRight   = req.body.patient.Inirect_OpthalmRight  ;
+  let Indirect_OpthalmLeft   = req.body.patient.Indirect_OpthalmLeft  ;
+  let NinetyD_SeventyeightDRight    = req.body.patient.NinetyD_SeventyeightDRight  ;
+  let NinetyD_SeventyeightDLeft   = req.body.patient.NinetyD_SeventyeightDLeft  ;
+  
+
+  let query = "INSERT INTO ophthalmologist_examination_record VALUES ('"+ UHID +"', '" + VisionRight + "','"+
+              VisionLeft + "','"+ AcceptanceRight +"', '"+ 
+              AcceptanceLeft +"', '"+ Finalglass_presRight +"', '"+ Finalglass_presLeft + "', '"+EyebrowRight +"', '"+ EyebrowLeft +"', '"+ Extraocular_moveRight + "', '"+ Extraocular_moveLeft +"', '"+
+               Pupillary_ReactionRight +"', '" + Pupillary_ReactionLeft +"','"+ Other_FindingRight +"','"+ Other_FindingLeft+"','"+ Intraocular_PressureType +"','"+ 
+               Intraocular_PressureRight +"','"+ Intraocular_PressureLeft + "', '"+ GonioscopyRight +"', '"+ GonioscopyLeft + "', '"+SlitLamp_ExamRight +"', '" +
+               SlitLamp_ExamLeft + "','" +ConjuctivaRight + "', '" +ConjuctivaLeft +"', '"+CorneaRight +"','"+ CorneaLeft+"','"+Anterior_ChamberRight+"','"+
+               Anterior_ChamberLeft +"','"+Lenticular_statusRight +"','"+Lenticular_statusLeft +"','"+GlowRight +"','"+ GlowLeft +"','"+ Direct_OpthalmRight +"','" +
+               Direct_OpthalmLeft+"', '"+Inirect_OpthalmRight +"','"+Indirect_OpthalmLeft +"', '"+NinetyD_SeventyeightDRight +"', '"+ NinetyD_SeventyeightDLeft +"', DEFAULT);";
+
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    await con.execute(query);
+    con.release();
+    console.log("Exiting addConsultantResults...");
+    return true;
+  }
+  catch(err) {
+    console.log("Error ====== addConsultantResults");
+    console.log("Error code is: ", err.code);
+    console.log("Exiting addConsultantResults...");
+    return false;
+  }
+}
+
 exports.addPatientOcularFacts = addPatientOcularFacts;
 exports.addOptometaryResults = addOptometaryResults;
 exports.retrieveRetrieveOptometaryResults = retrieveRetrieveOptometaryResults;
@@ -287,3 +358,4 @@ exports.retrieveOcularComplaintTypes = retrieveOcularComplaintTypes;
 exports.retrieveSystemicComplaintTypes = retrieveSystemicComplaintTypes;
 exports.addPreviousOcularIllness = addPreviousOcularIllness;
 exports.addCurrentOcularComplaints = addCurrentOcularComplaints;
+exports.addConsultantResults = addConsultantResults;

@@ -76,14 +76,6 @@ CREATE TABLE patient_progress_tracker (
   FOREIGN KEY (UHID, DateOfAppointment) references appointments(UHID, DateOfAppointment)
 );
 
-KnownMedicalCondition1 varchar(300),
-  KnownMedicalCondition2 varchar(300),
-  KnownMedicalCondition3 varchar(300),
-PreviousSystemicTreatment1 varchar(300),
-  PreviousSystemicTreatment2 varchar(300),
-  PreviousSystemicTreatment3 varchar(300),
-    DrugAllergy1 varchar(300),
-  DrugAllergy2 varchar(300),
 
 drop table if exists `patient_medical_facts`;
 CREATE TABLE patient_medical_facts (
@@ -198,38 +190,7 @@ CREATE TABLE optometary_results (
   FOREIGN KEY (UHID) references patients(UHID)
 );
 
-drop table if exists `optical_investigation`;
 
-CREATE TABLE optical_investigation (
-  UHID int NOT NULL,
-  Procedure1 varchar(100),
-  Procedure2 varchar(100),
-  Procedure3 varchar(100),
-  InvestigationSummary varchar(300),
-  XylocaineTest varchar(300),
-  BloodPressureSystolic varchar(100),
-  BloodPressureDiastolic varchar(100),
-  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (UHID) references patients(UHID)
-);
-
-drop table if exists `ocular_prescription`;
-
-CREATE TABLE ocular_prescription (
-  UHID int NOT NULL,
-  OpticalPrescription1 varchar(300),
-  OpticalPrescription2 varchar(300),
-  OpticalPrescription3 varchar(300),
-  Precaution1 varchar(300),
-  Precaution2 varchar(300),
-  Precaution3 varchar(300),
-  SpecialistReferral ENUM('YES', 'NO'),
-  ReferredSpecialist1 varchar(300),
-  ReferredSpecialist2 varchar(300),
-  ReferredSpecialist3 varchar(300),
-  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (UHID) references patients(UHID)
-);
 
 // to be imported from central medicine database
 drop talbe if exists `medicine_master`;
@@ -255,21 +216,6 @@ CREATE TABLE template_medicines (
   MedicineID varchar(100) NOT NULL,
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY(TemplateID, MedicineID) references medical_prescription_templates(TemplateID), medicine_master(MedicineID)
-);
-
-
-drop table if exists `patient_complaints`;
-
-CREATE TABLE patient_complaints (
-  UHID int NOT NULL,
-  Complaint1 varchar(300),
-  Complaint1DurationWeeks varchar(100),
-  Complaint2 varchar(300),
-  Complaint2DurationWeeks varchar(100),
-  Complaint3 varchar(300),
-  Complaint3DurationWeeks varchar(100),
-  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (UHID) references patients(UHID)
 );
 
 

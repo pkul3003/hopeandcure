@@ -183,6 +183,27 @@ async function apiHandlerAddCurrentOcularComplaints(req,res) {
 	  return res.json(returnJsonObj);
 }
 
+async function apiHandlerAddConsultantResults(req, res) {
+  console.log("Entering apiHandlerAddConsultantResults ====> ");
+
+  let result = await mysqlFunctions.addConsultantResults(req);
+  console.log("inside apiHandlerAddConsultantResults:  ", result);
+
+  if (result === false) {
+    var returnJsonObj = {
+      "msgtype" : "error",
+      "message": "There was an error is updating consultant examination record of the patient"
+    }
+    console.log("Exiting apiHandlerAddConsultantResults========>");
+    return res.send(returnJsonObj);
+  }
+  var returnJsonObj = {
+    "msgtype" : "success",
+    "message": "consultant examination record of the patient added successfully"
+  }
+  console.log("Exiting apiHandlerAddConsultantResults========>");
+  return res.json(returnJsonObj);
+}
 
 exports.apiHandlerAddOptometeryResults = apiHandlerAddOptometeryResults;
 exports.apiHandlerRetrieveOptometeryResults = apiHandlerRetrieveOptometeryResults;
@@ -193,3 +214,4 @@ exports.apiHandlerRetrieveOcularComplaintTypes = apiHandlerRetrieveOcularComplai
 exports.apiHandlerRetrieveSystemicComplaintTypes = apiHandlerRetrieveSystemicComplaintTypes;
 exports.apiHandlerAddPreviousOcularIllness = apiHandlerAddPreviousOcularIllness;
 exports.apiHandlerAddCurrentOcularComplaints = apiHandlerAddCurrentOcularComplaints;
+exports.apiHandlerAddConsultantResults = apiHandlerAddConsultantResults;
