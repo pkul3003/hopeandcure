@@ -33,3 +33,13 @@ insert into patient_progress_tracker values (1272, 'registered', 'patient compla
 insert into ocular_complaint_types values ('nearsightedness', 'cannot see far-off things', DEFAULT);
 insert into ocular_complaint_types values ('farsignthedness', 'cannot see nearby things', DEFAULT);
 insert into ocular_complaint_types values ('sore eyes', 'cannot see nearby things', DEFAULT);
+
+insert into surgery_types values ('ocular', 'ophthalmological', 'any type of eye surgery', 'BOTH');
+
+insert into surgery_sub_types values ('ocular', 'glaucoma', 'a condition of increased pressure within the eyeball, causing gradual loss of sight.', DEFAULT);
+insert into surgery_sub_types values ('ocular', 'DCR', '', DEFAULT);
+insert into surgery_sub_types values ('ocular', 'Pterygium', '', DEFAULT);
+insert into surgery_sub_types values ('ocular', 'Squint', '', DEFAULT);
+insert into surgery_sub_types values ('ocular', 'Lid surgery', '', DEFAULT);
+insert into surgery_sub_types values ('ocular', 'DCR', '', DEFAULT);
+

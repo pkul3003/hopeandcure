@@ -120,23 +120,7 @@ async function apiHandlerRetrieveOptometeryResults(req, res) {
 }
 
 
-async function apiHandlerRetrieveSystemicComplaintTypes(req, res) {
-  console.log("Entering apiHandlerRetrieveSystemicComplaintTypes========>");
 
-  let result = await mysqlFunctions.retrieveSystemicComplaintTypes(req);
-  
-  console.log("inside apiHandlerRetrieveSystemicComplaintTypes:  ", result);
-  if (result === false) {
-    var returnJsonObj = {
-      "msgtype" : "error",
-      "message": "There was an error is fetching systemic complaint types"
-    }
-    console.log("Exiting apiHandlerRetrieveSystemicComplaintTypes========>");
-    return res.send(returnJsonObj);
-  }
-console.log("Exiting apiHandlerRetrieveSystemicComplaintTypes========>");
-return res.send(JSON.parse(result));
-}
 
 async function apiHandlerAddPreviousOcularIllness(req,res) {
 	console.log("Entering apiHandlerAddPreviousOcularIllness========>");
@@ -205,13 +189,54 @@ async function apiHandlerAddConsultantResults(req, res) {
   return res.json(returnJsonObj);
 }
 
+async function apiHandlerRetrieveSurgicalHistory(req, res){
+	console.log("Entering apiHandlerRetrieveSurgicalHistory========>");
+	let response = await mysqlFunctions.retrievePatientSurgicalHistory(req);
+	console.log("inside apiHandlerRetrieveSurgicalHistory:  ", response);
+
+	if (response === false) {
+		var returnJsonObj = {
+			"msgtype" : "error",
+			"message": "There was an error in retrieving ocular surgical history for the patient"
+		}
+		console.log("Exiting apiHandlerRetrieveSurgicalHistory========>");
+		return res.send(returnJsonObj);
+	}
+
+	console.log("Exiting apiHandlerRetrieveSurgicalHistory========>");
+	return res.send(JSON.parse(response));
+}
+
+async function apiHandlerAddSurgicalHistory(req, res) {
+	console.log("Entering apiHandlerAddSurgicalHistory========>");
+	let response = await mysqlFunctions.addPatientSurgicalHistory(req);
+	console.log("inside apiHandlerAddSurgicalHistory:  ", response);
+
+	if (response === false) {
+		var returnJsonObj = {
+			"msgtype" : "error",
+			"message": "There was an error in adding ocular surgical history for the patient"
+		}
+		console.log("Exiting apiHandlerAddSurgicalHistory========>");
+		return res.send(returnJsonObj);
+	}
+
+	var returnJsonObj = {
+		"msgtype" : "success",
+		"message": "patient ocular surgical history added successfully"
+	  }
+	  console.log("Exiting apiHandlerAddSurgicalHistory========>");
+	  return res.json(returnJsonObj);
+}
+
 exports.apiHandlerAddOptometeryResults = apiHandlerAddOptometeryResults;
 exports.apiHandlerRetrieveOptometeryResults = apiHandlerRetrieveOptometeryResults;
 exports.apiHandlerAddOcularFacts = apiHandlerAddOcularFacts;
 exports.apiHandlerRetrieveOcularFacts = apiHandlerRetrieveOcularFacts;
 exports.apiHandlerRetrievePreviousOcularIllness = apiHandlerRetrievePreviousOcularIllness;
 exports.apiHandlerRetrieveOcularComplaintTypes = apiHandlerRetrieveOcularComplaintTypes;
-exports.apiHandlerRetrieveSystemicComplaintTypes = apiHandlerRetrieveSystemicComplaintTypes;
 exports.apiHandlerAddPreviousOcularIllness = apiHandlerAddPreviousOcularIllness;
 exports.apiHandlerAddCurrentOcularComplaints = apiHandlerAddCurrentOcularComplaints;
 exports.apiHandlerAddConsultantResults = apiHandlerAddConsultantResults;
+exports.apiHandlerRetrieveSurgicalHistory = apiHandlerRetrieveSurgicalHistory;
+exports.apiHandlerAddSurgicalHistory = apiHandlerAddSurgicalHistory;

@@ -419,6 +419,60 @@ async function addPatientDrugAllergies(req) {
   }
 }
 
+async function retrievePatientSurgicalHistory(req) {
+  console.log("Entering retrievePatientSurgicalHistory...");
+  let UHID = req.body.patient.UHID;
+
+  let query = "SELECT * FROM patient_systemic_surgical_history_simple WHERE UHID = '" +UHID+ "';";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let patientJson = JSON.stringify(result);
+    console.log(patientJson);
+    if(patientJson === "[]") {
+      console.log(" it seems no previous surgical history was found .........");
+      var NoSurgeryHistoryFound = {
+        "msgtype" : "info",
+        "message": "no surgical history found"
+      }
+      return JSON.stringify(NoSurgeryHistoryFound);
+    }
+    con.release();
+    return patientJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrievePatientSurgicalHistory");
+    console.log("Error code is: ", err.code);
+    console.log("Exiting retrievePatientSurgicalHistory...");
+    return false;
+  }
+}
+
+async function addPatientSurgicalHistory(req) {
+  console.log("Entering addPatientSurgicalHistory...");
+  let UHID = req.body.patient.UHID;
+  let surgery_description = req.body.patient.surgery_description;
+  
+  let query = "INSERT into patient_systemic_surgical_history_simple VALUES ('" +UHID+ "','" + 
+  surgery_description + "', DEFAULT);";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    await con.execute(query);
+    con.release();
+    return true;
+  }
+  catch(err) {
+    console.log("Error ====== addPatientSurgicalHistory");
+    console.log("Error code is: ", err.code);
+    console.log("Exiting addPatientSurgicalHistory...");
+    return false;
+  }
+}
+
 exports.retrievePatientsByUHID = retrievePatientsByUHID;
 exports.createNewPatient = createNewPatient;
 exports.createPatientMedicalFacts = createPatientMedicalFacts;
@@ -429,3 +483,5 @@ exports.retrievePatients = retrievePatients;
 exports.retrievePatientSystemicHistory = retrievePatientSystemicHistory;
 exports.addPatientSystemicHistory = addPatientSystemicHistory;
 exports.addPatientDrugAllergies = addPatientDrugAllergies;
+exports.retrievePatientSurgicalHistory = retrievePatientSurgicalHistory;
+exports.addPatientSurgicalHistory = addPatientSurgicalHistory;

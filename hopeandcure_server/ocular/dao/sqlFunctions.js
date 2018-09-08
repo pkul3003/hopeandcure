@@ -78,13 +78,13 @@ async function addOptometaryResults(req) {
   let VisionWithPinhole = req.body.patient.VisionWithPinhole;
   let Retinoscopy = req.body.patient.Retinoscopy;
   let Acceptance = req.body.patient.Acceptance;
-  let IntraocularPressure = req.body.patient.IntraocularPressure;
+  let IntraOcularPressure = req.body.patient.IntraOcularPressure;
   let SAC = req.body.patient.SAC;
 
   let query = "INSERT INTO optometary_results VALUES ('"+ UHID +"','" + AutorefactrometerReadingRight + "','"+
               AutorefactrometerReadingLeft + "','"+ KeratometryReadingRight +"', '"+
               KeratometryReadingLeft +"','" + UnaidedVisionRight +"', '"+ UnaidedVisionLeft +"', '"+ VisionWithPinhole +
-              "', '"+ Retinoscopy +"', '"+ Acceptance +"', '"+ IntraocularPressure + "', '"+ SAC +"', DEFAULT);";
+              "', '"+ Retinoscopy +"', '"+ Acceptance +"', '"+ IntraOcularPressure + "', '"+ SAC +"', DEFAULT);";
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -192,38 +192,6 @@ async function retrieveOcularComplaintTypes(Req) {
   }
 }
 
-async function retrieveSystemicComplaintTypes(Req) {
-  
-  console.log("Entering retrieveSystemicComplaintTypes...");
-
-  let query = "SELECT * FROM systemic_complaint_types; ";
-  console.log(query);
-  try {
-    let pool = await getConnectionPool();
-    let con = await pool.getConnection();
-    let [result,fields] = await con.execute(query);
-    let complaintsJson = JSON.stringify(result);
-    console.log("stringified json object is: ", complaintsJson);
-    if(complaintsJson === "[]") {
-      console.log(" it seems no previous complaints were found .........");
-      var NoComplaintTypesFound = {
-        "msgtype" : "info",
-        "message": "no complaint types found"
-      }
-      return JSON.stringify(NoComplaintTypesFound);
-    }
-    con.release();
-    console.log("Exiting retrieveSystemicComplaintTypes...");
-    return complaintsJson;
-  }
-  catch(err) {
-    console.log("Error ====== retrieveSystemicComplaintTypes");
-    console.log("Error code is: ", err.code);
-
-    console.log("Exiting retrieveSystemicComplaintTypes...");
-    return false;
-  }
-}
 
 async function addPreviousOcularIllness(req) {
   console.log("Entering addPreviousOcularIllness...");
@@ -349,13 +317,68 @@ async function addConsultantResults(req) {
   }
 }
 
+async function retrievePatientSurgicalHistory(req) {
+  console.log("Entering retrievePatientSurgicalHistory...");
+  let UHID = req.body.patient.UHID;
+
+  let query = "SELECT * FROM patient_ocular_surgical_history_simple WHERE UHID = '" +UHID+ "';";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let patientJson = JSON.stringify(result);
+    console.log(patientJson);
+    if(patientJson === "[]") {
+      console.log(" it seems no previous surgical history was found .........");
+      var NoSurgeryHistoryFound = {
+        "msgtype" : "info",
+        "message": "no ocular surgical history found"
+      }
+      return JSON.stringify(NoSurgeryHistoryFound);
+    }
+    con.release();
+    return patientJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrievePatientSurgicalHistory");
+    console.log("Error code is: ", err.code);
+    console.log("Exiting retrievePatientSurgicalHistory...");
+    return false;
+  }
+}
+
+async function addPatientSurgicalHistory(req) {
+  console.log("Entering addPatientSurgicalHistory...");
+  let UHID = req.body.patient.UHID;
+  let surgery_description = req.body.patient.surgery_description;
+  
+  let query = "INSERT into patient_ocular_surgical_history_simple VALUES ('" +UHID+ "','" + 
+  surgery_description + "', DEFAULT);";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    await con.execute(query);
+    con.release();
+    return true;
+  }
+  catch(err) {
+    console.log("Error ====== addPatientSurgicalHistory");
+    console.log("Error code is: ", err.code);
+    console.log("Exiting addPatientSurgicalHistory...");
+    return false;
+  }
+}
+
 exports.addPatientOcularFacts = addPatientOcularFacts;
 exports.addOptometaryResults = addOptometaryResults;
 exports.retrieveRetrieveOptometaryResults = retrieveRetrieveOptometaryResults;
 exports.retrievePatientOcularFacts = retrievePatientOcularFacts;
 exports.retrievePreviousOcularIllness = retrievePreviousOcularIllness;
 exports.retrieveOcularComplaintTypes = retrieveOcularComplaintTypes;
-exports.retrieveSystemicComplaintTypes = retrieveSystemicComplaintTypes;
 exports.addPreviousOcularIllness = addPreviousOcularIllness;
 exports.addCurrentOcularComplaints = addCurrentOcularComplaints;
 exports.addConsultantResults = addConsultantResults;
+exports.retrievePatientSurgicalHistory = retrievePatientSurgicalHistory;
+exports.addPatientSurgicalHistory = addPatientSurgicalHistory;

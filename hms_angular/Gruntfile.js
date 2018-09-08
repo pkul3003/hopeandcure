@@ -9,6 +9,8 @@
 
 module.exports = function (grunt) {
 
+  require('load-grunt-tasks')(grunt);
+  /*
   grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-connect');
@@ -18,7 +20,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-karma');
-
+*/
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 

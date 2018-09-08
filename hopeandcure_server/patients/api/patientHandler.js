@@ -232,6 +232,46 @@ async function apiHandlerAddPatientDrugAllergies(req, res) {
 	  return res.json(returnJsonObj);
 }
 
+async function apiHandlerRetrieveSurgicalHistory(req, res){
+	console.log("Entering apiHandlerRetrieveSurgicalHistory========>");
+	let response = await mysqlFunctions.retrievePatientSurgicalHistory(req);
+	console.log("inside apiHandlerRetrieveSurgicalHistory:  ", response);
+
+	if (response === false) {
+		var returnJsonObj = {
+			"msgtype" : "error",
+			"message": "There was an error in retrieving surgical history for the patient"
+		}
+		console.log("Exiting apiHandlerRetrieveSurgicalHistory========>");
+		return res.send(returnJsonObj);
+	}
+
+	console.log("Exiting apiHandlerRetrieveSurgicalHistory========>");
+	return res.send(JSON.parse(response));
+}
+
+async function apiHandlerAddSurgicalHistory(req, res) {
+	console.log("Entering apiHandlerAddSurgicalHistory========>");
+	let response = await mysqlFunctions.addPatientSurgicalHistory(req);
+	console.log("inside apiHandlerAddSurgicalHistory:  ", response);
+
+	if (response === false) {
+		var returnJsonObj = {
+			"msgtype" : "error",
+			"message": "There was an error in adding surgical history for the patient"
+		}
+		console.log("Exiting apiHandlerAddSurgicalHistory========>");
+		return res.send(returnJsonObj);
+	}
+
+	var returnJsonObj = {
+		"msgtype" : "success",
+		"message": "patient surgical history added successfully"
+	  }
+	  console.log("Exiting apiHandlerAddSurgicalHistory========>");
+	  return res.json(returnJsonObj);
+}
+
 exports.apiHandlerCreatePatient = apiHandlerCreatePatient;
 exports.apiHandlerFindPatients = apiHandlerFindPatients;
 exports.apiHandlerFindPatientByUHID = apiHandlerFindPatientByUHID;
@@ -244,3 +284,5 @@ exports.apiHandlerSearchPatient = apiHandlerSearchPatient;
 exports.apiHandlerRetrieveSystemicHistory = apiHandlerRetrieveSystemicHistory;
 exports.apiHandlerAddSystemicHistory = apiHandlerAddSystemicHistory;
 exports.apiHandlerAddPatientDrugAllergies = apiHandlerAddPatientDrugAllergies;
+exports.apiHandlerRetrieveSurgicalHistory = apiHandlerRetrieveSurgicalHistory;
+exports.apiHandlerAddSurgicalHistory = apiHandlerAddSurgicalHistory;

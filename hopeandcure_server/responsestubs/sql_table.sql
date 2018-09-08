@@ -190,10 +190,56 @@ CREATE TABLE optometary_results (
   FOREIGN KEY (UHID) references patients(UHID)
 );
 
+CREATE TABLE surgery_types
+(
+  surgery_type varchar(100) NOT NULL,
+  surgery_alias varchar(100),
+  surgery_description varchar(500),
+  applicable_gender ENUM('MALE', 'FEMALE', 'BOTH'),
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (surgery_type)
+);
 
+CREATE TABLE surgery_sub_types
+(
+  surgery_type varchar(100) NOT NULL,
+  surgery_sub_type varchar(100) NOT NULL,
+  surgery_subtype_description varchar(500),
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (surgery_type) REFERENCES surgery_types(surgery_type)
+);
 
-// to be imported from central medicine database
-drop talbe if exists `medicine_master`;
+drop table if exists patient_surgical_history;
+CREATE TABLE patient_surgical_history
+(
+  UHID int NOT NULL,
+  surgery_type varchar(300) NOT NULL,
+  surgery_sub_type varchar(100) NOT NULL,
+  surgery_description varchar(300),
+  surgery_month_year varchar(100),
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (UHID) references patients(UHID),
+  FOREIGN KEY (surgery_type) references surgery_types(surgery_type)
+);
+
+CREATE TABLE patient_systemic_surgical_history_simple
+(
+  UHID int NOT NULL,
+  surgery_description varchar(300),
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (UHID) references patients(UHID)
+);
+
+CREATE TABLE patient_ocular_surgical_history_simple
+(
+  UHID int NOT NULL,
+  surgery_description varchar(300),
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (UHID) references patients(UHID)
+);
+
+-- to be imported from central medicine database
+drop table if exists `medicine_master`;
 CREATE TABLE medicine_master (
   MedicineID
   MedicineName
