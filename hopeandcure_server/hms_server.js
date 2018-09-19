@@ -11,7 +11,7 @@ const http_port = 8082;
 const https_port = 7443;
 var app = express();
 
-if (tls_or_http === 'https') {
+try {
 
   var options = {
     //key: fs.readFileSync('/etc/certs/localhost.key'),
@@ -26,14 +26,20 @@ if (tls_or_http === 'https') {
   var server = https.createServer(options, app);
   var router = require('./router.js')(app);
 
-} else if (tls_or_http === 'http') {
+  // Now, setup server
+  server.listen(port, function (app) {
+    console.log('Express server listening on port ' + server.address().port);
+  });
+} catch (err ) {
+  console.log("something went wrong with https, so resorting to http...");
   var port = process.env.PORT || http_port;
   var server = http.createServer(app);
   var router = require('./router.js')(app);
 
+  // Now, setup server
+  server.listen(port, function (app) {
+    console.log('Express server listening on port ' + server.address().port);
+  });
 }
 
-// Now, setup server
-server.listen(port, function (app) {
-  console.log('Express server listening on port ' + server.address().port);
-});
+
