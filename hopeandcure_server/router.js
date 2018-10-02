@@ -17,6 +17,7 @@ var apiPatientController = require('./patients/api/patientHandler.js');
 var apiStaffController = require('./staff/api/staffHandler.js');
 var apiOcularController = require('./ocular/api/ocularHandler.js');
 var apiGenericController = require('./generic/api/genericHandler.js');
+var apiBillingController = require('./billing/api/billingHandler.js');
 
 
 var appRouter = function(app) {
@@ -57,6 +58,10 @@ app.get("/retrieve-consultants", async function(req, res) {
 	await apiStaffController.apiHandlerRetrieveConsultants(req, res);
 });
 
+// modes-of-payment
+app.get("/modes-of-payment", async function(req, res) {
+	await apiBillingController.apiHandlerRetrieveModesOfPayment(req, res);
+});
 
 // seperate POST call for login function
 app.post('/login', async function(req,res){
@@ -218,7 +223,20 @@ app.post('/ocular', async function (req, res){
 	}
 });
 
+app.post('/billing', async function (req, res){
+	console.log("inside router app.post/ocular: "+ JSON.stringify(req.body.intentName));
+	switch (req.body.intentName) {
+		case 'create-bill':
+			await apiBillingController.apiHandlerCreatePatientBill(req, res);
+			break;
+		default:
+			var returnJsonObj = {
+				"msgtype" : "info",
+				"message" : "Invalid intentName specified"
+			}
+			res.send(returnJsonObj);
+		}
+	});
 }
-
 module.exports = appRouter;
 console.log('Exiting router.js...');

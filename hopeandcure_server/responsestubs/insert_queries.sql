@@ -43,3 +43,12 @@ insert into surgery_sub_types values ('ocular', 'Squint', '', DEFAULT);
 insert into surgery_sub_types values ('ocular', 'Lid surgery', '', DEFAULT);
 insert into surgery_sub_types values ('ocular', 'DCR', '', DEFAULT);
 
+insert into mode_of_payment values ('DEBIT CARD', DEFAULT);
+insert into mode_of_payment values ('CREDIT CARD', DEFAULT);
+insert into mode_of_payment values ('CASH', DEFAULT);
+insert into mode_of_payment values ('CHEQUE', DEFAULT);
+insert into mode_of_payment values ('UPI', DEFAULT);
+insert into mode_of_payment values ('AADHAR PAY', DEFAULT);
+insert into mode_of_payment values ('PAYTM', DEFAULT);
+insert into mode_of_payment values ('GOOGLE PAY', DEFAULT);
+insert into mode_of_payment values ('NET BANKING', DEFAULT);

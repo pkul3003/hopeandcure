@@ -353,3 +353,35 @@ INSERT INTO consultants VALUES(1000, 'Prakash' , 'Rasal', 'Opthalmologist', '', 
 INSERT INTO consultants VALUES(1001, 'Wasant' , 'ambekar', 'Opthalmologist', '', 'MD', 'yes' , 'yes', 9922962322, DEFAULT);
 
 
+CREATE TABLE patient_billing_record (
+  UHID int NOT NULL,
+  OPDConsultationFee DECIMAL(7,2) NOT NULL DEFAULT 0.00,
+  IPDFee DECIMAL(8,2) NOT NULL DEFAULT 0.00,
+  InvestigationsFee DECIMAL(7,2) NOT NULL DEFAULT 0.00,
+  LabFee DECIMAL(8,2) NOT NULL DEFAULT 0.00,
+  ProcedureCharges DECIMAL(8,2) NOT NULL DEFAULT 0.00,
+  GST DECIMAL(6,2) NOT NULL DEFAULT 0.00,
+  DiscountPercent INTEGER NOT NULL DEFAULT 0,
+  TotalBillAmount DECIMAL(9,2) NOT NULL DEFAULT 0.00,
+  ModeOfPayment varchar(100) NOT NULL,
+  DateOfBill TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (UHID) references patients(UHID),
+  FOREIGN KEY (ModeOfPayment) references mode_of_payment(ModeOfPayment)
+);
+
+CREATE TABLE modes_of_payment (
+  ModeOfPayment varchar(100) NOT NULL,
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (ModeOfPayment)
+);
+
+insert into mode_of_payment values ('DEBIT CARD', DEFAULT);
+insert into mode_of_payment values ('CREDIT CARD', DEFAULT);
+insert into mode_of_payment values ('CASH', DEFAULT);
+insert into mode_of_payment values ('CHEQUE', DEFAULT);
+insert into mode_of_payment values ('UPI', DEFAULT);
+insert into mode_of_payment values ('AADHAR PAY', DEFAULT);
+insert into mode_of_payment values ('PAYTM', DEFAULT);
+insert into mode_of_payment values ('GOOGLE PAY', DEFAULT);
+insert into mode_of_payment values ('NET BANKING', DEFAULT);
