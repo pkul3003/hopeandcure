@@ -38,8 +38,9 @@ async function retrieveAppointments(req) {
 
 async function retrieveAppointmentsByDate(req) {
   console.log("Entering retrieveAppointmentsByDate...");
-  let DateOfAppointment = req.body.appointments.appointment_date;
-
+  //let DateOfAppointment = req.body.appointments.appointment_date;
+  let DateOfAppointment = req.param('date');
+  
   let query = "SELECT * FROM appointments_view WHERE DateOfAppointment = '" + DateOfAppointment + "';";
   console.log(query);
   try {

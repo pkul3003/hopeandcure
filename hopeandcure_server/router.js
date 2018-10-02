@@ -34,13 +34,31 @@ var appRouter = function(app) {
 		next();
   	});
 
+// get interfaces
 
+// sample test interface to check if the server is working
 app.get("/DaysOfWeek", function(req, res) {
 	 var DaysOfWeek = config.DaysOfWeek;
 	 res.send(DaysOfWeek);
 });
 
+// retrieve-appointments
+app.get("/retrieve-appointments", async function(req, res) {
+	await apiAppointmentsController.apiHandlerForAppointments(req, res);
+});
 
+// retrieve-appointments-by-date
+app.get("/retrieve-appointments-by-date", async function(req, res) {
+	await apiAppointmentsController.apiHandlerForAppointmentsByDate(req, res);
+});
+
+// retrieve-consultants
+app.get("/retrieve-consultants", async function(req, res) {
+	await apiStaffController.apiHandlerRetrieveConsultants(req, res);
+});
+
+
+// seperate POST call for login function
 app.post('/login', async function(req,res){
   console.log("insider router app.post/login: ", JSON.stringify(req.body.intentName));
   await apiStaffController.apiHandlerAuthenticateStaff(req, res);
