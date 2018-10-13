@@ -2,7 +2,7 @@
 let stubResponse = require('../../responsestubs/StubResponse.js');
 let config = require("../../config.js");
 let globalsqlFunctions = require('../../mysql-functions/mysqlFunctions.js');
-let mysqlFunctions = require('../dao/sqlfunctions.js');
+let mysqlFunctions = require('../dao/sqlFunctions.js');
 
 async function apiHandlerCreatePatientBill(req, res) {
     console.log("Entering apiHandlerCreatePatientBill========>");
