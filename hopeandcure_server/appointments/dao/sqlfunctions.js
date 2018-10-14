@@ -39,7 +39,8 @@ async function retrieveAppointments(req) {
 async function retrieveAppointmentsByDate(req) {
   console.log("Entering retrieveAppointmentsByDate...");
   //let DateOfAppointment = req.body.appointments.appointment_date;
-  let DateOfAppointment = req.query.date;
+  // req coming as a GET call
+  let DateOfAppointment = req.query['date'];
   
   let query = "SELECT * FROM appointments_view WHERE DateOfAppointment = '" + DateOfAppointment + "';";
   console.log(query);
@@ -93,16 +94,15 @@ async function createAppointment(req) {
   "','" +email_id+ "','" +referred_by+ "','" +patient_city+ "','" +patient_area+ "','" +relative_name+
   "','" +relation_with_patient+ "','" +relative_contact_no+ "',DEFAULT);";
 
+  // orchestration moved to apptHandler.js
   //let query2 = "INSERT INTO patient_progress_tracker values('" +UHID+ "', '" +PatientProgressStatus+ "', '" +RunningNotes+ "', DEFAULT);";
 
   console.log(query1);
- // console.log(query2);
 
   try {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
     await con.query(query1);
-    //await con.query(query2);
     con.release();
     return true;
   }
@@ -114,7 +114,6 @@ async function createAppointment(req) {
         "msgtype" : "info",
         "message": "appointment already exists for the patient for the given day."
       }
-      //con.release();
       console.log("Exiting createAppointment...");
       return response;
     }

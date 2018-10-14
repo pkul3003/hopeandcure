@@ -14,10 +14,10 @@ var app = express();
 try {
 
   var options = {
-    key: fs.readFileSync('/etc/certs/localhost.key'),
-    cert: fs.readFileSync('/etc/certs/localhost.cert'),
-    //key: fs.readFileSync('D:\\Parag\\Personal\\hmsapp\\localhost.key'),
-    //cert: fs.readFileSync('D:\\Parag\\Personal\\hmsapp\\localhost.cert'),
+    //key: fs.readFileSync('/etc/certs/localhost.key'),
+    //cert: fs.readFileSync('/etc/certs/localhost.cert'),
+    key: fs.readFileSync('D:\\Parag\\Personal\\hmsapp\\localhost.key'),
+    cert: fs.readFileSync('D:\\Parag\\Personal\\hmsapp\\localhost.cert'),
     requestCert: false,
     rejectUnauthorized: false
   };

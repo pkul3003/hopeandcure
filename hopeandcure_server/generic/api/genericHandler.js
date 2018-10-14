@@ -7,7 +7,7 @@ async function apiHandlerRetrieveComplaintTypes(req, res) {
     console.log("Entering apiHandlerRetrieveComplaintTypes========>");
 
     //let complaint_type = req.param('complaint-type');
-    let complaint_type = req.query.complaint_type;
+    let complaint_type = req.query['complaint-type'];
     let result = {};
 
     switch (complaint_type) {
@@ -16,7 +16,10 @@ async function apiHandlerRetrieveComplaintTypes(req, res) {
         break;
       case 'ocular':
         result = await mysqlFunctions.retrieveOcularComplaintTypes(req);
-        break;		
+        break;
+      case 'all':
+        result = await mysqlFunctions.retrieveAllComplaintTypes(req);	
+        break;
       default:
         var returnJsonObj = {
           "msgtype" : "info",
@@ -39,23 +42,42 @@ async function apiHandlerRetrieveComplaintTypes(req, res) {
   return res.send(JSON.parse(result));
   }
 
-async function apiHandlerRetrieveSurgeryTypes(req, res){
-    console.log("Entering apiHandlerRetrieveSurgeryTypes========>");
+async function apiHandlerRetrieveProcedureTypes(req, res){
+    console.log("Entering apiHandlerRetrieveProcedureTypes========>");
+    let procedure_type = req.query['procedure-type'];
+    let result = {};
 
-    let result = await mysqlFunctions.retrieveSurgeryTypes(req);
+    switch(procedure_type) {
+      case 'systemic':
+        result = await mysqlFunctions.retrieveSystemicProcedureTypes(req);
+        break;
+      case 'ocular':
+        result = await mysqlFunctions.retrieveOcularProcedureTypes(req);
+        break;
+      case 'all':
+        result = await mysqlFunctions.retrieveAllProcedureTypes(req);
+        break;
+      default:
+        var returnJsonObj = {
+          "msgtype" : "info",
+          "message" : "Invalid procedure type specified. current valid values: systemic, ocular"
+        }
+        console.log("Exiting apiHandlerRetrieveProcedureTypes========>");
+        res.send(returnJsonObj);
+      }
     
-    console.log("inside apiHandlerRetrieveSurgeryTypes:  ", result);
+    console.log("inside apiHandlerRetrieveProcedureTypes:  ", result);
     if (result === false) {
       var returnJsonObj = {
         "msgtype" : "error",
         "message": "There was an error is fetching surgery types"
       }
-      console.log("Exiting apiHandlerRetrieveSurgeryTypes========>");
+      console.log("Exiting apiHandlerRetrieveProcedureTypes========>");
       return res.send(returnJsonObj);
     }
-  console.log("Exiting apiHandlerRetrieveSurgeryTypes========>");
+  console.log("Exiting apiHandlerRetrieveProcedureTypes========>");
   return res.send(JSON.parse(result));
 }
 
 exports.apiHandlerRetrieveComplaintTypes = apiHandlerRetrieveComplaintTypes;
-exports.apiHandlerRetrieveSurgeryTypes = apiHandlerRetrieveSurgeryTypes;
+exports.apiHandlerRetrieveProcedureTypes = apiHandlerRetrieveProcedureTypes;

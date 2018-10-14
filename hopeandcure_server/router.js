@@ -35,7 +35,7 @@ var appRouter = function(app) {
 		next();
   	});
 
-// get interfaces
+// GET interfaces
 
 // sample test interface to check if the server is working
 app.get("/DaysOfWeek", function(req, res) {
@@ -59,13 +59,18 @@ app.get("/retrieve-consultants", async function(req, res) {
 });
 
 // modes-of-payment
-app.get("/modes-of-payment", async function(req, res) {
+app.get("/retrieve-modes-of-payment", async function(req, res) {
 	await apiBillingController.apiHandlerRetrieveModesOfPayment(req, res);
 });
 
 // complaint-types
-app.get("/complaint-types", async function(req, res) {
+app.get("/retrieve-complaint-types", async function(req, res) {
 	await apiGenericController.apiHandlerRetrieveComplaintTypes(req, res);
+});
+
+// procedure or surgery types
+app.get("/retrieve-procedure-types", async function(req, res) {
+	await apiGenericController.apiHandlerRetrieveProcedureTypes(req, res);
 });
 
 // seperate POST call for login function

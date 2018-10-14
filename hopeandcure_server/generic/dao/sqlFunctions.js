@@ -80,10 +80,10 @@ async function retrieveSystemicComplaintTypes(Req) {
     }
   }
 
-async function retrieveSurgeryTypes(req) {
-    console.log("Entering retrieveSurgeryTypes...");
+async function retrieveSystemicProcedureTypes(req) {
+    console.log("Entering retrieveSystemicProcedureTypes...");
   
-    let query = "SELECT surgery_type FROM surgery_types; ";
+    let query = "SELECT procedure_type FROM procedure_master where procedure_type = 'systemic'; ";
     console.log(query);
     try {
       let pool = await getConnectionPool();
@@ -92,27 +92,27 @@ async function retrieveSurgeryTypes(req) {
       let surgeryTypesJson = JSON.stringify(result);
       console.log("stringified json object is: ", surgeryTypesJson);
       if(surgeryTypesJson === "[]") {
-        console.log(" it seems no previous complaints were found .........");
+        console.log(" it seems no previous procedures were found .........");
         var NoSurgeryTypesFound = {
           "msgtype" : "info",
-          "message": "no surgery types found"
+          "message": "no procedures types found"
         }
         return JSON.stringify(NoSurgeryTypesFound);
       }
       con.release();
-      console.log("Exiting retrieveSurgeryTypes...");
+      console.log("Exiting retrieveSystemicProcedureTypes...");
       return surgeryTypesJson;
     }
     catch(err) {
-      console.log("Error ====== retrieveSurgeryTypes");
+      console.log("Error ====== retrieveSystemicProcedureTypes");
       console.log("Error code is: ", err.code);
   
-      console.log("Exiting retrieveSurgeryTypes...");
+      console.log("Exiting retrieveSystemicProcedureTypes...");
       return false;
     }
 }
 
 exports.retrieveSystemicComplaintTypes = retrieveSystemicComplaintTypes;
-exports.retrieveSurgeryTypes = retrieveSurgeryTypes;
+exports.retrieveSystemicProcedureTypes = retrieveSystemicProcedureTypes;
 exports.retrieveOcularComplaintTypes = retrieveOcularComplaintTypes;
   
