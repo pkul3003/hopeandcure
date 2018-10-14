@@ -18,7 +18,7 @@ async function retrieveSystemicComplaintTypes(Req) {
   
     console.log("Entering retrieveSystemicComplaintTypes...");
   
-    let query = "SELECT * FROM systemic_complaint_types; ";
+    let query = "SELECT * FROM complaint_master where complaint_type = 'systemic'; ";
     console.log(query);
     try {
       let pool = await getConnectionPool();
@@ -43,6 +43,39 @@ async function retrieveSystemicComplaintTypes(Req) {
       console.log("Error code is: ", err.code);
   
       console.log("Exiting retrieveSystemicComplaintTypes...");
+      return false;
+    }
+  }
+
+  async function retrieveOcularComplaintTypes(Req) {
+  
+    console.log("Entering retrieveOcularComplaintTypes...");
+  
+    let query = "SELECT * FROM complaint_master where complaint_type = 'ocular'; ";
+    console.log(query);
+    try {
+      let pool = await getConnectionPool();
+      let con = await pool.getConnection();
+      let [result,fields] = await con.execute(query);
+      let complaintsJson = JSON.stringify(result);
+      console.log("stringified json object is: ", complaintsJson);
+      if(complaintsJson === "[]") {
+        console.log(" it seems no previous complaints were found .........");
+        var NoComplaintTypesFound = {
+          "msgtype" : "info",
+          "message": "no complaint types found"
+        }
+        return JSON.stringify(NoComplaintTypesFound);
+      }
+      con.release();
+      console.log("Exiting retrieveOcularComplaintTypes...");
+      return complaintsJson;
+    }
+    catch(err) {
+      console.log("Error ====== retrieveOcularComplaintTypes");
+      console.log("Error code is: ", err.code);
+  
+      console.log("Exiting retrieveOcularComplaintTypes...");
       return false;
     }
   }
@@ -81,4 +114,5 @@ async function retrieveSurgeryTypes(req) {
 
 exports.retrieveSystemicComplaintTypes = retrieveSystemicComplaintTypes;
 exports.retrieveSurgeryTypes = retrieveSurgeryTypes;
+exports.retrieveOcularComplaintTypes = retrieveOcularComplaintTypes;
   

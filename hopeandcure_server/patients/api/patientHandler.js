@@ -19,7 +19,7 @@ async function apiHandlerCreatePatient(req,res){
 		if (response === false) {
 			var returnJsonObj = {
 				"msgtype" : "error",
-				"message": "There was an error is fetching customer"
+				"message": "There was an error in creating the new patient"
 			}
   	console.log("Exiting apiHandlerCreatePatient========>");
 			return res.send(returnJsonObj);

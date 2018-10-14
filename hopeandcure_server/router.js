@@ -63,6 +63,11 @@ app.get("/modes-of-payment", async function(req, res) {
 	await apiBillingController.apiHandlerRetrieveModesOfPayment(req, res);
 });
 
+// complaint-types
+app.get("/complaint-types", async function(req, res) {
+	await apiGenericController.apiHandlerRetrieveComplaintTypes(req, res);
+});
+
 // seperate POST call for login function
 app.post('/login', async function(req,res){
   console.log("insider router app.post/login: ", JSON.stringify(req.body.intentName));
