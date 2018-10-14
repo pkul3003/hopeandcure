@@ -8,17 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "pkul3003"
+    "url": "https://github.com/pkul3003/primenova"
   },
   "author": "parag",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.4",
     "express": "^4.16.3",
-    "express-session": "^1.15.6",
     "mysql": "^2.15.0",
     "mysql2": "^1.5.3",
-    "restify": "^7.1.1",
     "wait.for": "^0.6.6"
   }
 }
