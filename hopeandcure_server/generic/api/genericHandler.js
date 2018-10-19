@@ -81,10 +81,10 @@ async function apiHandlerRetrieveProcedureTypes(req, res){
 
 async function apiHandlerRertrieveInvestigationTypes(req, res) {
   console.log("Entering apiHandlerRertrieveInvestigationTypes========>");
-  let procedure_type = req.query['investigation-type'];
+  let investigation_type = req.query['investigation-type'];
   let result = {};
 
-  switch(procedure_type) {
+  switch(investigation_type) {
     case 'systemic':
       result = await mysqlFunctions.retrieveSystemicInvestigationTypes(req);
       break;
@@ -116,6 +116,45 @@ console.log("Exiting apiHandlerRertrieveInvestigationTypes========>");
 return res.send(JSON.parse(result));
 }
 
+
+async function apiHandlerRetrieveSpecialPrecautions(req, res) {
+  console.log("Entering apiHandlerRetrieveSpecialPrecautions========>");
+  let precaution_type = req.query['precaution-type'];
+  let result = {};
+
+  switch(precaution_type) {
+    case 'systemic':
+      result = await mysqlFunctions.retrieveSystemicPrecautionTypes(req);
+      break;
+    case 'ocular':
+      result = await mysqlFunctions.retrieveOpticalPrecautionTypes(req);
+      break;
+    case 'all':
+      result = await mysqlFunctions.retrieveAllPrecautionTypes(req);
+      break;
+    default:
+      var returnJsonObj = {
+        "msgtype" : "info",
+        "message" : "Invalid precaution type specified. current valid values: systemic, optical, all"
+      }
+      console.log("Exiting apiHandlerRetrieveSpecialPrecautions========>");
+      res.send(returnJsonObj);
+    }
+  
+  console.log("inside apiHandlerRetrieveSpecialPrecautions:  ", result);
+  if (result === false) {
+    var returnJsonObj = {
+      "msgtype" : "error",
+      "message": "There was an error is fetching precaution types"
+    }
+    console.log("Exiting apiHandlerRetrieveSpecialPrecautions========>");
+    return res.send(returnJsonObj);
+  }
+console.log("Exiting apiHandlerRetrieveSpecialPrecautions========>");
+return res.send(JSON.parse(result));
+}
+
 exports.apiHandlerRetrieveComplaintTypes = apiHandlerRetrieveComplaintTypes;
 exports.apiHandlerRetrieveProcedureTypes = apiHandlerRetrieveProcedureTypes;
 exports.apiHandlerRertrieveInvestigationTypes = apiHandlerRertrieveInvestigationTypes;
+exports.apiHandlerRetrieveSpecialPrecautions = apiHandlerRetrieveSpecialPrecautions;

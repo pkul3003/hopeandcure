@@ -78,6 +78,11 @@ app.get("/retrieve-investigation-types", async function(req, res) {
 	await apiGenericController.apiHandlerRertrieveInvestigationTypes(req, res);
 });
 
+// special precaution types
+app.get("/retrieve-special-precautions", async function(req, res){
+	await apiGenericController.apiHandlerRetrieveSpecialPrecautions(req, res);
+});
+
 // seperate POST call for login function
 app.post('/login', async function(req,res){
   console.log("insider router app.post/login: ", JSON.stringify(req.body.intentName));

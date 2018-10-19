@@ -220,16 +220,16 @@ async function addPreviousOcularIllness(req) {
 async function addCurrentOcularComplaints(req) {
   console.log("Entering addCurrentOcularComplaints...");
   let UHID = req.body.patient.UHID;
-  let ComplaintType = req.body.patient.ComplaintType;
-  let ComplaintDuration = req.body.patient.ComplaintDuration;
-  let ComplaintDescription = req.body.patient.ComplaintDescription;
-  if (ComplaintDescription === null || ComplaintDescription === 'undefined') {
+  let complaint_type = req.body.patient.complaint_type;
+  let complaint_duration = req.body.patient.complaint_duration;
+  let complaint_discription = req.body.patient.complaint_discription;
+  if (complaint_discription === null || complaint_discription === 'undefined') {
     console.log("inside null condition...")
-    ComplaintDescription = "";
+    complaint_discription = "";
   }
 
   let query = "INSERT into patient_ocular_complaints VALUES ('" +UHID+ "','" + 
-  ComplaintType + "', '" +ComplaintDuration+ "', ComplaintDescription = '"+ ComplaintDescription+"', DEFAULT);";
+  complaint_type + "', '" +complaint_duration+ "', '"+ complaint_discription+"', DEFAULT);";
   console.log(query);
   try {
     let pool = await getConnectionPool();

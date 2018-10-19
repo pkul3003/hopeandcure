@@ -483,14 +483,14 @@ DROP TABLE IF EXISTS `patient_ocular_complaints`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient_ocular_complaints` (
   `UHID` int(11) NOT NULL,
-  `ComplaintType` varchar(100) NOT NULL,
-  `ComplaintDuration` varchar(100) DEFAULT NULL,
-  `ComplaintDescription` varchar(300) DEFAULT NULL,
+  `complaint_type` varchar(100) DEFAULT NULL,
+  `complaint_duration` varchar(100) DEFAULT NULL,
+  `complaint_discription` varchar(300) DEFAULT NULL,
   `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY `UHID` (`UHID`),
-  KEY `ComplaintType` (`ComplaintType`),
+  KEY `ComplaintType` (`complaint_type`),
   CONSTRAINT `patient_ocular_complaints_ibfk_1` FOREIGN KEY (`UHID`) REFERENCES `patients` (`UHID`),
-  CONSTRAINT `patient_ocular_complaints_ibfk_2` FOREIGN KEY (`ComplaintType`) REFERENCES `ocular_complaint_types` (`ComplaintType`)
+  CONSTRAINT `patient_ocular_complaints_ibfk_2` FOREIGN KEY (`complaint_type`) REFERENCES `ocular_complaint_types` (`ComplaintType`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -500,7 +500,7 @@ CREATE TABLE `patient_ocular_complaints` (
 
 LOCK TABLES `patient_ocular_complaints` WRITE;
 /*!40000 ALTER TABLE `patient_ocular_complaints` DISABLE KEYS */;
-INSERT INTO `patient_ocular_complaints` VALUES (1272,'nearsightedness','2 months',NULL,'2018-08-26 10:57:40'),(1272,'nearsightedness','2 months',NULL,'2018-08-26 10:59:43');
+INSERT INTO `patient_ocular_complaints` VALUES (1272,'nearsightedness','2 months',NULL,'2018-08-26 10:57:40'),(1272,'nearsightedness','2 months',NULL,'2018-08-26 10:59:43'),(1275,'nearsightedness','2 months','','2018-10-19 08:25:26');
 /*!40000 ALTER TABLE `patient_ocular_complaints` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -679,6 +679,31 @@ LOCK TABLES `procedure_master` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `special_precaution_master`
+--
+
+DROP TABLE IF EXISTS `special_precaution_master`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `special_precaution_master` (
+  `precaution_id` int(11) NOT NULL AUTO_INCREMENT,
+  `precaution_type` varchar(50) NOT NULL,
+  `precaution_desc` varchar(255) NOT NULL,
+  `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`precaution_id`,`precaution_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `special_precaution_master`
+--
+
+LOCK TABLES `special_precaution_master` WRITE;
+/*!40000 ALTER TABLE `special_precaution_master` DISABLE KEYS */;
+/*!40000 ALTER TABLE `special_precaution_master` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `staff_address`
 --
 
@@ -850,4 +875,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-19 13:00:31
+-- Dump completed on 2018-10-19 17:09:53

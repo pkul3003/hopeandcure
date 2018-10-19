@@ -176,9 +176,42 @@ async function retrieveOpticalInvestigationTypes(req) {
   }
 }
 
+async function retrieveAllPrecautionTypes(req) {
+  console.log("Entering retrieveAllPrecautionTypes...");
+  
+  let query = "SELECT precaution_type FROM special_precaution_master; ";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let PrecautionTypesJson = JSON.stringify(result);
+    console.log("stringified json object is: ", PrecautionTypesJson);
+    if(PrecautionTypesJson === "[]") {
+      console.log(" it seems no previous precaution types were found .........");
+      var NoPrecautionTypesFound = {
+        "msgtype" : "info",
+        "message": "no precaution types found"
+      }
+      return JSON.stringify(NoPrecautionTypesFound);
+    }
+    con.release();
+    console.log("Exiting retrieveAllPrecautionTypes...");
+    return PrecautionTypesJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrieveAllPrecautionTypes");
+    console.log("Error code is: ", err.code);
+
+    console.log("Exiting retrieveAllPrecautionTypes...");
+    return false;
+  }
+}
+
 exports.retrieveSystemicComplaintTypes = retrieveSystemicComplaintTypes;
 exports.retrieveOcularComplaintTypes = retrieveOcularComplaintTypes;
 exports.retrieveSystemicProcedureTypes = retrieveSystemicProcedureTypes;
 exports.retrieveOcularProcedureTypes = retrieveOcularProcedureTypes;
 exports.retrieveOpticalInvestigationTypes = retrieveOpticalInvestigationTypes;
+exports.retrieveAllPrecautionTypes = retrieveAllPrecautionTypes;
   
