@@ -73,6 +73,11 @@ app.get("/retrieve-procedure-types", async function(req, res) {
 	await apiGenericController.apiHandlerRetrieveProcedureTypes(req, res);
 });
 
+// optical investigation types
+app.get("/retrieve-investigation-types", async function(req, res) {
+	await apiGenericController.apiHandlerRertrieveInvestigationTypes(req, res);
+});
+
 // seperate POST call for login function
 app.post('/login', async function(req,res){
   console.log("insider router app.post/login: ", JSON.stringify(req.body.intentName));
