@@ -88,6 +88,7 @@ DROP TABLE IF EXISTS `complaint_master`;
 CREATE TABLE `complaint_master` (
   `complaint_id` int(11) NOT NULL AUTO_INCREMENT,
   `complaint_type` varchar(50) NOT NULL,
+  `complaint_sub_type` varchar(100) NOT NULL,
   `complaint_desc` varchar(255) NOT NULL,
   `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`complaint_id`,`complaint_type`)
@@ -146,6 +147,7 @@ DROP TABLE IF EXISTS `investigation_master`;
 CREATE TABLE `investigation_master` (
   `investigation_id` int(11) NOT NULL AUTO_INCREMENT,
   `investigation_type` varchar(50) NOT NULL,
+  `investigation_sub_type` varchar(100) NOT NULL,
   `investigation_desc` varchar(255) NOT NULL,
   `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`investigation_id`,`investigation_type`)
@@ -660,6 +662,7 @@ DROP TABLE IF EXISTS `procedure_master`;
 CREATE TABLE `procedure_master` (
   `procedure_id` int(11) NOT NULL AUTO_INCREMENT,
   `procedure_type` varchar(50) NOT NULL,
+  `procedure_sub_type` varchar(100) NOT NULL,
   `procedure_desc` varchar(255) NOT NULL,
   `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`procedure_id`,`procedure_type`)
@@ -847,4 +850,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-19 11:42:06
+-- Dump completed on 2018-10-19 13:00:31
