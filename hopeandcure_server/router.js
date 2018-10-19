@@ -73,7 +73,7 @@ app.get("/retrieve-procedure-types", async function(req, res) {
 	await apiGenericController.apiHandlerRetrieveProcedureTypes(req, res);
 });
 
-// optical investigation types
+// investigation types (optical or systemic)
 app.get("/retrieve-investigation-types", async function(req, res) {
 	await apiGenericController.apiHandlerRertrieveInvestigationTypes(req, res);
 });

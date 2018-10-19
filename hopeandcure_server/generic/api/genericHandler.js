@@ -70,7 +70,7 @@ async function apiHandlerRetrieveProcedureTypes(req, res){
     if (result === false) {
       var returnJsonObj = {
         "msgtype" : "error",
-        "message": "There was an error is fetching surgery types"
+        "message": "There was an error is fetching procedure types"
       }
       console.log("Exiting apiHandlerRetrieveProcedureTypes========>");
       return res.send(returnJsonObj);
@@ -79,5 +79,43 @@ async function apiHandlerRetrieveProcedureTypes(req, res){
   return res.send(JSON.parse(result));
 }
 
+async function apiHandlerRertrieveInvestigationTypes(req, res) {
+  console.log("Entering apiHandlerRertrieveInvestigationTypes========>");
+  let procedure_type = req.query['investigation-type'];
+  let result = {};
+
+  switch(procedure_type) {
+    case 'systemic':
+      result = await mysqlFunctions.retrieveSystemicInvestigationTypes(req);
+      break;
+    case 'ocular':
+      result = await mysqlFunctions.retrieveOpticalInvestigationTypes(req);
+      break;
+    case 'all':
+      result = await mysqlFunctions.retrieveAllInvestigationTypes(req);
+      break;
+    default:
+      var returnJsonObj = {
+        "msgtype" : "info",
+        "message" : "Invalid investigation type specified. current valid values: systemic, optical"
+      }
+      console.log("Exiting apiHandlerRertrieveInvestigationTypes========>");
+      res.send(returnJsonObj);
+    }
+  
+  console.log("inside apiHandlerRertrieveInvestigationTypes:  ", result);
+  if (result === false) {
+    var returnJsonObj = {
+      "msgtype" : "error",
+      "message": "There was an error is fetching investigation types"
+    }
+    console.log("Exiting apiHandlerRertrieveInvestigationTypes========>");
+    return res.send(returnJsonObj);
+  }
+console.log("Exiting apiHandlerRertrieveInvestigationTypes========>");
+return res.send(JSON.parse(result));
+}
+
 exports.apiHandlerRetrieveComplaintTypes = apiHandlerRetrieveComplaintTypes;
 exports.apiHandlerRetrieveProcedureTypes = apiHandlerRetrieveProcedureTypes;
+exports.apiHandlerRertrieveInvestigationTypes = apiHandlerRertrieveInvestigationTypes;
