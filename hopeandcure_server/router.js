@@ -83,11 +83,18 @@ app.get("/retrieve-special-precautions", async function(req, res){
 	await apiGenericController.apiHandlerRetrieveSpecialPrecautions(req, res);
 });
 
+// xylocaine test list 
+app.get("/retrieve-xylocaine-list", async function(req, res) {
+	await apiGenericController.apiHandlerXylocaineList(req, res);
+});
+
 // seperate POST call for login function
 app.post('/login', async function(req,res){
   console.log("insider router app.post/login: ", JSON.stringify(req.body.intentName));
   await apiStaffController.apiHandlerAuthenticateStaff(req, res);
 });
+
+
 
 app.post('/staff', async function(req,res){
 	console.log("insider router app.post/staff: ", JSON.stringify(req.body.intentName));

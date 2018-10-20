@@ -174,21 +174,32 @@ CREATE TABLE patient_drug_allergies (
 drop table if exists `optometary_results`;
 
 CREATE TABLE optometary_results (
-  UHID int NOT NULL,
-  AutorefactrometerReadingRight varchar(100),
-  AutorefactrometerReadingLeft varchar(100),
-  KeratometryReadingRight varchar(100),
-  KeratometryReadingLeft varchar(100),
-  UnaidedVisionRight varchar(100),
-  UnaidedVisionLeft varchar(100),
-  VisionWithPinhole varchar(100),
-  Retinoscopy varchar(100),
-  Acceptance varchar(100),
-  IntraocularPressure ENUM('SCHIOTZ', 'NCT', 'APPLANATION', 'DIGITALLY'),
-  SAC varchar(100),
-  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (UHID) references patients(UHID)
+  UHID int(11) NOT NULL,
+  auto_refractometer_reading_right varchar(100) DEFAULT NULL,
+  auto_refractometer_reading_left varchar(100) DEFAULT NULL,
+  keratometry_reading_right varchar(100) DEFAULT NULL,
+  keratometry_reading_left varchar(100) DEFAULT NULL,
+  unaided_vision_right varchar(100) DEFAULT NULL,
+  unaided_vision_left varchar(100) DEFAULT NULL,
+  vision_with_pinhole varchar(100) DEFAULT NULL,
+  retinoscopy varchar(100) DEFAULT NULL,
+  acceptance varchar(100) DEFAULT NULL,
+  intra_ocular_pressure enum('SCHIOTZ','NCT','APPLANATION','DIGITALLY') DEFAULT NULL,
+  iop_record_timestamp date DEFAULT NULL,
+  dilatation varchar(100) DEFAULT NULL,
+  dilatation_time time DEFAULT NULL,
+  optical_investigation varchar(300) DEFAULT NULL,
+  procedures_done varchar(300) DEFAULT NULL,
+  blood_pressure varchar(100) DEFAULT NULL,
+  special_precautions varchar(200) DEFAULT NULL,
+  refer_to_consultant varchar(100) DEFAULT NULL,
+  SAC enum('PATENT','CDMR','CBCR') DEFAULT NULL,
+  xylocaine_test enum('POSITIVE','NEGATIVE') DEFAULT NULL,
+  RecordTouchDate timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY UHID (UHID),
+  CONSTRAINT optometary_results_ibfk_1 FOREIGN KEY (UHID) REFERENCES patients (UHID)
 );
+
 
 CREATE TABLE surgery_types
 (

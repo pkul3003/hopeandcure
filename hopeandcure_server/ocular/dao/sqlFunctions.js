@@ -65,26 +65,43 @@ async function retrievePatientOcularFacts(req) {
   }
 }
 
-
+// Function to add recording of a optometarist during eye examination
 async function addOptometaryResults(req) {
   console.log("Entering addOptometaryResults...");
   let UHID = req.body.patient.UHID;
-  let AutorefactrometerReadingRight = req.body.patient.AutorefactrometerReadingRight;
-  let AutorefactrometerReadingLeft = req.body.patient.AutorefactrometerReadingLeft;
-  let KeratometryReadingRight = req.body.patient.KeratometryReadingRight;
-  let KeratometryReadingLeft = req.body.patient.KeratometryReadingLeft;
-  let UnaidedVisionRight = req.body.patient.UnaidedVisionRight;
-  let UnaidedVisionLeft = req.body.patient.UnaidedVisionLeft;
-  let VisionWithPinhole = req.body.patient.VisionWithPinhole;
-  let Retinoscopy = req.body.patient.Retinoscopy;
-  let Acceptance = req.body.patient.Acceptance;
-  let IntraOcularPressure = req.body.patient.IntraOcularPressure;
+  let auto_refractometer_reading_right = req.body.patient.auto_refractometer_reading_right;
+  let auto_refractometer_reading_left = req.body.patient.auto_refractometer_reading_left;
+  let keratometry_reading_right = req.body.patient.keratometry_reading_right;
+  let keratometry_reading_left = req.body.patient.keratometry_reading_left;
+  let unaided_vision_right = req.body.patient.unaided_vision_right;
+  let unaided_vision_left = req.body.patient.unaided_vision_left;
+  let vision_with_pinhole = req.body.patient.vision_with_pinhole;
+  let retinoscopy = req.body.patient.retinoscopy;
+  let acceptance = req.body.patient.acceptance;
+  let intra_ocular_pressure = req.body.patient.intra_ocular_pressure;
+  let iop_record_timestamp = req.body.patient.iop_record_timestamp;
   let SAC = req.body.patient.SAC;
+  let dilatation = req.body.patient.dilatation;
+  let dilatation_time = req.body.patient.dilatation_time;
+  let optical_investigation = req.body.patient.optical_investigation;
+  let procedures_done = req.body.patient.procedures_done;
+  let blood_pressure = req.body.patient.blood_pressure;
+  let special_precautions = req.body.patient.special_precautions;
+  let refer_to_consultant = req.body.patient.refer_to_consultant;
+  let xylocaine_test = req.body.patient.xylocaine_test;
 
-  let query = "INSERT INTO optometary_results VALUES ('"+ UHID +"','" + AutorefactrometerReadingRight + "','"+
-              AutorefactrometerReadingLeft + "','"+ KeratometryReadingRight +"', '"+
-              KeratometryReadingLeft +"','" + UnaidedVisionRight +"', '"+ UnaidedVisionLeft +"', '"+ VisionWithPinhole +
-              "', '"+ Retinoscopy +"', '"+ Acceptance +"', '"+ IntraOcularPressure + "', '"+ SAC +"', DEFAULT);";
+  let query = "INSERT INTO optometary_results (UHID, auto_refractometer_reading_right, auto_refractometer_reading_left, " +
+  "keratometry_reading_right, keratometry_reading_left, unaided_vision_right, unaided_vision_left, " +
+  "vision_with_pinhole, retinoscopy, acceptance, intra_ocular_pressure, SAC, iop_record_timestamp, " +
+  "dilatation, dilatation_time, optical_investigation, procedures_done, blood_pressure, special_precautions, "+
+  "refer_to_consultant, xylocaine_test, RecordTouchDate) "+
+  "VALUES ('"+ UHID +"','" + auto_refractometer_reading_right + "','"+
+              auto_refractometer_reading_left + "','"+ keratometry_reading_right +"', '"+ keratometry_reading_left +
+              "','" + unaided_vision_right +"', '"+ unaided_vision_left +"', '"+ vision_with_pinhole +
+              "', '"+ retinoscopy +"', '"+ acceptance +"', '"+ intra_ocular_pressure + "', '"+ SAC +
+              "', '"+ iop_record_timestamp + "', '"+ dilatation+ "', '"+dilatation_time + "', '"+optical_investigation + 
+              "', '"+procedures_done + "', '"+ blood_pressure+ "', '"+special_precautions +
+              "', '"+refer_to_consultant + "', '"+ xylocaine_test+ "', DEFAULT);";
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -251,8 +268,8 @@ async function addConsultantResults(req) {
   let UHID = req.body.patient.UHID;
   let VisionRight = req.body.patient.VisionRight;
   let VisionLeft = req.body.patient.VisionLeft;
-  let AcceptanceRight = req.body.patient.AcceptanceRight;
-  let AcceptanceLeft = req.body.patient.AcceptanceLeft;
+  let acceptanceRight = req.body.patient.acceptanceRight;
+  let acceptanceLeft = req.body.patient.acceptanceLeft;
   let Finalglass_presRight  = req.body.patient.Finalglass_presRight ;
   let Finalglass_presLeft = req.body.patient.Finalglass_presLeft;
   let EyebrowRight  = req.body.patient.EyebrowRight ;
@@ -292,8 +309,8 @@ async function addConsultantResults(req) {
   
 
   let query = "INSERT INTO ophthalmologist_examination_record VALUES ('"+ UHID +"', '" + VisionRight + "','"+
-              VisionLeft + "','"+ AcceptanceRight +"', '"+ 
-              AcceptanceLeft +"', '"+ Finalglass_presRight +"', '"+ Finalglass_presLeft + "', '"+EyebrowRight +"', '"+ EyebrowLeft +"', '"+ Extraocular_moveRight + "', '"+ Extraocular_moveLeft +"', '"+
+              VisionLeft + "','"+ acceptanceRight +"', '"+ 
+              acceptanceLeft +"', '"+ Finalglass_presRight +"', '"+ Finalglass_presLeft + "', '"+EyebrowRight +"', '"+ EyebrowLeft +"', '"+ Extraocular_moveRight + "', '"+ Extraocular_moveLeft +"', '"+
                Pupillary_ReactionRight +"', '" + Pupillary_ReactionLeft +"','"+ Other_FindingRight +"','"+ Other_FindingLeft+"','"+ Intraocular_PressureType +"','"+ 
                Intraocular_PressureRight +"','"+ Intraocular_PressureLeft + "', '"+ GonioscopyRight +"', '"+ GonioscopyLeft + "', '"+SlitLamp_ExamRight +"', '" +
                SlitLamp_ExamLeft + "','" +ConjuctivaRight + "', '" +ConjuctivaLeft +"', '"+CorneaRight +"','"+ CorneaLeft+"','"+Anterior_ChamberRight+"','"+
