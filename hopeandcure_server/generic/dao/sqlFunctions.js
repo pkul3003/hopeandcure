@@ -208,10 +208,75 @@ async function retrieveAllPrecautionTypes(req) {
   }
 }
 
+async function retrieveAllDiagnosisTypes(req) {
+  console.log("Entering retrieveAllDiagnosisTypes...");
+  
+  let query = "SELECT diagnosis_type FROM diagnosis_master; ";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let DiagnosisTypesJson = JSON.stringify(result);
+    console.log("stringified json object is: ", DiagnosisTypesJson);
+    if(DiagnosisTypesJson === "[]") {
+      console.log(" it seems no previous diagnosis types were found .........");
+      var NoDiagnosisTypesFound = {
+        "msgtype" : "info",
+        "message": "no diagnosis type found"
+      }
+      return JSON.stringify(NoDiagnosisTypesFound);
+    }
+    con.release();
+    console.log("Exiting retrieveAllDiagnosisTypes...");
+    return DiagnosisTypesJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrieveAllDiagnosisTypes");
+    console.log("Error code is: ", err.code);
+
+    console.log("Exiting retrieveAllDiagnosisTypes...");
+    return false;
+  }
+}
+
+async function retrieveOcularInstructions(req){
+  console.log("Entering retrieveOcularInstructions...");
+  
+  let query = "SELECT instructions_sub_type FROM instructions_master where instructions_type = 'Occular'; ";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let InstructionTypesJson = JSON.stringify(result);
+    console.log("stringified json object is: ", InstructionTypesJson);
+    if(InstructionTypesJson === "[]") {
+      console.log(" it seems no previous instruction types were found .........");
+      var NoInstructionTypesFound = {
+        "msgtype" : "info",
+        "message": "no instructions type found"
+      }
+      return JSON.stringify(NoInstructionTypesFound);
+    }
+    con.release();
+    console.log("Exiting retrieveOcularInstructions...");
+    return InstructionTypesJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrieveOcularInstructions");
+    console.log("Error code is: ", err.code);
+
+    console.log("Exiting retrieveOcularInstructions...");
+    return false;
+  }
+}
+
 exports.retrieveSystemicComplaintTypes = retrieveSystemicComplaintTypes;
 exports.retrieveOcularComplaintTypes = retrieveOcularComplaintTypes;
 exports.retrieveSystemicProcedureTypes = retrieveSystemicProcedureTypes;
 exports.retrieveOcularProcedureTypes = retrieveOcularProcedureTypes;
 exports.retrieveOpticalInvestigationTypes = retrieveOpticalInvestigationTypes;
 exports.retrieveAllPrecautionTypes = retrieveAllPrecautionTypes;
-  
+exports.retrieveAllDiagnosisTypes = retrieveAllDiagnosisTypes;
+exports.retrieveOcularInstructions = retrieveOcularInstructions;

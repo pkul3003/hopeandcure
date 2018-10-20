@@ -36,9 +36,8 @@ var appRouter = function(app) {
   	});
 
 // GET interfaces
-
 // sample test interface to check if the server is working
-app.get("/DaysOfWeek", function(req, res) {
+app.get("/days-of-week", function(req, res) {
 	 var DaysOfWeek = config.DaysOfWeek;
 	 res.send(DaysOfWeek);
 });
@@ -83,10 +82,14 @@ app.get("/retrieve-special-precautions", async function(req, res){
 	await apiGenericController.apiHandlerRetrieveSpecialPrecautions(req, res);
 });
 
-// xylocaine test list 
-app.get("/retrieve-xylocaine-list", async function(req, res) {
-	await apiGenericController.apiHandlerXylocaineList(req, res);
+app.get("/retrieve-diagnosis-types", async function(req, res) {
+	await apiGenericController.apiHandlerRetrieveDiagnosisTypes(req, res);
 });
+
+app.get("/retrieve-instructions", async function(req, res){
+	await apiGenericController.apiHandlerRetrieveInstructions(req, res);
+});
+
 
 // seperate POST call for login function
 app.post('/login', async function(req,res){

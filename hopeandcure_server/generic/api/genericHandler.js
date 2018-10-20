@@ -17,6 +17,9 @@ async function apiHandlerRetrieveComplaintTypes(req, res) {
       case 'ocular':
         result = await mysqlFunctions.retrieveOcularComplaintTypes(req);
         break;
+      case 'optical':
+        result = await mysqlFunctions.retrieveOcularComplaintTypes(req);
+        break;
       case 'all':
         result = await mysqlFunctions.retrieveAllComplaintTypes(req);	
         break;
@@ -54,6 +57,9 @@ async function apiHandlerRetrieveProcedureTypes(req, res){
       case 'ocular':
         result = await mysqlFunctions.retrieveOcularProcedureTypes(req);
         break;
+      case 'optical':
+        result = await mysqlFunctions.retrieveOcularProcedureTypes(req);
+        break;
       case 'all':
         result = await mysqlFunctions.retrieveAllProcedureTypes(req);
         break;
@@ -89,6 +95,9 @@ async function apiHandlerRertrieveInvestigationTypes(req, res) {
       result = await mysqlFunctions.retrieveSystemicInvestigationTypes(req);
       break;
     case 'ocular':
+      result = await mysqlFunctions.retrieveOpticalInvestigationTypes(req);
+      break;
+    case 'optical':
       result = await mysqlFunctions.retrieveOpticalInvestigationTypes(req);
       break;
     case 'all':
@@ -154,7 +163,91 @@ console.log("Exiting apiHandlerRetrieveSpecialPrecautions========>");
 return res.send(JSON.parse(result));
 }
 
+
+async function apiHandlerRetrieveDiagnosisTypes(req, res) {
+  console.log("Entering apiHandlerRetrieveDiagnosisTypes========>");
+  let diagnosis_type = req.query['diagnosis-type'];
+  let result = {};
+
+  switch(diagnosis_type) {
+    case 'systemic':
+      result = await mysqlFunctions.retrieveSystemicDiagnosisTypes(req);
+      break;
+    case 'ocular':
+      result = await mysqlFunctions.retrieveAllDiagnosisTypes(req);
+      break;
+    case 'optical':
+      result = await mysqlFunctions.retrieveAllDiagnosisTypes(req);
+      break;
+    case 'all':
+      result = await mysqlFunctions.retrieveAllDiagnosisTypes(req);
+      break;
+    default:
+      var returnJsonObj = {
+        "msgtype" : "info",
+        "message" : "Invalid diagnosis type specified. current valid values: systemic, optical, all"
+      }
+      console.log("Exiting apiHandlerRetrieveDiagnosisTypes========>");
+      res.send(returnJsonObj);
+    }
+  
+  console.log("inside apiHandlerRetrieveDiagnosisTypes:  ", result);
+  if (result === false) {
+    var returnJsonObj = {
+      "msgtype" : "error",
+      "message": "There was an error is fetching diagnosis types"
+    }
+    console.log("Exiting apiHandlerRetrieveDiagnosisTypes========>");
+    return res.send(returnJsonObj);
+  }
+console.log("Exiting apiHandlerRetrieveDiagnosisTypes========>");
+return res.send(JSON.parse(result));
+}
+
+
+async function apiHandlerRetrieveInstructions(req, res){
+  console.log("Entering apiHandlerRetrieveInstructions========>");
+  let instruction_type = req.query['instructions-type'];
+  let result = {};
+
+  switch(instruction_type) {
+    case 'generic':
+      result = await mysqlFunctions.retrieveGenericInstructions(req);
+      break;
+    case 'ocular':
+      result = await mysqlFunctions.retrieveOcularInstructions(req);
+      break;
+    case 'optical':
+      result = await mysqlFunctions.retrieveOcularInstructions(req);
+      break;
+    case 'all':
+      result = await mysqlFunctions.retrieveAllInstructions(req);
+      break;
+    default:
+      var returnJsonObj = {
+        "msgtype" : "info",
+        "message" : "Invalid instruction type specified. current valid values: generic, ocular, all"
+      }
+      console.log("Exiting apiHandlerRetrieveInstructions========>");
+      res.send(returnJsonObj);
+    }
+  
+  console.log("inside apiHandlerRetrieveInstructions:  ", result);
+  if (result === false) {
+    var returnJsonObj = {
+      "msgtype" : "error",
+      "message": "There was an error is fetching instruction types"
+    }
+    console.log("Exiting apiHandlerRetrieveInstructions========>");
+    return res.send(returnJsonObj);
+  }
+console.log("Exiting apiHandlerRetrieveInstructions========>");
+return res.send(JSON.parse(result));
+}
+
 exports.apiHandlerRetrieveComplaintTypes = apiHandlerRetrieveComplaintTypes;
 exports.apiHandlerRetrieveProcedureTypes = apiHandlerRetrieveProcedureTypes;
 exports.apiHandlerRertrieveInvestigationTypes = apiHandlerRertrieveInvestigationTypes;
 exports.apiHandlerRetrieveSpecialPrecautions = apiHandlerRetrieveSpecialPrecautions;
+exports.apiHandlerRetrieveDiagnosisTypes = apiHandlerRetrieveDiagnosisTypes;
+exports.apiHandlerRetrieveInstructions = apiHandlerRetrieveInstructions;
