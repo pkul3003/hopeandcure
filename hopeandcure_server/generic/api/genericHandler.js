@@ -29,11 +29,11 @@ async function apiHandlerRetrieveComplaintTypes(req, res) {
           "message" : "Invalid complaint type specified. current valid values: systemic, ocular"
         }
         console.log("Exiting apiHandlerRetrieveComplaintTypes========>");
-        res.send(returnJsonObj);
+        return res.send(returnJsonObj);
       }
   
     console.log("inside apiHandlerRetrieveComplaintTypes, after BE call:  ", result);
-    if (result === false) {
+    if (result === false || result === '{}') {
       var returnJsonObj = {
         "msgtype" : "error",
         "message": "There was an error is fetching complaint types"
@@ -69,7 +69,7 @@ async function apiHandlerRetrieveProcedureTypes(req, res){
           "message" : "Invalid procedure type specified. current valid values: systemic, ocular"
         }
         console.log("Exiting apiHandlerRetrieveProcedureTypes========>");
-        res.send(returnJsonObj);
+        return res.send(returnJsonObj);
       }
     
     console.log("inside apiHandlerRetrieveProcedureTypes:  ", result);
@@ -109,7 +109,7 @@ async function apiHandlerRertrieveInvestigationTypes(req, res) {
         "message" : "Invalid investigation type specified. current valid values: systemic, optical"
       }
       console.log("Exiting apiHandlerRertrieveInvestigationTypes========>");
-      res.send(returnJsonObj);
+      return res.send(returnJsonObj);
     }
   
   console.log("inside apiHandlerRertrieveInvestigationTypes:  ", result);
@@ -147,7 +147,7 @@ async function apiHandlerRetrieveSpecialPrecautions(req, res) {
         "message" : "Invalid precaution type specified. current valid values: systemic, optical, all"
       }
       console.log("Exiting apiHandlerRetrieveSpecialPrecautions========>");
-      res.send(returnJsonObj);
+      return res.send(returnJsonObj);
     }
   
   console.log("inside apiHandlerRetrieveSpecialPrecautions:  ", result);
@@ -188,7 +188,7 @@ async function apiHandlerRetrieveDiagnosisTypes(req, res) {
         "message" : "Invalid diagnosis type specified. current valid values: systemic, optical, all"
       }
       console.log("Exiting apiHandlerRetrieveDiagnosisTypes========>");
-      res.send(returnJsonObj);
+      return res.send(returnJsonObj);
     }
   
   console.log("inside apiHandlerRetrieveDiagnosisTypes:  ", result);
@@ -229,7 +229,7 @@ async function apiHandlerRetrieveInstructions(req, res){
         "message" : "Invalid instruction type specified. current valid values: generic, ocular, all"
       }
       console.log("Exiting apiHandlerRetrieveInstructions========>");
-      res.send(returnJsonObj);
+      return res.send(returnJsonObj);
     }
   
   console.log("inside apiHandlerRetrieveInstructions:  ", result);
@@ -287,7 +287,7 @@ async function apiHandlerRetrieveMedicalAdvice(req, res) {
         "message" : "Invalid advice type specified. current valid values: generic, ophthalmic, all"
       }
       console.log("Exiting apiHandlerRetrieveAdviceTypes========>");
-      res.send(returnJsonObj);
+      return res.send(returnJsonObj);
     }
   
   console.log("inside apiHandlerRetrieveAdviceTypes:  ", result);
