@@ -249,7 +249,7 @@ return res.send(JSON.parse(result));
 async function apiHandlerRetrievePrescription(req, res){
   console.log("Entering apiHandlerRetrievePrescription========>");
   
-  let result = mysqlFunctions.retrieveMedicalPrescription(req);
+  let result = await mysqlFunctions.retrieveMedicalPrescription(req);
   console.log("inside apiHandlerRetrievePrescription:  ", result);
   if (result === false) {
     var returnJsonObj = {

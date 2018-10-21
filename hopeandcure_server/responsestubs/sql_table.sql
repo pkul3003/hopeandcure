@@ -458,14 +458,6 @@ CREATE TABLE IF NOT EXISTS advice_master(
     PRIMARY KEY (advice_id)
 ); 
 
-CREATE TABLE IF NOT EXISTS minoropd_procedure_master(
-    min_procedure_id INT AUTO_INCREMENT,
-    min_procedure_type VARCHAR(50) NOT NULL,
-    min_procedure_desc VARCHAR(255) NOT NULL,   
-    RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, 
-    PRIMARY KEY (min_procedure_id,min_procedure_type )
-);
-
 CREATE TABLE IF NOT EXISTS minor_opd_procedures_master(
     min_procedure_id INT AUTO_INCREMENT,
     min_procedure_type VARCHAR(50) NOT NULL,
@@ -487,3 +479,12 @@ CREATE TABLE `medicine_master` (
   `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`medicine_id`)
 );
+
+CREATE TABLE IF NOT EXISTS medical_prescription_master(
+    prescription_type VARCHAR(255) NOT NULL,
+    medicine_id INT NOT NULL,
+    diagnosis_id INT NOT NULL,
+    RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY fk_medicine(medicine_id) REFERENCES medicine_master(medicine_id),
+    FOREIGN KEY fk_diagnosis(diagnosis_id) REFERENCES diagnosis_master(diagnosis_id)
+); 

@@ -277,7 +277,7 @@ async function retrieveMedicalPrescription(req) {
   console.log("Entering retrieveMedicalPrescription...");
   let diagnosis_id = req.query['diagnosis-id'];
 
-  let query = "SELECT * FROM medical_prescription_master WHERE diagnosis_id  = '" +diagnosis_id+ "';";
+  let query = "select * from prescription_diagnosis_view where diagnosis_id = '" +diagnosis_id+ "';";
   console.log(query);
   try {
     let pool = await getConnectionPool();
