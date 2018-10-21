@@ -94,60 +94,12 @@ CREATE TABLE patient_medical_facts (
   FOREIGN KEY (UHID) references patients(UHID)
 );
 
-drop table if exists `patient_previous_ocular_illness`;
-CREATE TABLE patient_previous_ocular_illness (
-  UHID int NOT NULL,
-  KnownOcularCondition varchar(300),
-  DurationOfCondition varchar(100),
-  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (UHID) references patients(UHID)
-);
-
-drop table if exists `patient_previous_ocular_treatment`;
-CREATE TABLE patient_previous_ocular_illness (
-  UHID int NOT NULL,
-  OcularTreatment varchar(300),
-  OcularTreatmentMonthYear varchar(100),
-  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (UHID) references patients(UHID)
-);
-
-drop table if exists `ocular_complaint_types`;
-CREATE TABLE ocular_complaint_types (
-  ComplaintType varchar(100) NOT NULL,
-  ComplaintDescription varchar(300),
-  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (ComplaintType)
-);
-
 drop table if exists `systemic_complaint_types`;
 CREATE TABLE systemic_complaint_types (
   ComplaintType varchar(100) NOT NULL,
   ComplaintDescription varchar(300),
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (ComplaintType)
-);
-
-drop table if exists `patient_ocular_complaints`; 
-create table patient_ocular_complaints(
-  UHID int NOT NULL,
-  ComplaintType varchar(100) NOT NULL,
-  ComplaintDuration varchar(100),
-  ComplaintDescription varchar(300),
-  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (UHID) references patients(UHID),
-  FOREIGN KEY (ComplaintType) references ocular_complaint_types(ComplaintType)
-);
-
-drop table if exists `patient_systemic_history`;
-CREATE TABLE patient_systemic_history (
-  UHID int NOT NULL,
-  ComplaintType varchar(100) NOT NULL,
-  ComplaintDuration varchar(100),
-  ComplaintDescription varchar(300),
-  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (UHID) references patients(UHID),
-  FOREIGN KEY (ComplaintType) references systemic_complaint_types(ComplaintType)
 );
 
 drop table if exists `patient_ocular_facts`;
@@ -173,31 +125,41 @@ CREATE TABLE patient_drug_allergies (
 
 drop table if exists `optometary_results`;
 
-CREATE TABLE optometary_results (
-  UHID int(11) NOT NULL,
-  auto_refractometer_reading_right varchar(100) DEFAULT NULL,
-  auto_refractometer_reading_left varchar(100) DEFAULT NULL,
-  keratometry_reading_right varchar(100) DEFAULT NULL,
-  keratometry_reading_left varchar(100) DEFAULT NULL,
-  unaided_vision_right varchar(100) DEFAULT NULL,
-  unaided_vision_left varchar(100) DEFAULT NULL,
-  vision_with_pinhole varchar(100) DEFAULT NULL,
-  retinoscopy varchar(100) DEFAULT NULL,
-  acceptance varchar(100) DEFAULT NULL,
-  intra_ocular_pressure enum('SCHIOTZ','NCT','APPLANATION','DIGITALLY') DEFAULT NULL,
-  iop_record_timestamp date DEFAULT NULL,
-  dilatation varchar(100) DEFAULT NULL,
-  dilatation_time time DEFAULT NULL,
-  optical_investigation varchar(300) DEFAULT NULL,
-  procedures_done varchar(300) DEFAULT NULL,
-  blood_pressure varchar(100) DEFAULT NULL,
-  special_precautions varchar(200) DEFAULT NULL,
-  refer_to_consultant varchar(100) DEFAULT NULL,
-  SAC enum('PATENT','CDMR','CBCR') DEFAULT NULL,
-  xylocaine_test enum('POSITIVE','NEGATIVE') DEFAULT NULL,
-  RecordTouchDate timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY UHID (UHID),
-  CONSTRAINT optometary_results_ibfk_1 FOREIGN KEY (UHID) REFERENCES patients (UHID)
+CREATE TABLE `optometary_results` (
+  `UHID` int(11) NOT NULL,
+  `auto_refractometer_reading_right` varchar(100) DEFAULT NULL,
+  `auto_refractometer_reading_left` varchar(100) DEFAULT NULL,
+  `keratometry_reading_right` varchar(100) DEFAULT NULL,
+  `keratometry_reading_left` varchar(100) DEFAULT NULL,
+  `unaided_vision_right` varchar(100) DEFAULT NULL,
+  `unaided_vision_left` varchar(100) DEFAULT NULL,
+  `vision_with_pinhole` varchar(100) DEFAULT NULL,
+  `retinoscopy` varchar(100) DEFAULT NULL,
+  `acceptance` varchar(100) DEFAULT NULL,
+  `intra_ocular_pressure` enum('SCHIOTZ','NCT','APPLANATION','DIGITALLY') DEFAULT NULL,
+  `iop_record_timestamp` date DEFAULT NULL,
+  `dilatation` varchar(100) DEFAULT NULL,
+  `dilatation_time` time DEFAULT NULL,
+  `optical_investigation` varchar(300) DEFAULT NULL,
+  `procedures_done` varchar(300) DEFAULT NULL,
+  `blood_pressure` varchar(100) DEFAULT NULL,
+  `special_precautions` varchar(200) DEFAULT NULL,
+  `refer_to_consultant` varchar(100) DEFAULT NULL,
+  `SAC` enum('PATENT','CDMR','CBCR') DEFAULT NULL,
+  `xylocaine_test` enum('POSITIVE','NEGATIVE') DEFAULT NULL,
+  `current_complaints` varchar(300) DEFAULT NULL,
+  `duration_current_complaints` varchar(300) DEFAULT NULL,
+  `past_ocular_illness` varchar(300) DEFAULT NULL,
+  `treatment_past_ocular_illness` varchar(300) DEFAULT NULL,
+  `past_systemic_illness` varchar(300) DEFAULT NULL,
+  `treatment_past_systemic_illness` varchar(300) DEFAULT NULL,
+  `surgical_history_ocular` varchar(300) DEFAULT NULL,
+  `surgical_history_other` varchar(300) DEFAULT NULL,
+  `drug_allergies` varchar(300) DEFAULT NULL,
+  `current_glass_prescription_right` varchar(50) DEFAULT NULL,
+  `current_glass_prescription_left` varchar(50) DEFAULT NULL,
+  `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT `optometary_results_ibfk_1` FOREIGN KEY (`UHID`) REFERENCES `patients` (`UHID`)
 );
 
 
@@ -233,48 +195,7 @@ CREATE TABLE patient_surgical_history
   FOREIGN KEY (surgery_type) references surgery_types(surgery_type)
 );
 
-CREATE TABLE patient_systemic_surgical_history_simple
-(
-  UHID int NOT NULL,
-  surgery_description varchar(300),
-  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (UHID) references patients(UHID)
-);
-
-CREATE TABLE patient_ocular_surgical_history_simple
-(
-  UHID int NOT NULL,
-  surgery_description varchar(300),
-  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (UHID) references patients(UHID)
-);
-
 -- to be imported from central medicine database
-drop table if exists `medicine_master`;
-CREATE TABLE medicine_master (
-  MedicineID
-  MedicineName
-  ManufacturerName
-  MedicineRemarks
-);
-
-
-drop table if exists `medical_prescription_templates` ;
-CREATE TABLE medical_prescription_templates (
-  TemplateID int NOT NULL,
-  TemplateName varchar(300) NOT NULL,
-  Description varchar(300) NOT NULL,
-  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-);
-
-drop table if exists `template_medicines`;
-CREATE TABLE template_medicines (
-  TemplateID int NOT NULL,
-  MedicineID varchar(100) NOT NULL,
-  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY(TemplateID, MedicineID) references medical_prescription_templates(TemplateID), medicine_master(MedicineID)
-);
-
 
 drop table if exists `staff_login`;
 CREATE TABLE staff_login (
@@ -404,7 +325,7 @@ insert into mode_of_payment values ('NET BANKING', DEFAULT);
 CREATE TABLE IF NOT EXISTS complaint_master(
     complaint_id INT AUTO_INCREMENT,
     complaint_type VARCHAR(50) NOT NULL,
-	complaint_sub_type VARCHAR(100) NOT NULL,
+	  complaint_sub_type VARCHAR(100) NOT NULL,
     complaint_desc VARCHAR(255) NOT NULL,
     RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,    
     PRIMARY KEY (complaint_id,complaint_type )

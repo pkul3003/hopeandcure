@@ -47,24 +47,6 @@ async function apiHandlerAddPatientAddress(req, res) {
 		return res.json(response);
 }
 
-// find all patients based on first and last name
-async function apiHandlerFindPatients(req,res){
-	console.log("Entering apiHandlerCreatePatient========>");
-    console.log(req.body.patient.first_name);
-    console.log(req.body.patient.last_name);
-
-    let response = await mysqlFunctions.retrievePatientsByName(req);
-    console.log("inside retrievePatientsByName:  ", response);
-		if (response === false) {
-			var returnJsonObj = {
-				"msgtype" : "error",
-				"message": "There was an error is fetching customer"
-			}
-			return res.send(returnJsonObj);
-		}
-  console.log("Exiting apiHandlerCreatePatient========>");
-	return res.send(JSON.parse(response));
-}
 
 // find all patients based on either UHID, first_name, last_name or mobile
 async function apiHandlerSearchPatient(req, res) {
@@ -82,23 +64,6 @@ console.log("Exiting apiHandlerSearchPatient========>");
 return res.send(JSON.parse(response));
 }
 
-// find a patient using his/her UHID
-async function apiHandlerFindPatientByUHID(req,res){
-	console.log("Entering apiHandlerFindPatientByUHID========>");
-    console.log(req.body.patient.UHID);
-    let response = await mysqlFunctions.retrievePatientsByUHID(req);
-    console.log("inside apiHandlerFindPatientByUHID:  ", response);
-		if (response === false) {
-			var returnJsonObj = {
-				"msgtype" : "error",
-				"message": "There was an error is fetching customer"
-			}
-			return res.send(returnJsonObj);
-		}
-	console.log("Exiting apiHandlerFindPatientByUHID========>");
-	return res.send(JSON.parse(response));
-  
-}
 
 // find a patient by his/her mobile number
 async function apiHandlerFindPatientByMobile(req,res){
@@ -170,46 +135,6 @@ async function apiHandlerRetrieveMedicalFacts(req,res) {
 	return res.send(JSON.parse(response));
 }
 
-async function apiHandlerRetrieveSystemicHistory(req,res) {
-	console.log("Entering apiHandlerRetrieveSystemicHistory========>");
-	let response = await mysqlFunctions.retrievePatientSystemicHistory(req);
-	console.log("inside apiHandlerRetrieveSystemicHistory:  ", response);
-
-	if (response === false) {
-		var returnJsonObj = {
-			"msgtype" : "error",
-			"message": "There was an error in retrieving systemic history for the patient"
-		}
-		console.log("Exiting apiHandlerRetrieveSystemicHistory========>");
-		return res.send(returnJsonObj);
-	}
-
-	console.log("Exiting apiHandlerRetrieveSystemicHistory========>");
-	return res.send(JSON.parse(response));
-}
-
-async function apiHandlerAddSystemicHistory(req,res) {
-	console.log("Entering apiHandlerAddSystemicHistory========>");
-	let response = await mysqlFunctions.addPatientSystemicHistory(req);
-	console.log("inside apiHandlerAddSystemicHistory:  ", response);
-
-	if (response === false) {
-		var returnJsonObj = {
-			"msgtype" : "error",
-			"message": "There was an error in adding systemic history for the patient"
-		}
-		console.log("Exiting apiHandlerAddSystemicHistory========>");
-		return res.send(returnJsonObj);
-	}
-
-	var returnJsonObj = {
-		"msgtype" : "success",
-		"message": "patient systemtic history added successfully"
-	  }
-	  console.log("Exiting apiHandlerAddSystemicHistory========>");
-	  return res.json(returnJsonObj);
-}
-
 async function apiHandlerAddPatientDrugAllergies(req, res) {
 	console.log("Entering apiHandlerAddPatientDrugAllergies========>");
 	let response = await mysqlFunctions.addPatientDrugAllergies(req);
@@ -273,16 +198,11 @@ async function apiHandlerAddSurgicalHistory(req, res) {
 }
 
 exports.apiHandlerCreatePatient = apiHandlerCreatePatient;
-exports.apiHandlerFindPatients = apiHandlerFindPatients;
-exports.apiHandlerFindPatientByUHID = apiHandlerFindPatientByUHID;
-exports.apiHandlerFindPatientByMobile = apiHandlerFindPatientByMobile;
 exports.apiHandlerAddMedicalFacts = apiHandlerAddMedicalFacts;
 exports.apiHandlerUpdateMedicalFacts = apiHandlerUpdateMedicalFacts;
 exports.apiHandlerRetrieveMedicalFacts = apiHandlerRetrieveMedicalFacts;
 exports.apiHandlerAddPatientAddress = apiHandlerAddPatientAddress;
 exports.apiHandlerSearchPatient = apiHandlerSearchPatient;
-exports.apiHandlerRetrieveSystemicHistory = apiHandlerRetrieveSystemicHistory;
-exports.apiHandlerAddSystemicHistory = apiHandlerAddSystemicHistory;
 exports.apiHandlerAddPatientDrugAllergies = apiHandlerAddPatientDrugAllergies;
 exports.apiHandlerRetrieveSurgicalHistory = apiHandlerRetrieveSurgicalHistory;
 exports.apiHandlerAddSurgicalHistory = apiHandlerAddSurgicalHistory;

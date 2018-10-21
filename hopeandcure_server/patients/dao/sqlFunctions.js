@@ -317,84 +317,6 @@ async function retrievePatients(req) {
   return false;
 }
 
-
-async function retrievePatientsByUHID(req) {
-  console.log("inside retrievePatientsByUHID...");
-  let UHID = req.body.patient.UHID;
-  query = "SELECT * FROM patients WHERE UHID = " + UHID;
-  console.log(query);
-  try {
-    let pool = await getConnectionPool();
-    let con = await pool.getConnection();
-    let [result,fields] = await con.execute(query);
-    let patientJson = JSON.stringify(result);
-    console.log(patientJson);
-    con.release();
-    return patientJson;
-  }
-  catch (err){
-    console.log("Error ====== retrievePatientsByUHID");
-    console.log("Error code is: ", err.code);
-    return false;
-  }
-}
-
-async function retrievePatientSystemicHistory(req) {
-  console.log("Entering retrievePatientSystemicHistory...");
-  let UHID = req.body.patient.UHID;
-
-  let query = "SELECT * FROM patient_systemic_history WHERE UHID = '" +UHID+ "';";
-  console.log(query);
-  try {
-    let pool = await getConnectionPool();
-    let con = await pool.getConnection();
-    let [result,fields] = await con.execute(query);
-    let patientJson = JSON.stringify(result);
-    console.log(patientJson);
-    if(patientJson === "[]") {
-      console.log(" it seems no previous complaints were found .........");
-      var NoSystemicHistoryFound = {
-        "msgtype" : "info",
-        "message": "no systemic history found"
-      }
-      return JSON.stringify(NoSystemicHistoryFound);
-    }
-    con.release();
-    return patientJson;
-  }
-  catch(err) {
-    console.log("Error ====== retrievePatientSystemicHistory");
-    console.log("Error code is: ", err.code);
-    console.log("Exiting retrievePatientSystemicHistory...");
-    return false;
-  }
-}
-
-async function addPatientSystemicHistory(req) {
-  console.log("Entering addPatientSystemicHistory...");
-  let UHID = req.body.patient.UHID;
-  let ComplaintType = req.body.patient.ComplaintType;
-  let ComplaintDuration = req.body.patient.ComplaintDuration;
-  let ComplaintDescription = req.body.patient.ComplaintDescription;
-
-  let query = "INSERT into patient_systemic_history VALUES ('" +UHID+ "','" + 
-      ComplaintType + "', '" +ComplaintDuration+ "', '" + ComplaintDescription+ "', DEFAULT);";
-  console.log(query);
-  try {
-    let pool = await getConnectionPool();
-    let con = await pool.getConnection();
-    await con.execute(query);
-    con.release();
-    return true;
-  }
-  catch(err) {
-    console.log("Error ====== addPatientSystemicHistory");
-    console.log("Error code is: ", err.code);
-    console.log("Exiting addPatientSystemicHistory...");
-    return false;
-  }
-}
-
 async function addPatientDrugAllergies(req) {
   console.log("Entering addPatientDrugAllergies...");
   let UHID = req.body.patient.UHID;
@@ -473,15 +395,12 @@ async function addPatientSurgicalHistory(req) {
   }
 }
 
-exports.retrievePatientsByUHID = retrievePatientsByUHID;
 exports.createNewPatient = createNewPatient;
 exports.createPatientMedicalFacts = createPatientMedicalFacts;
 exports.retrievePatientMedicalFacts = retrievePatientMedicalFacts;
 exports.updatePatientMedicalFacts = updatePatientMedicalFacts;
 exports.addPatientAddress = addPatientAddress;
 exports.retrievePatients = retrievePatients;
-exports.retrievePatientSystemicHistory = retrievePatientSystemicHistory;
-exports.addPatientSystemicHistory = addPatientSystemicHistory;
 exports.addPatientDrugAllergies = addPatientDrugAllergies;
 exports.retrievePatientSurgicalHistory = retrievePatientSurgicalHistory;
 exports.addPatientSurgicalHistory = addPatientSurgicalHistory;

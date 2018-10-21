@@ -208,9 +208,6 @@ app.post('/patients', async function (req, res){
 app.post('/generic', async function(req, res){
 	console.log("inside router app.post/generic: "+ JSON.stringify(req.body.intentName));
 	switch (req.body.intentName) {
-		case 'retrieve-systemic-complaint-types' :
-			await apiGenericController.apiHandlerRetrieveSystemicComplaintTypes(req, res);
-			break;
 		case 'retrieve-surgery_types':
 			await apiGenericController.apiHandlerRetrieveSurgeryTypes(req, res);
 			break;
@@ -240,18 +237,6 @@ app.post('/ocular', async function (req, res){
 			break;
 		case 'retrieve-optometary-results':
 			await apiOcularController.apiHandlerRetrieveOptometeryResults(req, res);
-			break;
-		case 'retrieve-previous-ocular-illness':
-			await apiOcularController.apiHandlerRetrievePreviousOcularIllness(req, res);
-			break;
-		case 'add-previous-ocular-illness':
-			await apiOcularController.apiHandlerAddPreviousOcularIllness(req, res);
-			break;
-		case 'retrieve-ocular-complaint-types' :
-			await apiOcularController.apiHandlerRetrieveOcularComplaintTypes(req, res);
-			break;
-		case 'add-current-ocular-complaints':
-			await apiOcularController.apiHandlerAddCurrentOcularComplaints(req, res);
 			break;
 		case 'add-consultant-examination-record':
 			await apiOcularController.apiHandlerAddConsultantResults(req, res);
