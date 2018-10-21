@@ -257,11 +257,10 @@ CREATE TABLE `medicine_master` (
   `medicine_id` int(11) NOT NULL AUTO_INCREMENT,
   `medicine_name` varchar(100) NOT NULL,
   `medicine_type` varchar(255) NOT NULL,
-  `manufacturer` varchar(255) DEFAULT NULL,
+  `medicine_manufactrer` varchar(255) NOT NULL,
   `medicine_mr` varchar(255) DEFAULT NULL,
   `medicine_mr_contact` varchar(255) DEFAULT NULL,
   `medicine_remarks` varchar(255) DEFAULT NULL,
-  `recommended_dosage` varchar(300) DEFAULT NULL,
   `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`medicine_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -277,30 +276,28 @@ LOCK TABLES `medicine_master` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `minor_opd_procedures_master`
+-- Table structure for table `minoropd_procedure_master`
 --
 
-DROP TABLE IF EXISTS `minor_opd_procedures_master`;
+DROP TABLE IF EXISTS `minoropd_procedure_master`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `minor_opd_procedures_master` (
+CREATE TABLE `minoropd_procedure_master` (
   `min_procedure_id` int(11) NOT NULL AUTO_INCREMENT,
   `min_procedure_type` varchar(50) NOT NULL,
   `min_procedure_desc` varchar(255) NOT NULL,
   `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`min_procedure_id`),
-  UNIQUE KEY `uc_min_procedure_type` (`min_procedure_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`min_procedure_id`,`min_procedure_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `minor_opd_procedures_master`
+-- Dumping data for table `minoropd_procedure_master`
 --
 
-LOCK TABLES `minor_opd_procedures_master` WRITE;
-/*!40000 ALTER TABLE `minor_opd_procedures_master` DISABLE KEYS */;
-INSERT INTO `minor_opd_procedures_master` VALUES (1,'Petrygium suture removal done','','2018-10-20 18:30:00'),(2,'DCR suture removal done','','2018-10-20 18:30:00'),(3,'Conjunctival cyst ruptured','','2018-10-20 18:30:00'),(4,'Thorough eye wash done','','2018-10-20 18:30:00');
-/*!40000 ALTER TABLE `minor_opd_procedures_master` ENABLE KEYS */;
+LOCK TABLES `minoropd_procedure_master` WRITE;
+/*!40000 ALTER TABLE `minoropd_procedure_master` DISABLE KEYS */;
+/*!40000 ALTER TABLE `minoropd_procedure_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1027,4 +1024,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-21 15:14:28
+-- Dump completed on 2018-10-21 12:23:03

@@ -315,20 +315,20 @@ async function retrieveOphthalmicAdvice(req) {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
     let [result,fields] = await con.execute(query);
-    let AdviceTypesJson = JSON.stringify(result);
-    console.log("stringified json object is: ", AdviceTypesJson);
-    if(AdviceTypesJson === "[]") {
+    let MysqlResponseJson = JSON.stringify(result);
+    console.log("stringified json object is: ", MysqlResponseJson);
+    if(MysqlResponseJson === "[]") {
       console.log(" it seems no previous ophthalmic advice types were found .........");
-      var NoAdviceTypesFound = {
+      var NoDataFound = {
         "msgtype" : "info",
         "message": "no advice type found"
       }
       console.log("Exiting retrieveOphthalmicAdvice...");
-      return JSON.stringify(NoAdviceTypesFound);
+      return JSON.stringify(NoDataFound);
     }
     
     console.log("Exiting retrieveOphthalmicAdvice...");
-    return AdviceTypesJson;
+    return MysqlResponseJson;
   }
   catch(err) {
     console.log("Error ====== retrieveOphthalmicAdvice");
@@ -339,6 +339,78 @@ async function retrieveOphthalmicAdvice(req) {
   }
 }
 
+async function retrieveMinorOPDProcedures(req){
+  console.log("Entering retrieveMinorOPDProcedures...");
+
+  let query = "SELECT min_procedure_type FROM minor_opd_procedures_master;";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let MysqlResponseJson = JSON.stringify(result);
+    console.log("stringified json object is: ", MysqlResponseJson);
+    if(MysqlResponseJson === "[]") {
+      console.log(" it seems no previous minor procedures types were found .........");
+      var NoDataFound = {
+        "msgtype" : "info",
+        "message": "no minor OPD procedures type found"
+      }
+      console.log("Exiting retrieveMinorOPDProcedures...");
+      return JSON.stringify(NoDataFound);
+    }
+    
+    console.log("Exiting retrieveMinorOPDProcedures...");
+    return MysqlResponseJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrieveMinorOPDProcedures");
+    console.log("Error code is: ", err.code);
+
+    console.log("Exiting retrieveMinorOPDProcedures...");
+    return false;
+  }
+}
+
+// search medicine
+async function searchMedicineByName(req) {
+  console.log("Entering searchMedicineByName...");
+  let medicine_name = req.query['medicine-name'];
+
+  let query = "SELECT medicine_name, medicine_type, manufacturer, " +
+              "recommended_dosage FROM medicine_master where medicine_name like '" +medicine_name+ "';";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let MysqlResponseJson = JSON.stringify(result);
+    console.log("stringified json object is: ", MysqlResponseJson);
+    if(MysqlResponseJson === "[]") {
+      console.log(" it seems no medicines matching the given name were found .........");
+      var NoDataFound = {
+        "msgtype" : "info",
+        "message": "no medicine found"
+      }
+      console.log("Exiting searchMedicineByName...");
+      return JSON.stringify(NoDataFound);
+    }
+    
+    console.log("Exiting searchMedicineByName...");
+    return MysqlResponseJson;
+  }
+  catch(err) {
+    console.log("Error ====== searchMedicineByName");
+    console.log("Error code is: ", err.code);
+
+    console.log("Exiting searchMedicineByName...");
+    return false;
+  }
+}
+
+
+
+// export all functions to be used by NodeJS when imported in other functions
 exports.retrieveSystemicComplaintTypes = retrieveSystemicComplaintTypes;
 exports.retrieveOcularComplaintTypes = retrieveOcularComplaintTypes;
 exports.retrieveSystemicProcedureTypes = retrieveSystemicProcedureTypes;
@@ -349,3 +421,5 @@ exports.retrieveAllDiagnosisTypes = retrieveAllDiagnosisTypes;
 exports.retrieveOcularInstructions = retrieveOcularInstructions;
 exports.retrieveMedicalPrescription = retrieveMedicalPrescription;
 exports.retrieveOphthalmicAdvice = retrieveOphthalmicAdvice;
+exports.retrieveMinorOPDProcedures = retrieveMinorOPDProcedures;
+exports.searchMedicineByName = searchMedicineByName;

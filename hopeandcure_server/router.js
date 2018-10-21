@@ -98,6 +98,14 @@ app.get("/retrieve-medical-advice", async function(req, res){
 	await apiGenericController.apiHandlerRetrieveMedicalAdvice(req, res);
 });
 
+app.get("/retrieve-minor-opd-procedures", async function(req, res) {
+	await apiGenericController.apiHandlerRetrieveMinorPorcedures(req, res);
+});
+
+app.get("/search-medicine-by-name", async function(req, res) {
+	await apiGenericController.apiHandlerSearchMedicineByName(req, res);
+});
+
 
 // seperate POST call for login function
 app.post('/login', async function(req,res){

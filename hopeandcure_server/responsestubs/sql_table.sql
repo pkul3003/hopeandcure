@@ -465,3 +465,25 @@ CREATE TABLE IF NOT EXISTS minoropd_procedure_master(
     RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, 
     PRIMARY KEY (min_procedure_id,min_procedure_type )
 );
+
+CREATE TABLE IF NOT EXISTS minor_opd_procedures_master(
+    min_procedure_id INT AUTO_INCREMENT,
+    min_procedure_type VARCHAR(50) NOT NULL,
+    min_procedure_desc VARCHAR(255) NOT NULL,   
+	RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    PRIMARY KEY (min_procedure_id)
+);
+alter table minor_opd_procedures_master add constraint uc_min_procedure_type unique (min_procedure_type);
+
+CREATE TABLE `medicine_master` (
+  `medicine_id` int(11) NOT NULL AUTO_INCREMENT,
+  `medicine_name` varchar(100) NOT NULL,
+  `medicine_type` varchar(255) NOT NULL,
+  `manufacturer` varchar(255) DEFAULT NULL,
+  `medicine_mr` varchar(255) DEFAULT NULL,
+  `medicine_mr_contact` varchar(255) DEFAULT NULL,
+  `medicine_remarks` varchar(255) DEFAULT NULL,
+  `recommended_dosage` varchar(300) DEFAULT NULL,
+  `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`medicine_id`)
+);

@@ -303,6 +303,42 @@ console.log("Exiting apiHandlerRetrieveAdviceTypes========>");
 return res.send(JSON.parse(result));
 }
 
+async function apiHandlerRetrieveMinorPorcedures(req, res){
+  console.log("Entering apiHandlerRetrieveMinorPorcedures========>");
+  let result = {};
+
+  result = await mysqlFunctions.retrieveMinorOPDProcedures(req);
+  console.log("inside apiHandlerRetrieveMinorPorcedures:  ", result);
+  if (result === false) {
+    var returnJsonObj = {
+      "msgtype" : "error",
+      "message": "There was an error is fetching minor OPD Procedures."
+    }
+    console.log("Exiting apiHandlerRetrieveMinorPorcedures========>");
+    return res.send(returnJsonObj);
+  }
+console.log("Exiting apiHandlerRetrieveMinorPorcedures========>");
+return res.send(JSON.parse(result));
+}
+
+async function apiHandlerSearchMedicineByName(req, res) {
+  console.log("Entering apiHandlerSearchMedicineByName========>");
+  let result = {};
+
+  result = await mysqlFunctions.searchMedicineByName(req);
+  console.log("inside apiHandlerSearchMedicineByName:  ", result);
+  if (result === false) {
+    var returnJsonObj = {
+      "msgtype" : "error",
+      "message": "There was an error in searching the medicine"
+    }
+    console.log("Exiting apiHandlerSearchMedicineByName========>");
+    return res.send(returnJsonObj);
+  }
+console.log("Exiting apiHandlerSearchMedicineByName========>");
+return res.send(JSON.parse(result));
+}
+
 exports.apiHandlerRetrieveComplaintTypes = apiHandlerRetrieveComplaintTypes;
 exports.apiHandlerRetrieveProcedureTypes = apiHandlerRetrieveProcedureTypes;
 exports.apiHandlerRertrieveInvestigationTypes = apiHandlerRertrieveInvestigationTypes;
@@ -311,3 +347,5 @@ exports.apiHandlerRetrieveDiagnosisTypes = apiHandlerRetrieveDiagnosisTypes;
 exports.apiHandlerRetrieveInstructions = apiHandlerRetrieveInstructions;
 exports.apiHandlerRetrievePrescription = apiHandlerRetrievePrescription;
 exports.apiHandlerRetrieveMedicalAdvice = apiHandlerRetrieveMedicalAdvice;
+exports.apiHandlerRetrieveMinorPorcedures = apiHandlerRetrieveMinorPorcedures;
+exports.apiHandlerSearchMedicineByName = apiHandlerSearchMedicineByName;
