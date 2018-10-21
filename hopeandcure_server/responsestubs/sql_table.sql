@@ -396,3 +396,72 @@ insert into mode_of_payment values ('AADHAR PAY', DEFAULT);
 insert into mode_of_payment values ('PAYTM', DEFAULT);
 insert into mode_of_payment values ('GOOGLE PAY', DEFAULT);
 insert into mode_of_payment values ('NET BANKING', DEFAULT);
+
+
+
+-- master tables
+
+CREATE TABLE IF NOT EXISTS complaint_master(
+    complaint_id INT AUTO_INCREMENT,
+    complaint_type VARCHAR(50) NOT NULL,
+	complaint_sub_type VARCHAR(100) NOT NULL,
+    complaint_desc VARCHAR(255) NOT NULL,
+    RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,    
+    PRIMARY KEY (complaint_id,complaint_type )
+);  
+
+
+CREATE TABLE IF NOT EXISTS investigation_master(
+    investigation_id INT AUTO_INCREMENT,
+    investigation_type VARCHAR(50) NOT NULL,
+	investigation_sub_type VARCHAR(100) NOT NULL,
+    investigation_desc VARCHAR(255) NOT NULL,
+RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,    
+    PRIMARY KEY (investigation_id,investigation_type )
+);  
+
+CREATE TABLE IF NOT EXISTS procedure_master(
+    procedure_id INT AUTO_INCREMENT,
+    procedure_type VARCHAR(50) NOT NULL,
+	procedure_sub_type VARCHAR(100) NOT NULL,
+    procedure_desc VARCHAR(255) NOT NULL,
+RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,    
+    PRIMARY KEY (procedure_id,procedure_type )
+);  
+
+
+CREATE TABLE IF NOT EXISTS diagnosis_master(
+    diagnosis_id INT AUTO_INCREMENT,
+    diagnosis_type VARCHAR(50) NOT NULL,
+    diagnosis_desc VARCHAR(255) NOT NULL, 
+    RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,   
+    PRIMARY KEY (diagnosis_id)
+); 
+alter table diagnosis_master add constraint uc_diagnosis_type unique (diagnosis_type);
+
+
+CREATE TABLE IF NOT EXISTS special_precaution_master(
+    precaution_id INT AUTO_INCREMENT,
+    precaution_type VARCHAR(50) NOT NULL,
+    precaution_desc VARCHAR(255) NOT NULL, 
+    RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,   
+    PRIMARY KEY (precaution_id )
+);  
+alter table special_precaution_master add constraint uc_precaution_type unique (precaution_type);
+
+CREATE TABLE IF NOT EXISTS advice_master(
+    advice_id INT AUTO_INCREMENT,
+    advice_type VARCHAR(50) NOT NULL,
+	  advice_sub_type varchar(300) not null,
+    advice_desc VARCHAR(255) NOT NULL, 
+    RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,   
+    PRIMARY KEY (advice_id)
+); 
+
+CREATE TABLE IF NOT EXISTS minoropd_procedure_master(
+    min_procedure_id INT AUTO_INCREMENT,
+    min_procedure_type VARCHAR(50) NOT NULL,
+    min_procedure_desc VARCHAR(255) NOT NULL,   
+    RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    PRIMARY KEY (min_procedure_id,min_procedure_type )
+);

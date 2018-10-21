@@ -245,9 +245,69 @@ console.log("Exiting apiHandlerRetrieveInstructions========>");
 return res.send(JSON.parse(result));
 }
 
+// retrieve medical prescription for a given diagnosis
+async function apiHandlerRetrievePrescription(req, res){
+  console.log("Entering apiHandlerRetrievePrescription========>");
+  
+  let result = mysqlFunctions.retrieveMedicalPrescription(req);
+  console.log("inside apiHandlerRetrievePrescription:  ", result);
+  if (result === false) {
+    var returnJsonObj = {
+      "msgtype" : "error",
+      "message": "There was an error is fetching medical prescription for a given diagnosis id"
+    }
+    console.log("Exiting apiHandlerRetrievePrescription========>");
+    return res.send(returnJsonObj);
+  }
+console.log("Exiting apiHandlerRetrievePrescription========>");
+return res.send(JSON.parse(result));
+}
+
+async function apiHandlerRetrieveMedicalAdvice(req, res) {
+  console.log("Entering apiHandlerRetrieveAdviceTypes========>");
+  let advice_type = req.query['advice-type'];
+  let result = {};
+
+  switch(advice_type) {
+    case 'generic':
+      result = await mysqlFunctions.retrieveGenericAdvice(req);
+      break;
+    case 'ophthalmic':
+      result = await mysqlFunctions.retrieveOphthalmicAdvice(req);
+      break;
+    case 'optical':
+      result = await mysqlFunctions.retrieveOphthalmicAdvice(req);
+      break;
+    case 'all':
+      result = await mysqlFunctions.retrieveAllAdvice(req);
+      break;
+    default:
+      var returnJsonObj = {
+        "msgtype" : "info",
+        "message" : "Invalid advice type specified. current valid values: generic, ophthalmic, all"
+      }
+      console.log("Exiting apiHandlerRetrieveAdviceTypes========>");
+      res.send(returnJsonObj);
+    }
+  
+  console.log("inside apiHandlerRetrieveAdviceTypes:  ", result);
+  if (result === false) {
+    var returnJsonObj = {
+      "msgtype" : "error",
+      "message": "There was an error is fetching advice"
+    }
+    console.log("Exiting apiHandlerRetrieveAdviceTypes========>");
+    return res.send(returnJsonObj);
+  }
+console.log("Exiting apiHandlerRetrieveAdviceTypes========>");
+return res.send(JSON.parse(result));
+}
+
 exports.apiHandlerRetrieveComplaintTypes = apiHandlerRetrieveComplaintTypes;
 exports.apiHandlerRetrieveProcedureTypes = apiHandlerRetrieveProcedureTypes;
 exports.apiHandlerRertrieveInvestigationTypes = apiHandlerRertrieveInvestigationTypes;
 exports.apiHandlerRetrieveSpecialPrecautions = apiHandlerRetrieveSpecialPrecautions;
 exports.apiHandlerRetrieveDiagnosisTypes = apiHandlerRetrieveDiagnosisTypes;
 exports.apiHandlerRetrieveInstructions = apiHandlerRetrieveInstructions;
+exports.apiHandlerRetrievePrescription = apiHandlerRetrievePrescription;
+exports.apiHandlerRetrieveMedicalAdvice = apiHandlerRetrieveMedicalAdvice;

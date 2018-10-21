@@ -90,6 +90,14 @@ app.get("/retrieve-instructions", async function(req, res){
 	await apiGenericController.apiHandlerRetrieveInstructions(req, res);
 });
 
+app.get("/retrieve-prescription-by-diagnosis-id", async function(req, res){
+	await apiGenericController.apiHandlerRetrievePrescription(req, res);
+});
+
+app.get("/retrieve-medical-advice", async function(req, res){
+	await apiGenericController.apiHandlerRetrieveMedicalAdvice(req, res);
+});
+
 
 // seperate POST call for login function
 app.post('/login', async function(req,res){
