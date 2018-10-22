@@ -123,9 +123,9 @@ CREATE TABLE patient_drug_allergies (
   FOREIGN KEY (UHID) references patients(UHID)
 );
 
-drop table if exists `optometary_results`;
+drop table if exists `optometry_results`;
 
-CREATE TABLE `optometary_results` (
+CREATE TABLE `optometry_results` (
   `UHID` int(11) NOT NULL,
   `auto_refractometer_reading_right` varchar(100) DEFAULT NULL,
   `auto_refractometer_reading_left` varchar(100) DEFAULT NULL,
@@ -159,7 +159,7 @@ CREATE TABLE `optometary_results` (
   `current_glass_prescription_right` varchar(50) DEFAULT NULL,
   `current_glass_prescription_left` varchar(50) DEFAULT NULL,
   `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT `optometary_results_ibfk_1` FOREIGN KEY (`UHID`) REFERENCES `patients` (`UHID`)
+  CONSTRAINT `optometry_results_ibfk_1` FOREIGN KEY (`UHID`) REFERENCES `patients` (`UHID`)
 );
 
 

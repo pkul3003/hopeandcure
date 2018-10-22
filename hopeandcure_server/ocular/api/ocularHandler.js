@@ -47,39 +47,39 @@ async function apiHandlerRetrieveOcularFacts(req, res) {
 async function apiHandlerAddOptometeryResults(req, res) {
   console.log("Entering apiHandlerAddOptometeryResults ====> ");
 
-  let result = await mysqlFunctions.addOptometaryResults(req);
+  let result = await mysqlFunctions.addOptometryResults(req);
   console.log("inside apiHandlerAddOptometeryResults:  ", result);
 
   if (result === false) {
     var returnJsonObj = {
       "msgtype" : "error",
-      "message": "There was an error is adding patient optometary results"
+      "message": "There was an error is adding patient optometry results"
     }
     console.log("Exiting apiHandlerAddOptometeryResults========>");
     return res.send(returnJsonObj);
   }
   var returnJsonObj = {
     "msgtype" : "success",
-    "message": "patient optometary results added successfully"
+    "message": "patient optometry results added successfully"
   }
   console.log("Exiting apiHandlerAddOptometeryResults========>");
   return res.json(returnJsonObj);
 }
 
-async function apiHandlerRetrieveOptometeryResults(req, res) {
-  console.log("Entering apiHandlerRetrieveOptometeryResults========>");
+async function apiHandlerRetrieveOptometryResults(req, res) {
+  console.log("Entering apiHandlerRetrieveOptometryResults========>");
 
-  let result = await mysqlFunctions.retrieveRetrieveOptometaryResults(req);
-  console.log("inside apiHandlerRetrieveOptometeryResults:  ", result);
+  let result = await mysqlFunctions.retrieveOptometryResults(req);
+  console.log("inside apiHandlerRetrieveOptometryResults:  ", result);
   if (result === false) {
     var returnJsonObj = {
       "msgtype" : "error",
-      "message": "There was an error is fetching patient optometary results"
+      "message": "There was an error is fetching patient optometry results"
     }
-    console.log("Exiting apiHandlerRetrieveOptometeryResults========>");
+    console.log("Exiting apiHandlerRetrieveOptometryResults========>");
     return res.send(returnJsonObj);
   }
-  console.log("Exiting apiHandlerRetrieveOptometeryResults========>");
+  console.log("Exiting apiHandlerRetrieveOptometryResults========>");
   return res.send(JSON.parse(result));
 }
 
@@ -146,7 +146,7 @@ async function apiHandlerAddSurgicalHistory(req, res) {
 }
 
 exports.apiHandlerAddOptometeryResults = apiHandlerAddOptometeryResults;
-exports.apiHandlerRetrieveOptometeryResults = apiHandlerRetrieveOptometeryResults;
+exports.apiHandlerRetrieveOptometryResults = apiHandlerRetrieveOptometryResults;
 exports.apiHandlerAddOcularFacts = apiHandlerAddOcularFacts;
 exports.apiHandlerRetrieveOcularFacts = apiHandlerRetrieveOcularFacts;
 exports.apiHandlerAddConsultantResults = apiHandlerAddConsultantResults;

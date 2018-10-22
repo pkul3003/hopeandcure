@@ -106,6 +106,10 @@ app.get("/search-medicine-by-name", async function(req, res) {
 	await apiGenericController.apiHandlerSearchMedicineByName(req, res);
 });
 
+// GET interface for Optometry results
+app.get("/retrieve-optometry-data-by-uhid", async function(req, res){
+	await apiOcularController.apiHandlerRetrieveOptometryResults(req, res);
+});
 
 
 
@@ -232,11 +236,8 @@ app.post('/ocular', async function (req, res){
 		case 'retrieve-patient-ocular-facts':
 			await apiOcularController.apiHandlerRetrieveOcularFacts(req, res);
 			break;
-		case 'add-optometary-results':
+		case 'add-optometry-results':
 			await apiOcularController.apiHandlerAddOptometeryResults(req, res);
-			break;
-		case 'retrieve-optometary-results':
-			await apiOcularController.apiHandlerRetrieveOptometeryResults(req, res);
 			break;
 		case 'add-consultant-examination-record':
 			await apiOcularController.apiHandlerAddConsultantResults(req, res);

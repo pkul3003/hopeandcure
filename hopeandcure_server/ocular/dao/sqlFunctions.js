@@ -1,6 +1,7 @@
 let mysql = require('mysql2');
 let config = require("../../config.js");
 let callmysqlpool = require("../../mysql-functions/createMysqlSingleton.js");
+var moment = require('moment');
 
 async function getConnectionPool() {
   try {
@@ -66,8 +67,8 @@ async function retrievePatientOcularFacts(req) {
 }
 
 // Function to add recording of a optometarist during eye examination
-async function addOptometaryResults(req) {
-  console.log("Entering addOptometaryResults...");
+async function addOptometryResults(req) {
+  console.log("Entering addOptometryResults...");
   let UHID = req.body.patient.UHID;
   let auto_refractometer_reading_right = req.body.patient.auto_refractometer_reading_right;
   let auto_refractometer_reading_left = req.body.patient.auto_refractometer_reading_left;
@@ -102,7 +103,7 @@ async function addOptometaryResults(req) {
   let current_glass_prescription_left = req.body.patient.current_glass_prescription_left
 
 
-  let query = "INSERT INTO optometary_results (UHID, auto_refractometer_reading_right, auto_refractometer_reading_left, " +
+  let query = "INSERT INTO optometry_results (UHID, auto_refractometer_reading_right, auto_refractometer_reading_left, " +
   "keratometry_reading_right, keratometry_reading_left, unaided_vision_right, unaided_vision_left, " +
   "vision_with_pinhole, retinoscopy, acceptance, intra_ocular_pressure, SAC, iop_record_timestamp, " +
   "dilatation, dilatation_time, optical_investigation, procedures_done, blood_pressure, special_precautions, "+
@@ -127,22 +128,30 @@ async function addOptometaryResults(req) {
     let con = await pool.getConnection();
     await con.execute(query);
     con.release();
-    console.log("Exiting addOptometaryResults...");
+    console.log("Exiting addOptometryResults...");
     return true;
   }
   catch(err) {
-    console.log("Error ====== addOptometaryResults");
+    console.log("Error ====== addOptometryResults");
     console.log("Error code is: ", err.code);
-    console.log("Exiting addOptometaryResults...");
+    console.log("Exiting addOptometryResults...");
     return false;
   }
 }
 
-async function retrieveRetrieveOptometaryResults(req) {
-  console.log("Entering retrieveRetrieveOptometaryResults...");
-  let UHID = req.body.patient.UHID;
+async function retrieveOptometryResults(req) {
+  console.log("Entering retrieveOptometryResults...");
+  let UHID = req.query['UHID'];
+  let date_of_optometry_test = req.query['date'];
+  let query = "";
 
-  let query = "SELECT * FROM optometary_results WHERE UHID = '" +UHID+ "'; ";
+  if (moment(date_of_optometry_test, 'YYYY-MM-DD',true)=== true) {
+    query = "SELECT * FROM optometry_results WHERE UHID = '" +UHID+ 
+    "' and date(RecordTouchDate) = '" + date_of_optometry_test+ "'; ";
+  } else {
+    query = "SELECT * FROM optometry_results WHERE UHID = '" +UHID+ 
+            "' order by RecordTouchDate desc limit 1;"
+  } 
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -151,13 +160,13 @@ async function retrieveRetrieveOptometaryResults(req) {
     let patientJson = JSON.stringify(result);
     console.log(patientJson);
     con.release();
-    console.log("Exiting retrieveRetrieveOptometaryResults...");
+    console.log("Exiting retrieveOptometryResults...");
     return patientJson;
   }
   catch(err) {
-    console.log("Error ====== retrieveOptometaryResults");
+    console.log("Error ====== retrieveOptometryResults");
     console.log("Error code is: ", err.code);
-    console.log("Exiting retrieveRetrieveOptometaryResults...");
+    console.log("Exiting retrieveOptometryResults...");
     return false;
   }
 }
@@ -288,8 +297,8 @@ async function addPatientSurgicalHistory(req) {
 }
 
 exports.addPatientOcularFacts = addPatientOcularFacts;
-exports.addOptometaryResults = addOptometaryResults;
-exports.retrieveRetrieveOptometaryResults = retrieveRetrieveOptometaryResults;
+exports.addOptometryResults = addOptometryResults;
+exports.retrieveOptometryResults = retrieveOptometryResults;
 exports.retrievePatientOcularFacts = retrievePatientOcularFacts;
 exports.addConsultantResults = addConsultantResults;
 exports.retrievePatientSurgicalHistory = retrievePatientSurgicalHistory;
