@@ -48,6 +48,14 @@ async function apiHandlerCreateAppointment(req, res) {
   let result = await mysqlFunctions.createAppointment(req);
   console.log("inside apiHandlerCreateAppointment, appointment creation result:  ", result);
 
+  if (result === "ER_DUP_ENTRY"){
+    var returnJsonObj = {
+      "msgtype" : "info",
+      "message": "appointment already exists for the patient for the given day."
+    }
+    console.log("Exiting createAppointment...");
+    return res.send(returnJsonObj);
+  }
   if (result === true) {
     let status = await mysqlFunctions.addPatientProgressStatus(req);
     console.log("after appointment creation, print progress status:  ", status);

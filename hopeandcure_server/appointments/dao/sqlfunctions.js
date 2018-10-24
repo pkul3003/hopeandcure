@@ -103,23 +103,21 @@ async function createAppointment(req) {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
     await con.query(query1);
-    con.release();
     return true;
   }
   catch(err) {
     console.log("Error ====== createAppointment");
     console.log("Error code is: ", err.code);
     if(err.code === "ER_DUP_ENTRY") {
-      var response = {
-        "msgtype" : "info",
-        "message": "appointment already exists for the patient for the given day."
-      }
+      var duplicate_entry = "ER_DUP_ENTRY";
+      console.log("appointment already exists for the patient for the given day ");
       console.log("Exiting createAppointment...");
-      return response;
+      return duplicate_entry;
+    } else {
+      console.log("Exiting createAppointment...");
+      return false;
     }
-    return false;
   }
-
 }
 
 async function addPatientProgressStatus(req) {
