@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.23, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.16, for Win64 (x86_64)
 --
 -- Host: localhost    Database: hmsdb
 -- ------------------------------------------------------
--- Server version	5.7.23-0ubuntu0.18.04.1
+-- Server version	5.7.16-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -84,7 +84,7 @@ INSERT INTO `appointments` VALUES (1234,'sujay','satish','kulkarni','1981-11-06'
 UNLOCK TABLES;
 
 --
--- Temporary table structure for view `appointments_view`
+-- Temporary view structure for view `appointments_view`
 --
 
 DROP TABLE IF EXISTS `appointments_view`;
@@ -190,6 +190,33 @@ LOCK TABLES `diagnosis_master` WRITE;
 /*!40000 ALTER TABLE `diagnosis_master` DISABLE KEYS */;
 INSERT INTO `diagnosis_master` VALUES (1,'Advance Catract Surgery','','2018-10-20 18:30:00'),(2,'Conjective eyes','','2018-10-20 18:30:00'),(3,'Glucoma','','2018-10-20 18:30:00');
 /*!40000 ALTER TABLE `diagnosis_master` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `healthcare_services_master`
+--
+
+DROP TABLE IF EXISTS `healthcare_services_master`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `healthcare_services_master` (
+  `service_id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_type` varchar(100) NOT NULL,
+  `service_sub_type` varchar(200) DEFAULT NULL,
+  `service_charge` decimal(6,2) DEFAULT NULL,
+  `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`service_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `healthcare_services_master`
+--
+
+LOCK TABLES `healthcare_services_master` WRITE;
+/*!40000 ALTER TABLE `healthcare_services_master` DISABLE KEYS */;
+INSERT INTO `healthcare_services_master` VALUES (1,'OPD','Consultation',200.00,'2018-11-03 02:14:45');
+/*!40000 ALTER TABLE `healthcare_services_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -341,9 +368,9 @@ DROP TABLE IF EXISTS `modes_of_payment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `modes_of_payment` (
-  `ModeOfPayment` varchar(100) NOT NULL,
+  `mode_of_payment` varchar(100) NOT NULL,
   `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`ModeOfPayment`)
+  PRIMARY KEY (`mode_of_payment`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -404,6 +431,7 @@ CREATE TABLE `ophthalmologist_examination_record` (
   `NinetyD_SeventyeightDRight` varchar(100) DEFAULT NULL,
   `NinteyD_SeventyeightDLeft` varchar(100) DEFAULT NULL,
   `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `consultant_name` varchar(100) DEFAULT NULL,
   KEY `fk_UHID` (`UHID`),
   CONSTRAINT `ophthalmologist_examination_record_ibfk_1` FOREIGN KEY (`UHID`) REFERENCES `patients` (`UHID`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -415,39 +443,8 @@ CREATE TABLE `ophthalmologist_examination_record` (
 
 LOCK TABLES `ophthalmologist_examination_record` WRITE;
 /*!40000 ALTER TABLE `ophthalmologist_examination_record` DISABLE KEYS */;
-INSERT INTO `ophthalmologist_examination_record` VALUES (1272,'5','5','accept right','accept left','+2','-2','eyebrow right','eyebrow left','extra ocular right','extra ocular left','pupillary right','pupillary left','other right','other left','NCT','intra ocular right','intra ocular left','gonio right','gonio left','slit right','slit left','conjectiva right','conjectiva left','cornea right','cornea left','anterior right','anterior left','lenticular right','lenticular left','glow right','glow left','opth right','opth left','indirect right','indirect left','ninety right','ninety left','2018-08-27 18:31:00'),(1275,'5','5','undefined','undefined','+2','-2','eyebrow right','eyebrow left','extra ocular right','extra ocular left','pupillary right','pupillary left','other right','other left','NCT','intra ocular right','intra ocular left','gonio right','gonio left','slit right','slit left','conjectiva right','conjectiva left','cornea right','cornea left','anterior right','anterior left','lenticular right','lenticular left','glow right','glow left','opth right','opth left','indirect right','indirect left','ninety right','ninety left','2018-10-21 18:35:03');
+INSERT INTO `ophthalmologist_examination_record` VALUES (1272,'5','5','accept right','accept left','+2','-2','eyebrow right','eyebrow left','extra ocular right','extra ocular left','pupillary right','pupillary left','other right','other left','NCT','intra ocular right','intra ocular left','gonio right','gonio left','slit right','slit left','conjectiva right','conjectiva left','cornea right','cornea left','anterior right','anterior left','lenticular right','lenticular left','glow right','glow left','opth right','opth left','indirect right','indirect left','ninety right','ninety left','2018-08-27 18:31:00',NULL),(1275,'5','5','undefined','undefined','+2','-2','eyebrow right','eyebrow left','extra ocular right','extra ocular left','pupillary right','pupillary left','other right','other left','NCT','intra ocular right','intra ocular left','gonio right','gonio left','slit right','slit left','conjectiva right','conjectiva left','cornea right','cornea left','anterior right','anterior left','lenticular right','lenticular left','glow right','glow left','opth right','opth left','indirect right','indirect left','ninety right','ninety left','2018-10-21 18:35:03',NULL);
 /*!40000 ALTER TABLE `ophthalmologist_examination_record` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `optical_investigation`
---
-
-DROP TABLE IF EXISTS `optical_investigation`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `optical_investigation` (
-  `UHID` int(11) NOT NULL,
-  `Procedure1` varchar(100) DEFAULT NULL,
-  `Procedure2` varchar(100) DEFAULT NULL,
-  `Procedure3` varchar(100) DEFAULT NULL,
-  `InvestigationSummary` varchar(300) DEFAULT NULL,
-  `XylocaineTest` varchar(300) DEFAULT NULL,
-  `BloodPressureSystolic` varchar(100) DEFAULT NULL,
-  `BloodPressureDiastolic` varchar(100) DEFAULT NULL,
-  `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  KEY `UHID` (`UHID`),
-  CONSTRAINT `optical_investigation_ibfk_1` FOREIGN KEY (`UHID`) REFERENCES `patients` (`UHID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `optical_investigation`
---
-
-LOCK TABLES `optical_investigation` WRITE;
-/*!40000 ALTER TABLE `optical_investigation` DISABLE KEYS */;
-/*!40000 ALTER TABLE `optical_investigation` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -549,21 +546,19 @@ DROP TABLE IF EXISTS `patient_billing_record`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient_billing_record` (
   `UHID` int(11) NOT NULL,
-  `OPDConsultationFee` decimal(7,2) NOT NULL DEFAULT '0.00',
-  `IPDFee` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `InvestigationsFee` decimal(7,2) NOT NULL DEFAULT '0.00',
-  `LabFee` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `ProcedureCharges` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `service_type` varchar(100) NOT NULL,
+  `service_sub_type` varchar(200) DEFAULT NULL,
   `GST` decimal(6,2) NOT NULL DEFAULT '0.00',
-  `DiscountPercent` int(11) NOT NULL DEFAULT '0',
-  `TotalBillAmount` decimal(9,2) NOT NULL DEFAULT '0.00',
-  `ModeOfPayment` varchar(100) NOT NULL,
-  `DateOfBill` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `discount_percent` int(11) NOT NULL DEFAULT '0',
+  `total_bill_amount` decimal(9,2) NOT NULL DEFAULT '0.00',
+  `mode_of_payment` varchar(100) NOT NULL,
+  `date_of_bill` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `consultant_name` varchar(100) NOT NULL,
   `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY `UHID` (`UHID`),
-  KEY `ModeOfPayment` (`ModeOfPayment`),
+  KEY `mode_of_payment` (`mode_of_payment`),
   CONSTRAINT `patient_billing_record_ibfk_1` FOREIGN KEY (`UHID`) REFERENCES `patients` (`UHID`),
-  CONSTRAINT `patient_billing_record_ibfk_2` FOREIGN KEY (`ModeOfPayment`) REFERENCES `modes_of_payment` (`ModeOfPayment`)
+  CONSTRAINT `patient_billing_record_ibfk_2` FOREIGN KEY (`mode_of_payment`) REFERENCES `modes_of_payment` (`mode_of_payment`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -573,35 +568,7 @@ CREATE TABLE `patient_billing_record` (
 
 LOCK TABLES `patient_billing_record` WRITE;
 /*!40000 ALTER TABLE `patient_billing_record` DISABLE KEYS */;
-INSERT INTO `patient_billing_record` VALUES (1275,123.44,3432.22,121.11,132.11,5443.00,0.00,10,8326.69,'DEBIT CARD','2018-10-02 10:38:03','2018-10-02 10:38:03'),(1275,123.44,3432.22,121.11,132.11,5443.00,0.00,10,8326.69,'DEBIT CARD','2018-10-02 10:49:37','2018-10-02 10:49:37'),(1275,123.44,3432.22,121.11,132.11,5443.00,0.00,10,8300.00,'DEBIT CARD','2018-10-02 10:49:56','2018-10-02 10:49:56'),(1275,123.44,3432.22,121.11,132.11,5443.00,0.00,10,8326.69,'DEBIT CARD','2018-10-02 10:50:18','2018-10-02 10:50:18'),(1275,123.44,3432.22,121.11,132.11,5443.00,0.00,10,8326.69,'DEBIT CARD','2018-10-02 10:50:46','2018-10-02 10:50:46');
 /*!40000 ALTER TABLE `patient_billing_record` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `patient_drug_allergies`
---
-
-DROP TABLE IF EXISTS `patient_drug_allergies`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `patient_drug_allergies` (
-  `UHID` int(11) NOT NULL,
-  `DrugName` varchar(100) DEFAULT NULL,
-  `AllergicReaction` varchar(100) DEFAULT NULL,
-  `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  KEY `UHID` (`UHID`),
-  CONSTRAINT `patient_drug_allergies_ibfk_1` FOREIGN KEY (`UHID`) REFERENCES `patients` (`UHID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `patient_drug_allergies`
---
-
-LOCK TABLES `patient_drug_allergies` WRITE;
-/*!40000 ALTER TABLE `patient_drug_allergies` DISABLE KEYS */;
-INSERT INTO `patient_drug_allergies` VALUES (1272,'penicilin','skin rashes and vomiting','2018-08-27 17:20:11'),(1272,'penicilin','skin rashes and vomiting','2018-10-21 18:35:27');
-/*!40000 ALTER TABLE `patient_drug_allergies` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -640,33 +607,32 @@ INSERT INTO `patient_medical_facts` VALUES (1277,'AB+ve','110','80','YES','YES',
 UNLOCK TABLES;
 
 --
--- Table structure for table `patient_ocular_facts`
+-- Table structure for table `patient_prescription_record`
 --
 
-DROP TABLE IF EXISTS `patient_ocular_facts`;
+DROP TABLE IF EXISTS `patient_prescription_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `patient_ocular_facts` (
+CREATE TABLE `patient_prescription_record` (
   `UHID` int(11) NOT NULL,
-  `UsingSpectacles` enum('YES','NO') DEFAULT NULL,
-  `UsingContacts` enum('YES','NO') DEFAULT NULL,
-  `RightGlassPrescription` varchar(100) DEFAULT NULL,
-  `LeftGlassPrescription` varchar(100) DEFAULT NULL,
-  `EyeColor` varchar(100) DEFAULT NULL,
+  `medicine_name` varchar(200) NOT NULL,
+  `recommended_dosage` varchar(100) NOT NULL,
+  `additional_instructions` varchar(200) NOT NULL,
+  `date_of_prescription` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `consultant_name` varchar(100) DEFAULT NULL,
   `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY `UHID` (`UHID`),
-  CONSTRAINT `patient_ocular_facts_ibfk_1` FOREIGN KEY (`UHID`) REFERENCES `patients` (`UHID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `patient_prescription_record_ibfk_1` FOREIGN KEY (`UHID`) REFERENCES `patients` (`UHID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `patient_ocular_facts`
+-- Dumping data for table `patient_prescription_record`
 --
 
-LOCK TABLES `patient_ocular_facts` WRITE;
-/*!40000 ALTER TABLE `patient_ocular_facts` DISABLE KEYS */;
-INSERT INTO `patient_ocular_facts` VALUES (1234,'YES','YES','+2.2','+2.4','brown','2018-08-23 19:47:16');
-/*!40000 ALTER TABLE `patient_ocular_facts` ENABLE KEYS */;
+LOCK TABLES `patient_prescription_record` WRITE;
+/*!40000 ALTER TABLE `patient_prescription_record` DISABLE KEYS */;
+/*!40000 ALTER TABLE `patient_prescription_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -731,7 +697,7 @@ INSERT INTO `patients` VALUES (1234,'sujay','satish','kulkarni','1981-11-06','ma
 UNLOCK TABLES;
 
 --
--- Temporary table structure for view `prescription_diagnosis_view`
+-- Temporary view structure for view `prescription_diagnosis_view`
 --
 
 DROP TABLE IF EXISTS `prescription_diagnosis_view`;
@@ -878,6 +844,7 @@ CREATE TABLE `staff_login` (
   `username` varchar(255) NOT NULL,
   `password` varchar(32) NOT NULL,
   `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `staff_role` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`staffid`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1004 DEFAULT CHARSET=latin1;
@@ -889,7 +856,7 @@ CREATE TABLE `staff_login` (
 
 LOCK TABLES `staff_login` WRITE;
 /*!40000 ALTER TABLE `staff_login` DISABLE KEYS */;
-INSERT INTO `staff_login` VALUES (1000,'prakash.rasal','e19d5cd5af0378da05f63f891c7467af','2018-07-30 21:12:35'),(1001,'wasant.ambekar','e19d5cd5af0378da05f63f891c7467af','2018-07-30 21:27:10'),(1002,'pri123','e19d5cd5af0378da05f63f891c7467af','2018-08-12 01:32:42'),(1003,'anil.gore','e19d5cd5af0378da05f63f891c7467af','2018-08-23 19:11:03');
+INSERT INTO `staff_login` VALUES (1000,'prakash.rasal','e19d5cd5af0378da05f63f891c7467af','2018-07-30 21:12:35',NULL),(1001,'wasant.ambekar','e19d5cd5af0378da05f63f891c7467af','2018-07-30 21:27:10',NULL),(1002,'pri123','e19d5cd5af0378da05f63f891c7467af','2018-08-12 01:32:42',NULL),(1003,'anil.gore','e19d5cd5af0378da05f63f891c7467af','2018-08-23 19:11:03',NULL);
 /*!40000 ALTER TABLE `staff_login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -902,14 +869,14 @@ DROP TABLE IF EXISTS `staff_roles`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `staff_roles` (
   `staffid` bigint(20) NOT NULL,
-  `Admin` enum('yes','no') DEFAULT NULL,
-  `Receptionist` enum('yes','no') DEFAULT NULL,
-  `Consultant` enum('yes','no') DEFAULT NULL,
-  `Optometerist` enum('yes','no') DEFAULT NULL,
+  `role_name` varchar(50) DEFAULT NULL,
+  `screen_name` varchar(100) DEFAULT NULL,
+  `privileges` enum('READ','READ-WRITE') NOT NULL,
+  `html_path` varchar(400) DEFAULT NULL,
   `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY `staffid` (`staffid`),
   CONSTRAINT `staff_roles_ibfk_1` FOREIGN KEY (`staffid`) REFERENCES `staff_login` (`staffid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -918,32 +885,8 @@ CREATE TABLE `staff_roles` (
 
 LOCK TABLES `staff_roles` WRITE;
 /*!40000 ALTER TABLE `staff_roles` DISABLE KEYS */;
+INSERT INTO `staff_roles` VALUES (1001,'ADMIN','MASTER-DATA','READ-WRITE','http://localhost:4200/master-data','2018-11-03 01:41:37'),(1001,'ADMIN','MASTER-DATA','READ-WRITE','http://localhost:4200/help','2018-11-03 01:42:19'),(1001,'ADMIN','MASTER-DATA','READ-WRITE','http://localhost:4200/help','2018-11-03 01:42:22'),(1001,'ADMIN','HELP','READ-WRITE','http://localhost:4200/master-data','2018-11-03 01:42:56');
 /*!40000 ALTER TABLE `staff_roles` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `systemic_complaint_types`
---
-
-DROP TABLE IF EXISTS `systemic_complaint_types`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `systemic_complaint_types` (
-  `ComplaintType` varchar(100) NOT NULL,
-  `ComplaintDescription` varchar(300) DEFAULT NULL,
-  `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`ComplaintType`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `systemic_complaint_types`
---
-
-LOCK TABLES `systemic_complaint_types` WRITE;
-/*!40000 ALTER TABLE `systemic_complaint_types` DISABLE KEYS */;
-INSERT INTO `systemic_complaint_types` VALUES ('blurred_vision','the vision becomes blurred','2018-08-26 02:46:48');
-/*!40000 ALTER TABLE `systemic_complaint_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -991,4 +934,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-22 20:01:20
+-- Dump completed on 2018-11-04 19:13:14

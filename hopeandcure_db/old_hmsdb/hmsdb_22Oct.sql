@@ -451,13 +451,13 @@ LOCK TABLES `optical_investigation` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `optometary_results`
+-- Table structure for table `optometry_results`
 --
 
-DROP TABLE IF EXISTS `optometary_results`;
+DROP TABLE IF EXISTS `optometry_results`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `optometary_results` (
+CREATE TABLE `optometry_results` (
   `UHID` int(11) NOT NULL,
   `auto_refractometer_reading_right` varchar(100) DEFAULT NULL,
   `auto_refractometer_reading_left` varchar(100) DEFAULT NULL,
@@ -492,18 +492,18 @@ CREATE TABLE `optometary_results` (
   `current_glass_prescription_left` varchar(50) DEFAULT NULL,
   `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY `optometary_results_ibfk_1` (`UHID`),
-  CONSTRAINT `optometary_results_ibfk_1` FOREIGN KEY (`UHID`) REFERENCES `patients` (`UHID`)
+  CONSTRAINT `optometry_results_ibfk_1` FOREIGN KEY (`UHID`) REFERENCES `patients` (`UHID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `optometary_results`
+-- Dumping data for table `optometry_results`
 --
 
-LOCK TABLES `optometary_results` WRITE;
-/*!40000 ALTER TABLE `optometary_results` DISABLE KEYS */;
-INSERT INTO `optometary_results` VALUES (1278,'afr123','afl123','krr123','krl123','15/20','13/20','not sure','not sure','not sure','APPLANATION','2018-10-21','TBD','00:00:15','cornea','left eye cataract','110/165','dark glasses','Prakash.Rasal','CDMR','POSITIVE','sore eyes','3 months','cataract','cataract surgery left eye','type2 diabetes','medicines & insulin','cataract surgery','none','none','na','na','2018-10-21 18:32:20'),(1278,'afr123','afl123','krr123','krl123','15/20','13/20','not sure','not sure','not sure','APPLANATION','2018-10-21','TBD','00:00:15','cornea','left eye cataract','110/165','dark glasses','Prakash.Rasal','CDMR','POSITIVE','sore eyes','3 months','cataract','cataract surgery left eye','type2 diabetes','medicines & insulin','cataract surgery','none','none','na','na','2018-10-21 18:32:23');
-/*!40000 ALTER TABLE `optometary_results` ENABLE KEYS */;
+LOCK TABLES `optometry_results` WRITE;
+/*!40000 ALTER TABLE `optometry_results` DISABLE KEYS */;
+INSERT INTO `optometry_results` VALUES (1278,'afr123','afl123','krr123','krl123','15/20','13/20','not sure','not sure','not sure','APPLANATION','2018-10-21','TBD','00:00:15','cornea','left eye cataract','110/165','dark glasses','Prakash.Rasal','CDMR','POSITIVE','sore eyes','3 months','cataract','cataract surgery left eye','type2 diabetes','medicines & insulin','cataract surgery','none','none','na','na','2018-10-21 18:32:20'),(1278,'afr123','afl123','krr123','krl123','15/20','13/20','not sure','not sure','not sure','APPLANATION','2018-10-21','TBD','00:00:15','cornea','left eye cataract','110/165','dark glasses','Prakash.Rasal','CDMR','POSITIVE','sore eyes','3 months','cataract','cataract surgery left eye','type2 diabetes','medicines & insulin','cataract surgery','none','none','na','na','2018-10-21 18:32:23'),(1278,'afr123','afl123','krr123','krl123','15/20','13/20','not sure','not sure','not sure','APPLANATION','2018-10-21','TBD','00:00:15','cornea','left eye cataract','110/165','dark glasses','Prakash.Rasal','CDMR','POSITIVE','sore eyes','3 months','cataract','cataract surgery left eye','type2 diabetes','medicines & insulin','cataract surgery','none','none','na','na','2018-10-22 13:36:25'),(1277,'afr123','afl123','krr123','krl123','15/20','13/20','not sure','not sure','not sure','APPLANATION','2018-10-21','TBD','10:15:00','cornea','left eye cataract','110/165','dark glasses','Prakash.Rasal','CDMR','POSITIVE','sore eyes','3 months','cataract','cataract surgery left eye','type2 diabetes','medicines & insulin','cataract surgery','none','none','na','na','2018-10-22 13:50:03');
+/*!40000 ALTER TABLE `optometry_results` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -717,7 +717,7 @@ CREATE TABLE `patients` (
   `Aadhar` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`UHID`),
   UNIQUE KEY `UC_Patient` (`FirstName`,`LastName`,`DOB`,`ContactNumber`,`Aadhar`)
-) ENGINE=InnoDB AUTO_INCREMENT=1282 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1281 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -991,4 +991,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-22  0:24:03
+-- Dump completed on 2018-10-22 20:01:20

@@ -124,9 +124,6 @@ app.post('/login', async function(req,res){
 app.post('/staff', async function(req,res){
 	console.log("insider router app.post/staff: ", JSON.stringify(req.body.intentName));
 	switch (req.body.intentName) {
-		case 'retrieve-consultants':
-			await apiStaffController.apiHandlerRetrieveConsultants(req, res);
-			break;
 		case 'create-new-staff':
 			await apiStaffController.apiHandlerCreateStaff(req, res);
 			break;		
@@ -145,12 +142,6 @@ app.post('/appointments', async function (req, res){
 	switch (req.body.intentName) {
 		case 'create-appointment':
 			await apiAppointmentsController.apiHandlerCreateAppointment(req, res);
-			break;
-		case 'retrieve-appointments':
-			await apiAppointmentsController.apiHandlerForAppointments(req, res);
-			break;
-		case 'retrieve-appointments-by-date':
-			await apiAppointmentsController.apiHandlerForAppointmentsByDate(req, res);
 			break;
 		default:
 			var returnJsonObj = {
@@ -182,23 +173,8 @@ app.post('/patients', async function (req, res){
 		case 'retrieve-patient-medical-facts':
 			await apiPatientController.apiHandlerRetrieveMedicalFacts(req, res);
 			break;
-		case 'retrieve-patient-systemic-history':
-			await apiPatientController.apiHandlerRetrieveSystemicHistory(req, res);
-			break;
-		case 'add-patient-systemic-history':
-			await apiPatientController.apiHandlerAddSystemicHistory(req, res);
-			break;
 		case 'update-patient-progress-status' :
 			await apiAppointmentsController.apiHandlerUpdatePatientProgressStatus(req, res);
-			break;
-		case 'add-patient-drug-allergies':
-			await apiPatientController.apiHandlerAddPatientDrugAllergies(req, res);
-			break;
-		case 'retrieve-patient-systemic-surgical-history':
-			await apiPatientController.apiHandlerRetrieveSurgicalHistory(req, res);
-			break;		
-		case 'add-patient-systemic-surgical-history':
-			await apiPatientController.apiHandlerAddSurgicalHistory(req, res);
 			break;
 		default:
 			var returnJsonObj = {
@@ -212,12 +188,6 @@ app.post('/patients', async function (req, res){
 app.post('/generic', async function(req, res){
 	console.log("inside router app.post/generic: "+ JSON.stringify(req.body.intentName));
 	switch (req.body.intentName) {
-		case 'retrieve-surgery_types':
-			await apiGenericController.apiHandlerRetrieveSurgeryTypes(req, res);
-			break;
-		case 'retrieve-surgery-sub-types':
-			await apiGenericController.apiHandlerRetrieveSurgerySubTypes(req, res);
-			break;
 		default:
 			var returnJsonObj = {
 				"msgtype" : "info",
@@ -230,24 +200,12 @@ app.post('/generic', async function(req, res){
 app.post('/ocular', async function (req, res){
 	console.log("inside router app.post/ocular: "+ JSON.stringify(req.body.intentName));
 	switch (req.body.intentName) {
-		case 'add-patient-ocular-facts':
-			await apiOcularController.apiHandlerAddOcularFacts(req, res);
-			break;
-		case 'retrieve-patient-ocular-facts':
-			await apiOcularController.apiHandlerRetrieveOcularFacts(req, res);
-			break;
 		case 'add-optometry-results':
 			await apiOcularController.apiHandlerAddOptometeryResults(req, res);
 			break;
 		case 'add-consultant-examination-record':
 			await apiOcularController.apiHandlerAddConsultantResults(req, res);
 			break;
-		case 'retrieve-patient-ocular-surgical-history':
-			await apiOcularController.apiHandlerRetrieveSurgicalHistory(req, res);
-			break;
-		case 'add-patient-ocular-surgical-history':
-			await apiOcularController.apiHandlerAddSurgicalHistory(req, res);
-			break;		
 		default:
 			var returnJsonObj = {
 				"msgtype" : "info",

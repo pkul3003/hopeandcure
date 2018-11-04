@@ -206,6 +206,8 @@ CREATE TABLE staff_login (
   PRIMARY KEY (staffid)
 );
 
+alter table staff_login add staff_role varchar(50);
+
 ALTER TABLE staff_login AUTO_INCREMENT=1000;
 
 INSERT INTO staff_login VALUES(DEFAULT, 'prakash.rasal', MD5('abcd1234'), DEFAULT);
@@ -235,17 +237,42 @@ INSERT INTO staff_details VALUES (1002, 'Prasad','Dattatray','Jpshi','1981-06-06
 drop table if exists `staff_roles`;
 CREATE TABLE staff_roles (
   staffid bigint NOT NULL,
-  Admin ENUM('yes', 'no'),
-  Receptionist ENUM('yes', 'no'),
-  Consultant ENUM('yes', 'no'),
-  Optometerist ENUM('yes', 'no'),
+  role_name enum('ADMIN', 'RECEPTIONIST', 'OPTOMETRIST', 'CONSULTANT') NOT NULL,
+  screen_name varchar(100),
+  privileges enum('READ', 'READ-WRITE') NOT NULL,
+  html_path varchar(400),
   RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (staffid) REFERENCES staff_login(staffid)
 );
 
-INSERT INTO staff_roles VALUES ('pkul3003', 'yes', 'yes', 'no', 'no', DEFAULT);
-INSERT INTO staff_roles VALUES ('pkul3003', 'yes', 'yes', 'no', 'no', DEFAULT);
+INSERT INTO staff_roles VALUES ('pkul3003', 'ADMIN', 'MASTER-DATA', 'READ-WRITE', 'http://localhost:4200/master-data', DEFAULT);
 
+
+create table healthcare_services_master (
+  service_id INT AUTO_INCREMENT,
+  service_type varchar(100) not null,
+  service_sub_type varchar(200),
+  service_charge DECIMAL(6,2),
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (service_id)
+);
+
+insert into healthcare_services_master values(DEFAULT, 'OPD', 'Consultation', 200.00, DEFAULT);
+
+CREATE TABLE patient_billing_record (
+  UHID int NOT NULL,
+  service_type varchar(100) not null,
+  service_sub_type varchar(200),
+  GST DECIMAL(6,2) NOT NULL DEFAULT 0.00,
+  discount_percent INTEGER NOT NULL DEFAULT 0,
+  total_bill_amount DECIMAL(9,2) NOT NULL DEFAULT 0.00,
+  mode_of_payment varchar(100) NOT NULL,
+  date_of_bill TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  consultant_name varchar(100) NOT NULL,
+  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (UHID) references patients(UHID),
+  FOREIGN KEY (mode_of_payment) references modes_of_payment(mode_of_payment)
+);
 
 
 drop table if exists `staff_address`;
@@ -285,22 +312,7 @@ INSERT INTO consultants VALUES(1000, 'Prakash' , 'Rasal', 'Opthalmologist', '', 
 INSERT INTO consultants VALUES(1001, 'Wasant' , 'ambekar', 'Opthalmologist', '', 'MD', 'yes' , 'yes', 9922962322, DEFAULT);
 
 
-CREATE TABLE patient_billing_record (
-  UHID int NOT NULL,
-  OPDConsultationFee DECIMAL(7,2) NOT NULL DEFAULT 0.00,
-  IPDFee DECIMAL(8,2) NOT NULL DEFAULT 0.00,
-  InvestigationsFee DECIMAL(7,2) NOT NULL DEFAULT 0.00,
-  LabFee DECIMAL(8,2) NOT NULL DEFAULT 0.00,
-  ProcedureCharges DECIMAL(8,2) NOT NULL DEFAULT 0.00,
-  GST DECIMAL(6,2) NOT NULL DEFAULT 0.00,
-  DiscountPercent INTEGER NOT NULL DEFAULT 0,
-  TotalBillAmount DECIMAL(9,2) NOT NULL DEFAULT 0.00,
-  ModeOfPayment varchar(100) NOT NULL,
-  DateOfBill TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  RecordTouchDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (UHID) references patients(UHID),
-  FOREIGN KEY (ModeOfPayment) references mode_of_payment(ModeOfPayment)
-);
+
 
 CREATE TABLE modes_of_payment (
   ModeOfPayment varchar(100) NOT NULL,
@@ -409,3 +421,15 @@ CREATE TABLE IF NOT EXISTS medical_prescription_master(
     FOREIGN KEY fk_medicine(medicine_id) REFERENCES medicine_master(medicine_id),
     FOREIGN KEY fk_diagnosis(diagnosis_id) REFERENCES diagnosis_master(diagnosis_id)
 ); 
+
+create table patient_prescription_record (
+  UHID INT not null,
+  medicine_name varchar(200) not null,
+  recommended_dosage varchar(100) not null,
+  additional_instructions varchar(200) not null,
+  date_of_prescription timestamp not null DEFAULT CURRENT_TIMESTAMP,
+  consultant_name varchar(100),
+  RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY(UHID) references patients(UHID)
+);
+
