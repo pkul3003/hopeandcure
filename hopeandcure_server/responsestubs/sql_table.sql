@@ -427,7 +427,7 @@ create table patient_prescription_record (
   medicine_name varchar(200) not null,
   recommended_dosage varchar(100) not null,
   additional_instructions varchar(200) not null,
-  date_of_prescription timestamp not null DEFAULT CURRENT_TIMESTAMP,
+  date_of_prescription date not null,
   consultant_name varchar(100),
   RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY(UHID) references patients(UHID)

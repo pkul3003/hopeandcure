@@ -21,11 +21,11 @@ async function apiHandlerCreatePatient(req,res){
 				"msgtype" : "error",
 				"message": "There was an error in creating the new patient"
 			}
-  	console.log("Exiting apiHandlerCreatePatient========>");
-			return res.send(returnJsonObj);
+  		console.log("Exiting apiHandlerCreatePatient========>");
+		return res.send(returnJsonObj);
 		}
   	console.log("Exiting apiHandlerCreatePatient========>");
-		return res.json(response);
+	return res.json(response);
 }
 
 // add patient Address

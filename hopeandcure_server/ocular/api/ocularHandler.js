@@ -145,6 +145,37 @@ async function apiHandlerAddSurgicalHistory(req, res) {
 	  return res.json(returnJsonObj);
 }
 
+
+async function apiHandlerAddPrescription(req, res){
+  console.log("Entering apiHandlerAddPrescription========>");
+	let response = await mysqlFunctions.addPatientPrescription(req);
+	console.log("inside apiHandlerAddPrescription:  ", response);
+
+	if (response === false) {
+		var returnJsonObj = {
+			"msgtype" : "error",
+			"message": "one or more prescriptions could not be added"
+		}
+		console.log("Exiting apiHandlerAddPrescription========>");
+		return res.send(returnJsonObj);
+	} else if (response === true) {
+
+	var returnJsonObj = {
+		"msgtype" : "success",
+		"message": "patient medical prescription added successfully"
+	  }
+	  console.log("Exiting apiHandlerAddPrescription========>");
+	  return res.json(returnJsonObj);
+  } else {
+    var returnJsonObj = {
+      "msgtype" : "error",
+      "message": "There was an error in creating medical prescription"
+      }
+      console.log("Exiting apiHandlerAddPrescription========>");
+      return res.json(returnJsonObj);
+  }
+}
+
 exports.apiHandlerAddOptometeryResults = apiHandlerAddOptometeryResults;
 exports.apiHandlerRetrieveOptometryResults = apiHandlerRetrieveOptometryResults;
 exports.apiHandlerAddOcularFacts = apiHandlerAddOcularFacts;
@@ -152,3 +183,4 @@ exports.apiHandlerRetrieveOcularFacts = apiHandlerRetrieveOcularFacts;
 exports.apiHandlerAddConsultantResults = apiHandlerAddConsultantResults;
 exports.apiHandlerRetrieveSurgicalHistory = apiHandlerRetrieveSurgicalHistory;
 exports.apiHandlerAddSurgicalHistory = apiHandlerAddSurgicalHistory;
+exports.apiHandlerAddPrescription = apiHandlerAddPrescription;

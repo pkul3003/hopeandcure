@@ -296,6 +296,51 @@ async function addPatientSurgicalHistory(req) {
   }
 }
 
+async function addPatientPrescription(req){
+  console.log("Entering addPatientPrescription...");
+  let UHID = req.body.patient.UHID;
+  let consultant_name = req.body.patient.consultant_name;
+  let date_of_prescription = req.body.patient.date_of_prescription;
+  let json_data = [] ;
+  json_data = req.body.patient.prescription_array;
+  
+  console.log("prescription list length: " + json_data.length);
+  var iCount = 0;
+
+  json_data.forEach(async function(prescription){
+    iCount = iCount+1;
+    console.log(prescription.medicine_name);
+
+    let query = "INSERT into patient_prescription_record (UHID, medicine_name, recommended_dosage,"+
+    "additional_instructions, date_of_prescription, consultant_name, RecordTouchDate) "+
+    "VALUES (" +UHID+ ", '" + prescription.medicine_name + "', '"+ prescription.recommended_dosage + 
+    "', '"+ prescription.additional_instructions+"', '"+date_of_prescription+ "', '" + consultant_name + 
+    "', NOW());";
+    
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    await con.query(query);
+    if (iCount === json_data.length) {
+      console.log("Exiting addPatientPrescription...");
+      return true;
+    }
+  }
+  catch(err) {
+    console.log("Error ====== addPatientPrescription");
+    console.log("Error code is: ", err.code);
+    console.log("Exiting addPatientPrescription...");
+    if(iCount === json_data.length) {
+      return false;
+    }
+    return false;
+  }
+});
+console.log("Exiting addPatientPrescription...");
+return true;
+}
+
 exports.addPatientOcularFacts = addPatientOcularFacts;
 exports.addOptometryResults = addOptometryResults;
 exports.retrieveOptometryResults = retrieveOptometryResults;
@@ -303,3 +348,4 @@ exports.retrievePatientOcularFacts = retrievePatientOcularFacts;
 exports.addConsultantResults = addConsultantResults;
 exports.retrievePatientSurgicalHistory = retrievePatientSurgicalHistory;
 exports.addPatientSurgicalHistory = addPatientSurgicalHistory;
+exports.addPatientPrescription = addPatientPrescription;
