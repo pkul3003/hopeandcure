@@ -220,6 +220,7 @@ async function apiHandlerUpdateConsultantResults(req, res) {
 	  return res.json(returnJsonObj);
 }
 
+
 exports.apiHandlerAddOptometeryResults = apiHandlerAddOptometeryResults;
 exports.apiHandlerRetrieveOptometryResults = apiHandlerRetrieveOptometryResults;
 exports.apiHandlerAddOcularFacts = apiHandlerAddOcularFacts;

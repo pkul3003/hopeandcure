@@ -481,8 +481,6 @@ async function updateConsultantResults(req) {
   }
 }
 
-
-
 exports.addPatientOcularFacts = addPatientOcularFacts;
 exports.addOptometryResults = addOptometryResults;
 exports.retrieveOptometryResults = retrieveOptometryResults;
