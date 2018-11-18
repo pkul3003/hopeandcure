@@ -176,6 +176,50 @@ async function apiHandlerAddPrescription(req, res){
   }
 }
 
+async function apiHandlerUpdateOptimetryResults(req, res) {
+	console.log("Entering apiHandlerUpdateOptimetryResults========>");
+	let response = await mysqlFunctions.updateOptometryResults(req);
+	console.log("inside apiHandlerUpdateOptimetryResults:  ", response);
+
+	if (response === false) {
+		var returnJsonObj = {
+			"msgtype" : "error",
+			"message": "There was an error updating Optimetry details for the patient"
+		}
+		console.log("Exiting apiHandlerUpdateOptimetryResults========>");
+		return res.send(returnJsonObj);
+	}
+
+	var returnJsonObj = {
+		"msgtype" : "success",
+		"message": "patient Optimetry details updated successfully"
+	  }
+	  console.log("Exiting apiHandlerUpdateOptimetryResults========>");
+	  return res.json(returnJsonObj);
+}
+
+async function apiHandlerUpdateConsultantResults(req, res) {
+	console.log("Entering apiHandlerUpdateConsultantResults========>");
+	let response = await mysqlFunctions.updateConsultantResults(req);
+	console.log("inside apiHandlerUpdateConsultantResults:  ", response);
+
+	if (response === false) {
+		var returnJsonObj = {
+			"msgtype" : "error",
+			"message": "There was an error updating Consultant results for the patient"
+		}
+		console.log("Exiting apiHandlerUpdateConsultantResults========>");
+		return res.send(returnJsonObj);
+	}
+
+	var returnJsonObj = {
+		"msgtype" : "success",
+		"message": "patient Consultant results updated successfully"
+	  }
+	  console.log("Exiting apiHandlerUpdateConsultantResults========>");
+	  return res.json(returnJsonObj);
+}
+
 exports.apiHandlerAddOptometeryResults = apiHandlerAddOptometeryResults;
 exports.apiHandlerRetrieveOptometryResults = apiHandlerRetrieveOptometryResults;
 exports.apiHandlerAddOcularFacts = apiHandlerAddOcularFacts;
@@ -184,3 +228,5 @@ exports.apiHandlerAddConsultantResults = apiHandlerAddConsultantResults;
 exports.apiHandlerRetrieveSurgicalHistory = apiHandlerRetrieveSurgicalHistory;
 exports.apiHandlerAddSurgicalHistory = apiHandlerAddSurgicalHistory;
 exports.apiHandlerAddPrescription = apiHandlerAddPrescription;
+exports.apiHandlerUpdateOptimetryResults=apiHandlerUpdateOptimetryResults;
+exports.apiHandlerUpdateConsultantResults=apiHandlerUpdateConsultantResults;
