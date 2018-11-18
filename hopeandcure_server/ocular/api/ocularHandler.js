@@ -220,6 +220,28 @@ async function apiHandlerUpdateConsultantResults(req, res) {
 	  return res.json(returnJsonObj);
 }
 
+async function apiHandlerRetrievPatientlatestComplaintHistory(req, res) {
+	console.log("Entering apiHandlerRetrievPatientlatestComplaintHistory========>");
+	let response = await mysqlFunctions.retrievePatientlatestComplaintHistory(req);
+	console.log("inside apiHandlerRetrievPatientlatestComplaintHistory:  ", response);
+
+	if (response === false) {
+		var returnJsonObj = {
+			"msgtype" : "error",
+			"message": "There was an error retrieving Patients last Complaints and illness history"
+		}
+		console.log("Exiting apiHandlerRetrievPatientlatestComplaintHistory========>");
+		return res.send(returnJsonObj);
+	}
+
+	var returnJsonObj = {
+		"msgtype" : "success",
+		"message": "patient Consultant results updated successfully"
+	  }
+	  console.log("Exiting apiHandlerRetrievPatientlatestComplaintHistory========>");
+	  return res.json(returnJsonObj);
+}
+
 
 exports.apiHandlerAddOptometeryResults = apiHandlerAddOptometeryResults;
 exports.apiHandlerRetrieveOptometryResults = apiHandlerRetrieveOptometryResults;
@@ -231,3 +253,4 @@ exports.apiHandlerAddSurgicalHistory = apiHandlerAddSurgicalHistory;
 exports.apiHandlerAddPrescription = apiHandlerAddPrescription;
 exports.apiHandlerUpdateOptimetryResults=apiHandlerUpdateOptimetryResults;
 exports.apiHandlerUpdateConsultantResults=apiHandlerUpdateConsultantResults;
+exposts.apiHandlerRetrievPatientlatestComplaintHistory=apiHandlerRetrievPatientlatestComplaintHistory;

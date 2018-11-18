@@ -100,8 +100,8 @@ async function addOptometryResults(req) {
   let surgical_history_other = req.body.patient.surgical_history_other;
   let drug_allergies = req.body.patient.drug_allergies;
   let current_glass_prescription_right = req.body.patient.current_glass_prescription_right;
-  let current_glass_prescription_left = req.body.patient.current_glass_prescription_left
-
+  let current_glass_prescription_left = req.body.patient.current_glass_prescription_left;
+  let user = req.body.patient.user;
 
   let query = "INSERT INTO optometry_results (UHID, auto_refractometer_reading_right, auto_refractometer_reading_left, " +
   "keratometry_reading_right, keratometry_reading_left, unaided_vision_right, unaided_vision_left, " +
@@ -110,7 +110,7 @@ async function addOptometryResults(req) {
   "refer_to_consultant, xylocaine_test, current_complaints, duration_current_complaints, " + 
   "past_ocular_illness, treatment_past_ocular_illness, past_systemic_illness, treatment_past_systemic_illness, "+
   "surgical_history_ocular, surgical_history_other, drug_allergies, current_glass_prescription_right," +
-  "current_glass_prescription_left,  RecordTouchDate) "+
+  "current_glass_prescription_left,  RecordTouchDate,user) "+
   "VALUES ('"+ UHID +"','" + auto_refractometer_reading_right + "','"+
               auto_refractometer_reading_left + "','"+ keratometry_reading_right +"', '"+ keratometry_reading_left +
               "','" + unaided_vision_right +"', '"+ unaided_vision_left +"', '"+ vision_with_pinhole +
@@ -121,7 +121,7 @@ async function addOptometryResults(req) {
               "', '"+ past_ocular_illness+ "', '"+treatment_past_ocular_illness+ "', '" + past_systemic_illness +
               "', '"+ treatment_past_systemic_illness+ "', '"+ surgical_history_ocular+ "', '"+ surgical_history_other+
               "', '"+ drug_allergies+ "', '"+ current_glass_prescription_right+ 
-              "', '"+ current_glass_prescription_left+ "', DEFAULT);";
+              "', '"+ current_glass_prescription_left+ "', DEFAULT,'"+ user +"' );";
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -214,7 +214,7 @@ async function addConsultantResults(req) {
   let Indirect_OpthalmLeft   = req.body.patient.Indirect_OpthalmLeft  ;
   let NinetyD_SeventyeightDRight    = req.body.patient.NinetyD_SeventyeightDRight  ;
   let NinetyD_SeventyeightDLeft   = req.body.patient.NinetyD_SeventyeightDLeft  ;
-  
+  let user = req.body.patient.user;
 
   let query = "INSERT INTO ophthalmologist_examination_record VALUES ('"+ UHID +"', '" + VisionRight + "','"+
               VisionLeft + "','"+ acceptanceRight +"', '"+ 
@@ -223,7 +223,7 @@ async function addConsultantResults(req) {
                Intraocular_PressureRight +"','"+ Intraocular_PressureLeft + "', '"+ GonioscopyRight +"', '"+ GonioscopyLeft + "', '"+SlitLamp_ExamRight +"', '" +
                SlitLamp_ExamLeft + "','" +ConjuctivaRight + "', '" +ConjuctivaLeft +"', '"+CorneaRight +"','"+ CorneaLeft+"','"+Anterior_ChamberRight+"','"+
                Anterior_ChamberLeft +"','"+Lenticular_statusRight +"','"+Lenticular_statusLeft +"','"+GlowRight +"','"+ GlowLeft +"','"+ Direct_OpthalmRight +"','" +
-               Direct_OpthalmLeft+"', '"+Inirect_OpthalmRight +"','"+Indirect_OpthalmLeft +"', '"+NinetyD_SeventyeightDRight +"', '"+ NinetyD_SeventyeightDLeft +"', DEFAULT);";
+               Direct_OpthalmLeft+"', '"+Inirect_OpthalmRight +"','"+Indirect_OpthalmLeft +"', '"+NinetyD_SeventyeightDRight +"', '"+ NinetyD_SeventyeightDLeft +"', DEFAULT,'"+user+"');";
 
   console.log(query);
   try {
@@ -377,7 +377,8 @@ async function updateOptometryResults(req) {
   let surgical_history_other = req.body.patient.surgical_history_other;
   let drug_allergies = req.body.patient.drug_allergies;
   let current_glass_prescription_right = req.body.patient.current_glass_prescription_right;
-  let current_glass_prescription_left = req.body.patient.current_glass_prescription_left
+  let current_glass_prescription_left = req.body.patient.current_glass_prescription_left;
+  let user = req.body.patient.user;
 
 
   let query = "UPDATE  optometry_results set auto_refractometer_reading_right='" + auto_refractometer_reading_right + "', auto_refractometer_reading_left= '"+ auto_refractometer_reading_left + "', " +
@@ -387,7 +388,7 @@ async function updateOptometryResults(req) {
   "refer_to_consultant='"+ refer_to_consultant + "', xylocaine_test='"+ xylocaine_test+ "', current_complaints='"+current_complaints+ "', duration_current_complaints'"+duration_current_complaints +"', " + 
   "past_ocular_illness='"+ past_ocular_illness+ "', treatment_past_ocular_illness='"+treatment_past_ocular_illness+ "', past_systemic_illness='" + past_systemic_illness+", treatment_past_systemic_illness='"+ treatment_past_systemic_illness+ "', "+
   "surgical_history_ocular'"+ surgical_history_ocular+ "', surgical_history_other='"+ surgical_history_other+"', drug_allergies='"+ drug_allergies+ "', current_glass_prescription_right ='"+ current_glass_prescription_right+ "'," +
-  "current_glass_prescription_left='"+ current_glass_prescription_left+ "',  RecordTouchDate=DEFAULT Where UHID='"+ UHID +"' ;";
+  "current_glass_prescription_left='"+ current_glass_prescription_left+ "',  RecordTouchDate=DEFAULT, user = '" + user +"' Where UHID='"+ UHID +"' ;";
 
   console.log(query);
   try {
@@ -453,7 +454,7 @@ async function updateConsultantResults(req) {
   let Indirect_OpthalmLeft   = req.body.patient.Indirect_OpthalmLeft  ;
   let NinetyD_SeventyeightDRight    = req.body.patient.NinetyD_SeventyeightDRight  ;
   let NinetyD_SeventyeightDLeft   = req.body.patient.NinetyD_SeventyeightDLeft  ;
-  
+  let user = req.body.patient.user;
    
   let query = "Update ophthalmologist_examination_record set VisionRight = '" + VisionRight + "',VisionLeft = '"+
               VisionLeft + "',AcceptanceRight= '"+ acceptanceRight +"', AcceptanceLeft = '"+ 
@@ -462,7 +463,7 @@ async function updateConsultantResults(req) {
               Intraocular_PressureRight +"', Intraocular_PressureLeft = '"+ Intraocular_PressureLeft + "',GonioscopyRight = '"+ GonioscopyRight +"', GonioscopyLeft = '"+ GonioscopyLeft + "', SlitLamp_ExamRight= '"+SlitLamp_ExamRight +"', SlitLamp_ExamLeft='" +
               SlitLamp_ExamLeft + "',ConjuctivaRight='" +ConjuctivaRight + "', ConjuctivaLeft='" +ConjuctivaLeft +"',CorneaRight= '"+CorneaRight +"', CorneaLeft='"+ CorneaLeft+"',Anterior_ChamberRight ='"+Anterior_ChamberRight+"', Anterior_ChamberLeft ='"+
               Anterior_ChamberLeft +"', Lenticular_statusRight ='"+Lenticular_statusRight +"', Lenticular_statusLeft='"+Lenticular_statusLeft +"', GlowRight ='"+GlowRight +"', GlowLeft = '"+ GlowLeft +"', Direct_OpthalmRight='"+ Direct_OpthalmRight +"',Direct_OpthalmLeft = '" +
-              Direct_OpthalmLeft+"', Inirect_OpthalmRight='"+Inirect_OpthalmRight +"',Indirect_OpthalmLeft='"+Indirect_OpthalmLeft +"', NinetyD_SeventyeightDRight= '"+NinetyD_SeventyeightDRight +"', NinetyD_SeventyeightDLeft= '"+ NinetyD_SeventyeightDLeft +"', RecordTouchDate = DEFAULT  ; Where UHID = '"+UHID +"'";
+              Direct_OpthalmLeft+"', Inirect_OpthalmRight='"+Inirect_OpthalmRight +"',Indirect_OpthalmLeft='"+Indirect_OpthalmLeft +"', NinetyD_SeventyeightDRight= '"+NinetyD_SeventyeightDRight +"', NinetyD_SeventyeightDLeft= '"+ NinetyD_SeventyeightDLeft +"', RecordTouchDate = DEFAULT, user = '" + user +"'   Where UHID = '"+UHID +"'";
 
               console.log(query);
   try {
@@ -481,6 +482,42 @@ async function updateConsultantResults(req) {
   }
 }
 
+async function retrievePatientlatestComplaintHistory(req) {
+  console.log("Entering retrievePatientlatestComplaintHistory...");
+  let UHID = req.body.patient.UHID;
+
+  let query = "select UHID, current_complaints, duration_current_complaints, past_ocular_illness, treatment_past_ocular_illness, " +
+            " past_systemic_illness, treatment_past_systemic_illness, surgical_history_ocular, surgical_history_other, " +
+            " drug_allergies,  RecordTouchDate from optometry_results where uhid = '" +UHID+ "' order by  RecordTouchDate limit 1 = ;";
+  
+      console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let patientJson = JSON.stringify(result);
+    console.log(patientJson);
+    if(patientJson === "[]") {
+      console.log(" it seems no previous complanits , illness history  found .........");
+      var NoSurgeryHistoryFound = {
+        "msgtype" : "info",
+        "message": "no  complaints , illness history found"
+      }
+      return JSON.stringify(NoComplaintsHistoryFound);
+    }
+    con.release();
+    return patientJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrievePatientlatestComplaintHistory");
+    console.log("Error code is: ", err.code);
+    console.log("Exiting retrievePatientlatestComplaintHistory...");
+    return false;
+  }
+}
+
+
+
 exports.addPatientOcularFacts = addPatientOcularFacts;
 exports.addOptometryResults = addOptometryResults;
 exports.retrieveOptometryResults = retrieveOptometryResults;
@@ -491,3 +528,4 @@ exports.addPatientSurgicalHistory = addPatientSurgicalHistory;
 exports.addPatientPrescription = addPatientPrescription;
 exports.updateOptometryResults=updateOptometryResults;
 exports.updateConsultantResults=updateConsultantResults;
+exports.retrievePatientlatestComplaintHistory=retrievePatientlatestComplaintHistory;
