@@ -28,6 +28,26 @@ async function apiHandlerCreatePatient(req,res){
 	return res.json(response);
 }
 
+// update existing patient details
+async function apiHandlerUpdatePatientDetails(req,res){
+	console.log("Entering apiHandlerUpdatePatientDetails========>");
+
+    let response = await mysqlFunctions.updatePatientDetails(req);
+    console.log("inside apiHandlerUpdatePatientDetails:  ", response);
+
+		if (response === false) {
+			var returnJsonObj = {
+				"msgtype" : "error",
+				"message": "There was an error in updating the patient details"
+			}
+  		console.log("Exiting apiHandlerUpdatePatientDetails========>");
+		return res.send(returnJsonObj);
+		}
+  	console.log("Exiting apiHandlerUpdatePatientDetails========>");
+	return res.json(response);
+}
+
+
 // add patient Address
 async function apiHandlerAddPatientAddress(req, res) {
 	console.log("Entering apiHandlerAddPatientAddress========>");
@@ -62,25 +82,6 @@ async function apiHandlerSearchPatient(req, res) {
 	}
 console.log("Exiting apiHandlerSearchPatient========>");
 return res.send(JSON.parse(response));
-}
-
-
-// find a patient by his/her mobile number
-async function apiHandlerFindPatientByMobile(req,res){
-	console.log("Entering apiHandlerFindPatientByMobile========>");
-    console.log(req.body.patient.contact_number);
-    let response = await mysqlFunctions.retrievePatientsByMobile(req);
-    console.log("inside apiHandlerFindPatientByMobile:  ", response);
-		if (response === false) {
-			var returnJsonObj = {
-				"msgtype" : "error",
-				"message": "There was an error is fetching customer"
-			}
-			return res.send(returnJsonObj);
-		}
-		
-  console.log("Exiting apiHandlerFindPatientByMobile========>");
-  return res.send(JSON.parse(response));
 }
 
 async function apiHandlerAddMedicalFacts(req, res) {
@@ -206,3 +207,4 @@ exports.apiHandlerSearchPatient = apiHandlerSearchPatient;
 exports.apiHandlerAddPatientDrugAllergies = apiHandlerAddPatientDrugAllergies;
 exports.apiHandlerRetrieveSurgicalHistory = apiHandlerRetrieveSurgicalHistory;
 exports.apiHandlerAddSurgicalHistory = apiHandlerAddSurgicalHistory;
+exports.apiHandlerUpdatePatientDetails = apiHandlerUpdatePatientDetails;

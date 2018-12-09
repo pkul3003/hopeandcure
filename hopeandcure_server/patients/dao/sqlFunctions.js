@@ -71,6 +71,41 @@ async function createNewPatient(req) {
   }
 }
 
+async function updatePatientDetails(req) {
+  console.log("Entering updatePatientDetails...");
+  let UHID = req.body.patient.UHID
+  let first_name = req.body.patient.first_name;
+  let middle_name = req.body.patient.middle_name;
+  let last_name = req.body.patient.last_name;
+  let birth_date = req.body.patient.DOB;
+  let gender = req.body.patient.gender;
+  let contact_number = req.body.patient.contact_number;
+  let email_id = req.body.patient.email_id;
+  let aadhar = req.body.patient.aadhar;
+  let query = "UPDATE patients set FirstName = '"+ first_name +"', MiddleName = '" + middle_name + 
+              "', LastName = '"+ last_name + "', DOB = '"+birth_date +"', Gender = '" + gender +
+              "', ContactNumber = '"+ contact_number +"', EmailId = '"+ email_id +
+              "', Aadhar = '"+ aadhar +"', RecordTouchDate = NOW() where UHID = "+UHID+ ";";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    await con.execute(query);
+    var response = {
+      "msgtype": "success",
+      "message": "patient details updated successfully"
+    }
+    console.log("Exiting updatePatientDetails...");
+    return response;
+  }
+  catch(err) {
+      console.log("Error ====== updatePatientDetails");
+      console.log("Error code is: ", err.code);
+      console.log("Exiting updatePatientDetails...");
+      return false;
+  }
+}
+
 async function addPatientAddress(req) {
   console.log("Entering addPatientAddress...");
   let UHID = req.body.patientAddress.UHID;
@@ -404,3 +439,4 @@ exports.retrievePatients = retrievePatients;
 exports.addPatientDrugAllergies = addPatientDrugAllergies;
 exports.retrievePatientSurgicalHistory = retrievePatientSurgicalHistory;
 exports.addPatientSurgicalHistory = addPatientSurgicalHistory;
+exports.updatePatientDetails = updatePatientDetails;

@@ -158,6 +158,9 @@ app.post('/patients', async function (req, res){
 		case 'create-patient':
 			await apiPatientController.apiHandlerCreatePatient(req, res);
 			break;
+		case 'update-patient-details':
+			await apiPatientController.apiHandlerUpdatePatientDetails(req, res);
+			break;		
 		case 'add-patient-address':
 			await apiPatientController.apiHandlerAddPatientAddress(req, res);
 			break;

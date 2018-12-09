@@ -28,6 +28,21 @@ search appointments by date range
 referred by - create new table and new web-service called
 consultant - new web-service call
 
+17 Nov 2018
+UI Design Changes:
+Label and Text box - side by side
+horizontal tabs
+gender field missing in optometry
+drug allergy yes/no radio button
+no select all in any drop-bown boxes
+dialation - single select
+
+09 Dec 2018
+Add Date column to the Appointments table
+add filter for sorting by Consultant, Date
+
+
+
 
 amazon ec2 instance url 
 https://52.90.13.219:443/login
