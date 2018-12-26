@@ -111,6 +111,9 @@ app.get("/retrieve-optometry-data-by-uhid", async function(req, res){
 	await apiOcularController.apiHandlerRetrieveOptometryResults(req, res);
 });
 
+app.get("/retrieve-ptient-past-history", async function(req, res) {
+	await apiOcularController.apiHandlerRetrievPatientlatestComplaintHistory(req, res);
+});
 
 
 // seperate POST call for login function
@@ -212,6 +215,7 @@ app.post('/ocular', async function (req, res){
 		case 'add-patient-prescription':
 			await apiOcularController.apiHandlerAddPrescription(req, res);
 			break;
+				
 		default:
 			var returnJsonObj = {
 				"msgtype" : "info",
