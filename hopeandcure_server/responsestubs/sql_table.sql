@@ -433,3 +433,10 @@ create table patient_prescription_record (
   FOREIGN KEY(UHID) references patients(UHID)
 );
 
+CREATE TABLE IF NOT EXISTS instructions_master(
+    instruction_id INT AUTO_INCREMENT,
+    instruction_type VARCHAR(50) NOT NULL,
+    instruction_desc VARCHAR(255) NOT NULL, 
+    RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,   
+    PRIMARY KEY (instruction_id)
+);  

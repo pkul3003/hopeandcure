@@ -194,6 +194,24 @@ app.post('/patients', async function (req, res){
 app.post('/generic', async function(req, res){
 	console.log("inside router app.post/generic: "+ JSON.stringify(req.body.intentName));
 	switch (req.body.intentName) {
+		case 'create-complaint' :
+			await apiGenericController.apiHandlerCreateComplaint(req, res);
+			break;
+		case 'create-investigation' :
+			await apiGenericController.apiHandlerCreateInvestigation(req, res);
+			break;
+		case 'create-procedure':
+			await apiGenericController.apiHandlerCreateProcedure(req,res);
+			break;
+		case 'create-special-precaution':
+			await apiGenericController.apiHandlerSpecialPrecaution(req, res);
+			break;
+		case 'crate-new-diagnosis':
+			await apiGenericController.apiHandlerCreateNewDiagnosis(req,res);
+			break;
+		case 'create-new-instruction':
+			await apiGenericController.apiHandlerCreateNewInstruction(req,res);
+			break;
 		default:
 			var returnJsonObj = {
 				"msgtype" : "info",

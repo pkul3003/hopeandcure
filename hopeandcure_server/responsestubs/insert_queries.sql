@@ -56,21 +56,21 @@ insert into mode_of_payment values ('NET BANKING', DEFAULT);
 
 
 
-INSERT INTO complaint_master (complaint_id, complaint_type, complaint_sub_type, complaint_desc, RecordTouchDate) VALUES ('1', 'Occular', 'Redness', 'Eyes Redness', default);
+INSERT INTO complaint_master (complaint_id, complaint_type, complaint_sub_type, complaint_desc, RecordTouchDate) VALUES ('1', 'ocular', 'Redness', 'Eyes Redness', default);
 
-INSERT INTO complaint_master (complaint_id, complaint_type, complaint_sub_type, complaint_desc, RecordTouchDate) VALUES ('2', 'Occular', 'Pain', '', default);
+INSERT INTO complaint_master (complaint_id, complaint_type, complaint_sub_type, complaint_desc, RecordTouchDate) VALUES ('2', 'ocular', 'Pain', '', default);
 
-INSERT INTO complaint_master (complaint_id, complaint_type, complaint_sub_type, complaint_desc, RecordTouchDate) VALUES ('3', 'Occular', 'Watering', '', default);
+INSERT INTO complaint_master (complaint_id, complaint_type, complaint_sub_type, complaint_desc, RecordTouchDate) VALUES ('3', 'ocular', 'Watering', '', default);
 
-INSERT INTO complaint_master (complaint_id, complaint_type, complaint_sub_type, complaint_desc, RecordTouchDate) VALUES ('4', 'Occular', 'Dryness', '', default);
+INSERT INTO complaint_master (complaint_id, complaint_type, complaint_sub_type, complaint_desc, RecordTouchDate) VALUES ('4', 'ocular', 'Dryness', '', default);
 
-INSERT INTO complaint_master (complaint_id, complaint_type, complaint_sub_type, complaint_desc, RecordTouchDate) VALUES ('5', 'Occular', 'Diminished Vision', '', default);
+INSERT INTO complaint_master (complaint_id, complaint_type, complaint_sub_type, complaint_desc, RecordTouchDate) VALUES ('5', 'ocular', 'Diminished Vision', '', default);
 
-INSERT INTO complaint_master (complaint_id, complaint_type, complaint_sub_type, complaint_desc, RecordTouchDate) VALUES ('6', 'Occular', 'Blurring of Vision', '', default);
+INSERT INTO complaint_master (complaint_id, complaint_type, complaint_sub_type, complaint_desc, RecordTouchDate) VALUES ('6', 'ocular', 'Blurring of Vision', '', default);
 
-INSERT INTO complaint_master (complaint_id, complaint_type, complaint_sub_type, complaint_desc, RecordTouchDate) VALUES ('7', 'Occular', 'Broken Spectacle', '', default);
+INSERT INTO complaint_master (complaint_id, complaint_type, complaint_sub_type, complaint_desc, RecordTouchDate) VALUES ('7', 'ocular', 'Broken Spectacle', '', default);
 
-INSERT INTO complaint_master (complaint_id, complaint_type, complaint_sub_type, complaint_desc, RecordTouchDate) VALUES ('8', 'Occular', 'Routine Followup', '', default);
+INSERT INTO complaint_master (complaint_id, complaint_type, complaint_sub_type, complaint_desc, RecordTouchDate) VALUES ('8', 'ocular', 'Routine Followup', '', default);
 
 
 
@@ -116,11 +116,11 @@ INSERT INTO advice_master (advice_id, advice_type, advice_sub_type, advice_desc,
 INSERT INTO advice_master (advice_id, advice_type, advice_sub_type, advice_desc, RecordTouchDate) VALUES ('4', 'ophthalmic', 'Petrygium Surgery','', default);
 
 
-INSERT INTO instructions_master (instructions_id, instructions_type,instructions_sub_type, instructions_desc, RecordTouchDate) VALUES ('1', 'Occular','Regular followup', '',default);
+INSERT INTO instructions_master (instruction_id, instruction_type,instruction_sub_type, instruction_desc, RecordTouchDate) VALUES ('1', 'ocular','Regular followup', '',default);
 
-INSERT INTO instructions_master (instructions_id, instructions_type,instructions_sub_type, instructions_desc, RecordTouchDate) VALUES ('3', 'Occular','Regular Medication', '',default);
+INSERT INTO instructions_master (instruction_id, instruction_type,instruction_sub_type, instruction_desc, RecordTouchDate) VALUES ('3', 'ocular','Regular Medication', '',default);
 
-INSERT INTO instructions_master (instructions_id, instructions_type,instructions_sub_type, instructions_desc, RecordTouchDate) VALUES ('4', 'Occular','Please carry all documents during visit', '',default);
+INSERT INTO instructions_master (instruction_id, instruction_type,instruction_sub_type, instruction_desc, RecordTouchDate) VALUES ('4', 'ocular','Please carry all documents during visit', '',default);
 
 
 INSERT INTO diagnosis_master (diagnosis_id, diagnosis_type, diagnosis_desc, RecordTouchDate) VALUES ('1', 'Advance Catract Surgery','', default);
