@@ -374,6 +374,40 @@ async function retrieveMinorOPDProcedures(req){
   }
 }
 
+// To retrieve Patient status from master
+async function retrievePatientStatusMaster(req){
+  console.log("Entering retrievePatientStatusMaster...");
+
+  let query = "select status_code from patient_status_master order by status_code;";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let MysqlResponseJson = JSON.stringify(result);
+    console.log("stringified json object is: ", MysqlResponseJson);
+    if(MysqlResponseJson === "[]") {
+      console.log(" it seems no patient status found in master table .........");
+      var NoDataFound = {
+        "msgtype" : "info",
+        "message": "no Patient status found"
+      }
+      console.log("Exiting retrievePatientStatusMaster...");
+      return JSON.stringify(NoDataFound);
+    }
+    
+    console.log("Exiting retrievePatientStatusMaster...");
+    return MysqlResponseJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrievePatientStatusMaster");
+    console.log("Error code is: ", err.code);
+
+    console.log("Exiting retrievePatientStatusMaster...");
+    return false;
+  }
+}
+
 // search medicine
 async function searchMedicineByName(req) {
   console.log("Entering searchMedicineByName...");
@@ -871,3 +905,4 @@ exports.retrieveMedicalPrescription = retrieveMedicalPrescription;
 exports.retrieveAdvice = retrieveAdvice;
 exports.retrieveMinorOPDProcedures = retrieveMinorOPDProcedures;
 exports.searchMedicineByName = searchMedicineByName;
+exports.retrievePatientStatusMaster=retrievePatientStatusMaster;
