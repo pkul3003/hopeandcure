@@ -440,3 +440,9 @@ CREATE TABLE IF NOT EXISTS instructions_master(
     RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,   
     PRIMARY KEY (instruction_id)
 );  
+
+CREATE TABLE IF NOT EXISTS patient_progress_status(
+    status_code VARCHAR(100),
+    RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,   
+    PRIMARY KEY (status_code)
+);  

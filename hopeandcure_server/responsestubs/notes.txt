@@ -41,8 +41,17 @@ dialation - single select
 Add Date column to the Appointments table
 add filter for sorting by Consultant, Date
 
-
-
+29 Dec 2018
+1.  Nikhil: Add field validation for mobile number on the book appointments screen - 10 digits
+2.  Nikhil: Change label from Search Patient to book appointment
+3.  Parag: keep data in appointments table for last 100 days
+4.  Nikhil: at appointments landing page, status needs to be populated by default to "registered"
+5.  Nikhil: After status change, invoke a call to http://localhost:8082/appointments with intentName as "update-patient-progress-status"
+6.  Parag: modify create-patient to also add patient address
+7.  Parag: write a new API for search appointments by patient name, UHID, mobile
+8.  Nikhil: Search Appointments Text Box to invoke new API for searching appointments
+9.  Nikhil: on Search-Patient click, open a new page with patient details including address. Keep it read-only with Edit button
+10. Nikhil: 
 
 amazon ec2 instance url 
 https://52.90.13.219:443/login
