@@ -159,6 +159,16 @@ app.post('/appointments', async function (req, res){
 				"message" : "Invalid intentName specified"
 			}
 			res.send(returnJsonObj);
+
+		case 'update-appointment':
+			await apiAppointmentsController.apiHandlerUpdateAppointments(req, res);
+			break;
+		default:
+			var returnJsonObj = {
+				"msgtype" : "info",
+				"message" : "Invalid intentName specified"
+			}
+			res.send(returnJsonObj);
 	}
 });
 
