@@ -79,7 +79,7 @@ async function apiHandlerCreateAppointment(req, res) {
   } else if (result === false) {
     var returnJsonObj = {
       "msgtype" : "error",
-      "message": "There was an error is creating the appointment"
+      "message": "There was an error is creating the appointment."
     }
     console.log("Exiting apiHandlerForAppointments========>");
     return res.send(returnJsonObj);
