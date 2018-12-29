@@ -13,19 +13,31 @@ restService.use(bodyParser.json());
 async function apiHandlerCreatePatient(req,res){
 	console.log("Entering apiHandlerCreatePatient========>");
 
-    let response = await mysqlFunctions.createNewPatient(req);
-    console.log("inside apiHandlerCreatePatient:  ", response);
+    let patientResponse = await mysqlFunctions.createNewPatient(req);
+    console.log("inside apiHandlerCreatePatient:  ", patientResponse);
 
-		if (response === false) {
+		if (patientResponse === false) {
 			var returnJsonObj = {
 				"msgtype" : "error",
 				"message": "There was an error in creating the new patient"
 			}
   		console.log("Exiting apiHandlerCreatePatient========>");
 		return res.send(returnJsonObj);
+		} else {
+			if (response.msgtype === "success") {
+				req.body.patientAddress.UHID = response.UHID;
+			}
 		}
+	let addressResponse = await mysqlFunctions.addPatientAddress(req);
+	if (addressResponse === false || addressResponse.msgtype !== "success") {
+		patientResponse.msgtype = "info";
+		patientResponse.message = "Patient created successfully but there was an error in adding address";
+		console.log("Exiting apiHandlerCreatePatient========>");
+		return res.json(patientResponse);
+	}
+
   	console.log("Exiting apiHandlerCreatePatient========>");
-	return res.json(response);
+	return res.json(patientResponse);
 }
 
 // update existing patient details

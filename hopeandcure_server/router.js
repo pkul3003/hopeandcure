@@ -146,6 +146,9 @@ app.post('/appointments', async function (req, res){
 		case 'create-appointment':
 			await apiAppointmentsController.apiHandlerCreateAppointment(req, res);
 			break;
+		case 'update-patient-progress-status' :
+			await apiAppointmentsController.apiHandlerUpdatePatientProgressStatus(req, res);
+			break;
 		default:
 			var returnJsonObj = {
 				"msgtype" : "info",
@@ -178,9 +181,6 @@ app.post('/patients', async function (req, res){
 			break;
 		case 'retrieve-patient-medical-facts':
 			await apiPatientController.apiHandlerRetrieveMedicalFacts(req, res);
-			break;
-		case 'update-patient-progress-status' :
-			await apiAppointmentsController.apiHandlerUpdatePatientProgressStatus(req, res);
 			break;
 		default:
 			var returnJsonObj = {

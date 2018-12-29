@@ -43,7 +43,6 @@ async function createNewPatient(req) {
     let newUHIDObject = JSON.parse(JSON.stringify(result));
     newUHID = newUHIDObject[0].UHID;
     console.log(newUHID);
-    con.release();
 
     var response = {
       "msgtype": "success",
