@@ -713,8 +713,6 @@ async function apiHandlerRetriveSpecialPrecaution(req,res){
 }
 
 
-
-
 exports.apiHandlerCreateComplaint = apiHandlerCreateComplaint;
 exports.apiHandlerCreateInvestigation = apiHandlerCreateInvestigation;
 exports.apiHandlerCreateProcedure = apiHandlerCreateProcedure;
@@ -726,7 +724,6 @@ exports.apiHandlerDosageInstruction = apiHandlerDosageInstruction;
 exports.apiHandlerMinorOpdProcedure = apiHandlerMinorOpdProcedure;
 exports.apiHandlerMedicine = apiHandlerMedicine;
 exports.apiHandlerMedicalPrescription = apiHandlerMedicalPrescription;
-
 
 exports.apiHandlerRetrieveComplaintTypes = apiHandlerRetrieveComplaintTypes;
 exports.apiHandlerRetrieveProcedureTypes = apiHandlerRetrieveProcedureTypes;
