@@ -18,8 +18,8 @@
 --
 -- Table structure for table `advice_master`
 --
-CREATE DATABASE IF NOT EXISTS `hmsdb`;
 
+CREATE DATABASE IF NOT EXISTS `hmsdb`;
 
 DROP TABLE IF EXISTS `advice_master`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -633,30 +633,6 @@ INSERT INTO `patient_prescription_record` VALUES (1272,'ofloxacin','3 times a da
 UNLOCK TABLES;
 
 --
--- Table structure for table `patient_progress_status`
---
-
-DROP TABLE IF EXISTS `patient_progress_status`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `patient_progress_status` (
-  `status_code` varchar(100) NOT NULL,
-  `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`status_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `patient_progress_status`
---
-
-LOCK TABLES `patient_progress_status` WRITE;
-/*!40000 ALTER TABLE `patient_progress_status` DISABLE KEYS */;
-INSERT INTO `patient_progress_status` VALUES ('Arrived','2018-12-29 05:34:53'),('Consultation_Complete','2018-12-29 05:37:57'),('Registered','2018-12-29 05:34:35'),('Under_Investigation','2018-12-29 05:36:19'),('With_Consultant','2018-12-29 05:35:33'),('With_Optometrist','2018-12-29 05:35:26');
-/*!40000 ALTER TABLE `patient_progress_status` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `patient_progress_tracker`
 --
 
@@ -682,6 +658,30 @@ LOCK TABLES `patient_progress_tracker` WRITE;
 /*!40000 ALTER TABLE `patient_progress_tracker` DISABLE KEYS */;
 INSERT INTO `patient_progress_tracker` VALUES (1235,'registered','patient needs a wheel chain','2018-08-26','2018-08-26 09:45:16'),(1272,'consultant','Patient needs a wheel chair;','2018-08-29','2018-08-26 09:53:31'),(1275,'registered','patient complains a lot','2018-08-27','2018-08-26 09:47:58'),(1275,'registered','patient complains a lot','2018-08-31','2018-08-26 09:48:41'),(1277,'Registered','Patient needs wheel chair','2018-12-23','2018-10-02 05:30:30'),(1234,'Registered','','2019-01-12','2018-12-29 03:55:39');
 /*!40000 ALTER TABLE `patient_progress_tracker` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `patient_status_master`
+--
+
+DROP TABLE IF EXISTS `patient_status_master`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `patient_status_master` (
+  `status_code` varchar(100) NOT NULL,
+  `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`status_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `patient_status_master`
+--
+
+LOCK TABLES `patient_status_master` WRITE;
+/*!40000 ALTER TABLE `patient_status_master` DISABLE KEYS */;
+INSERT INTO `patient_status_master` VALUES ('Arrived','2018-12-29 05:34:53'),('Consultation_Complete','2018-12-29 05:37:57'),('Registered','2018-12-29 05:34:35'),('Under_Investigation','2018-12-29 05:36:19'),('With_Consultant','2018-12-29 05:35:33'),('With_Optometrist','2018-12-29 05:35:26');
+/*!40000 ALTER TABLE `patient_status_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -953,4 +953,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-29 12:17:27
+-- Dump completed on 2018-12-29 12:33:40

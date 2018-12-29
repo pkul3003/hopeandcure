@@ -24,18 +24,17 @@ async function apiHandlerCreatePatient(req,res){
   		console.log("Exiting apiHandlerCreatePatient========>");
 		return res.send(returnJsonObj);
 		} else {
-			if (response.msgtype === "success") {
-				req.body.patientAddress.UHID = response.UHID;
+			if (patientResponse.msgtype === "success") {
+				req.body.patientAddress.UHID = patientResponse.UHID;
+				let addressResponse = await mysqlFunctions.addPatientAddress(req);
+				if (addressResponse === false || addressResponse.msgtype !== "success") {
+					patientResponse.msgtype = "info";
+					patientResponse.message = "Patient created successfully but there was an error in adding address";
+					console.log("Exiting apiHandlerCreatePatient========>");
+					return res.json(patientResponse);
+				}
 			}
 		}
-	let addressResponse = await mysqlFunctions.addPatientAddress(req);
-	if (addressResponse === false || addressResponse.msgtype !== "success") {
-		patientResponse.msgtype = "info";
-		patientResponse.message = "Patient created successfully but there was an error in adding address";
-		console.log("Exiting apiHandlerCreatePatient========>");
-		return res.json(patientResponse);
-	}
-
   	console.log("Exiting apiHandlerCreatePatient========>");
 	return res.json(patientResponse);
 }

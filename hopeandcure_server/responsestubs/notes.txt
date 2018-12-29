@@ -51,6 +51,7 @@ add filter for sorting by Consultant, Date
 7.  Parag: write a new API for search appointments by patient name, UHID, mobile
 8.  Nikhil: Search Appointments Text Box to invoke new API for searching appointments
 9.  Nikhil: on Search-Patient click, open a new page with patient details including address. Keep it read-only with Edit button
+10. Nikhil: 
 
 amazon ec2 instance url 
 https://52.90.13.219:443/login
