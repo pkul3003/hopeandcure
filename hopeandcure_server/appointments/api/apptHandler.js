@@ -107,9 +107,32 @@ async function apiHandlerUpdatePatientProgressStatus(req, res) {
 	  console.log("Exiting apiHandlerUpdatePatientProgressStatus========>");
 	  return res.json(returnJsonObj);
 }
+// api to update appoinntments
+async function apiHandlerUpdateAppointments(req, res) {
+  console.log("Entering apiHandlerUpdateAppointments========>");
+	let response = await mysqlFunctions.updateAppointment(req);
+	console.log("inside apiHandlerUpdateAppointments:  ", response);
+
+	if (response === false) {
+		var returnJsonObj = {
+			"msgtype" : "error",
+			"message": "There was an error in updating the appointment"
+		}
+		console.log("Exiting apiHandlerUpdateAppointments========>");
+		return res.send(returnJsonObj);
+	}
+
+	var returnJsonObj = {
+		"msgtype" : "success",
+		"message": "patient appointment updated successfully"
+	  }
+	  console.log("Exiting apiHandlerUpdateAppointments========>");
+	  return res.json(returnJsonObj);
+}
 
 //exporing all apiHandler functions
 exports.apiHandlerForAppointments = apiHandlerForAppointments;
 exports.apiHandlerCreateAppointment = apiHandlerCreateAppointment;
 exports.apiHandlerForAppointmentsByDate = apiHandlerForAppointmentsByDate;
 exports.apiHandlerUpdatePatientProgressStatus = apiHandlerUpdatePatientProgressStatus;
+exports.apiHandlerUpdateAppointments=apiHandlerUpdateAppointments;
