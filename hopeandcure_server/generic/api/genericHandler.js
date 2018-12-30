@@ -281,7 +281,7 @@ async function apiHandlerRetrievePatientStatusMaster(req, res){
   console.log("Entering apiHandlerRetrievePatientStatusMaster========>");
   let result = {};
 
-  result = await mysqlFunctions.retrievePatientStatusMaster (req);
+  result = await mysqlFunctions.retrievePatientStatusMaster(req);
   console.log("inside apiHandlerRetrievePatientStatusMaster:  ", result);
   if (result === false) {
     var returnJsonObj = {
