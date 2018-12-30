@@ -199,116 +199,6 @@ async function updatePatientAddress(req) {
 }
 
 
-async function createPatientMedicalFacts (req) {
-  console.log("Entering createPatientMedicalFacts...");
-
-  let UHID = req.body.patient.UHID;
-  let blood_group = req.body.patient.blood_group;
-  let bp_systolic = req.body.patient.bp_systolic;
-  let bp_diastolic = req.body.patient.bp_diastolic;
-  let isDiabetic = req.body.patient.isDiabetic;
-  let isHighBPPatient = req.body.patient.isHighBPPatient;
-  let isHeartPatient = req.body.patient.isHeartPatient;
-  let patient_weight = req.body.patient.patient_weight;
-  let sugar_level_fasting = req.body.patient.sugar_level_fasting;
-  let sugar_level_random = req.body.patient.sugar_level_random;
-  let sugar_level_postlunch = req.body.patient.sugar_level_postlunch;
-
-
-  let query = "INSERT INTO patient_medical_facts VALUES ('"+UHID+ "','"+ blood_group + "','"+
-              bp_systolic +"','" + bp_diastolic +"', '"+ isDiabetic +"', '"+ isHighBPPatient +
-              "', '"+ isHeartPatient + "', '"+ patient_weight + "', '"+ sugar_level_fasting + "', '"+ sugar_level_random +
-              "', '"+ sugar_level_postlunch + "', DEFAULT);";
-
-  console.log(query);
-  try {
-    let pool = await getConnectionPool();
-    let con = await pool.getConnection();
-    await con.execute(query);
-    con.release();
-
-    var response = {
-      "msgtype" : "success",
-      "message": "patient medical facts added successfully"
-    }
-    console.log("Exiting createPatientMedicalFacts...");
-    return response;
-  }
-  catch(err) {
-    //con.release();
-    console.log("Error ====== createPatientMedicalFacts");
-    console.log("Error code is: ", err.code);
-    console.log("Exiting createPatientMedicalFacts...");
-    return false;
-  }
-}
-
-async function updatePatientMedicalFacts (req) {
-  console.log("Entering updatePatientMedicalFacts...");
-
-  let UHID = req.body.patient.UHID;
-  let blood_group = req.body.patient.blood_group;
-  let bp_systolic = req.body.patient.bp_systolic;
-  let bp_diastolic = req.body.patient.bp_diastolic;
-  let isDiabetic = req.body.patient.isDiabetic;
-  let isHighBPPatient = req.body.patient.isHighBPPatient;
-  let isHeartPatient = req.body.patient.isHeartPatient;
-  let patient_weight = req.body.patient.patient_weight;
-  let sugar_level_fasting = req.body.patient.sugar_level_fasting;
-  let sugar_level_random = req.body.patient.sugar_level_random;
-  let sugar_level_postlunch = req.body.patient.sugar_level_postlunch;
-
-  let query = "update patient_medical_facts set BloodGroup = '" + blood_group + "', BloodPressureSystolic = '" +
-      bp_systolic + "', BloodPressureDiastolic = '" + bp_diastolic + "', isDiabetic = '" + isDiabetic + "', isHighBPPatient ='" +
-      isHighBPPatient + "', isHeartPatient = '" +isHeartPatient + "',   PatientWeight = '" + patient_weight +
-      "', SugarLevelFasting = '" + sugar_level_fasting + "', SugarLeaveRandom = '" + sugar_level_random +     
-      "', SugarLevelPostLunch = '" + sugar_level_postlunch+ "', RecordTouchDate = DEFAULT where UHID = " +UHID+ "; ";
-
-  console.log(query);
-  try {
-    let pool = await getConnectionPool();
-    let con = await pool.getConnection();
-    await con.execute(query);
-    var response = {
-      "msgtype" : "success",
-      "message": "patient medical facts updated successfully"
-    }
-    con.release();
-    console.log("Exiting updatePatientMedicalFacts...");
-    return response;
-  }
-  catch(err) {
-    //con.release();
-    console.log("Error ====== updatePatientMedicalFacts");
-    console.log("Error code is: ", err.code);
-    console.log("Exiting updatePatientMedicalFacts...");
-    return false;
-  }
-}
-
-async function retrievePatientMedicalFacts(req) {
-  console.log("Entering retrievePatientMedicalFacts...");
-  let UHID = req.body.patient.UHID;
-
-  let query = "SELECT * FROM patients WHERE UHID = '" +UHID+ "';";
-  console.log(query);
-  try {
-    let pool = await getConnectionPool();
-    let con = await pool.getConnection();
-    let [result,fields] = await con.execute(query);
-    let patientJson = JSON.stringify(result);
-    console.log(patientJson);
-    con.release();
-    return patientJson;
-  }
-  catch(err) {
-    console.log("Error ====== retrievePatientsByName");
-    console.log("Error code is: ", err.code);
-    console.log("Exiting retrievePatientMedicalFacts...");
-    return false;
-  }
-}
-
 async function retrievePatients(req) {
   console.log("Entering retrievePatients...");
 
@@ -390,92 +280,44 @@ async function retrievePatients(req) {
   return false;
 }
 
-async function addPatientDrugAllergies(req) {
-  console.log("Entering addPatientDrugAllergies...");
-  let UHID = req.body.patient.UHID;
-  let DrugName = req.body.patient.DrugName;
-  let AllergicReaction = req.body.patient.AllergicReaction;
-  
-  let query = "INSERT into patient_drug_allergies VALUES ('" +UHID+ "','" + 
-  DrugName + "', '" +AllergicReaction+ "', DEFAULT);";
-  console.log(query);
-  try {
-    let pool = await getConnectionPool();
-    let con = await pool.getConnection();
-    await con.execute(query);
-    con.release();
-    return true;
-  }
-  catch(err) {
-    console.log("Error ====== addPatientDrugAllergies");
-    console.log("Error code is: ", err.code);
-    console.log("Exiting addPatientDrugAllergies...");
-    return false;
-  }
-}
+async function retrievePatientAndAddressDetails(req) {
+  console.log("Entering retrievePatientAndAddressDetails...");
+  let UHID = req.query['UHID'];
 
-async function retrievePatientSurgicalHistory(req) {
-  console.log("Entering retrievePatientSurgicalHistory...");
-  let UHID = req.body.patient.UHID;
-
-  let query = "SELECT * FROM patient_systemic_surgical_history_simple WHERE UHID = '" +UHID+ "';";
+  let query = "select * from patient_address_details_view where UHID = " +UHID+ ";";
   console.log(query);
   try {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
     let [result,fields] = await con.execute(query);
-    let patientJson = JSON.stringify(result);
-    console.log(patientJson);
-    if(patientJson === "[]") {
-      console.log(" it seems no previous surgical history was found .........");
-      var NoSurgeryHistoryFound = {
+    let PatientDetailsJson = JSON.stringify(result);
+    console.log("stringified json object is: ", PatientDetailsJson);
+    if(PatientDetailsJson === "[]") {
+      console.log(" it seems no patients were found .........");
+      var NoPatientsFound = {
         "msgtype" : "info",
-        "message": "no surgical history found"
+        "message": "no patient details found"
       }
-      return JSON.stringify(NoSurgeryHistoryFound);
+      console.log("Exiting retrievePatientAndAddressDetails...");
+      return JSON.stringify(NoPatientsFound);
     }
-    con.release();
-    return patientJson;
+    // success response
+    console.log("Exiting retrievePatientAndAddressDetails...");
+    return PatientDetailsJson;
   }
   catch(err) {
-    console.log("Error ====== retrievePatientSurgicalHistory");
+    console.log("Error ====== retrievePatientAndAddressDetails");
     console.log("Error code is: ", err.code);
-    console.log("Exiting retrievePatientSurgicalHistory...");
+
+    console.log("Exiting retrievePatientAndAddressDetails...");
     return false;
   }
+
 }
 
-async function addPatientSurgicalHistory(req) {
-  console.log("Entering addPatientSurgicalHistory...");
-  let UHID = req.body.patient.UHID;
-  let surgery_description = req.body.patient.surgery_description;
-  
-  let query = "INSERT into patient_systemic_surgical_history_simple VALUES ('" +UHID+ "','" + 
-  surgery_description + "', DEFAULT);";
-  console.log(query);
-  try {
-    let pool = await getConnectionPool();
-    let con = await pool.getConnection();
-    await con.execute(query);
-    con.release();
-    return true;
-  }
-  catch(err) {
-    console.log("Error ====== addPatientSurgicalHistory");
-    console.log("Error code is: ", err.code);
-    console.log("Exiting addPatientSurgicalHistory...");
-    return false;
-  }
-}
 
 exports.createNewPatient = createNewPatient;
-exports.createPatientMedicalFacts = createPatientMedicalFacts;
-exports.retrievePatientMedicalFacts = retrievePatientMedicalFacts;
-exports.updatePatientMedicalFacts = updatePatientMedicalFacts;
 exports.addPatientAddress = addPatientAddress;
 exports.retrievePatients = retrievePatients;
-exports.addPatientDrugAllergies = addPatientDrugAllergies;
-exports.retrievePatientSurgicalHistory = retrievePatientSurgicalHistory;
-exports.addPatientSurgicalHistory = addPatientSurgicalHistory;
 exports.updatePatientDetails = updatePatientDetails;
-exports.updatePatientAddress=updatePatientAddress;
+exports.retrievePatientAndAddressDetails = retrievePatientAndAddressDetails;

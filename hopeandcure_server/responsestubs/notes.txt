@@ -48,11 +48,12 @@ add filter for sorting by Consultant, Date
 4.  Nikhil: at appointments landing page, status needs to be populated by default to "registered"
 5.  Nikhil: After status change, invoke a call to http://localhost:8082/appointments with intentName as "update-patient-progress-status"
 6.  Parag: modify create-patient to also add patient address
-7.  Parag: write a new API for search appointments by patient name, UHID, mobile
+7.  Prasad: write a new API for search appointments by patient name, UHID, mobile
 8.  Nikhil: Search Appointments Text Box to invoke new API for searching appointments
 9.  Nikhil: on Search-Patient click, open a new page with patient details including address. Keep it read-only with Edit button
-10. Nikhil: 
-
+10. Prasad: update patient API - merge edit patient with edit address
+11. Nikhil: At Consultant Entry Screen - Call filter records by date, status (With_Consultant)
+12. Parag: Retrieve Patient detail - combine with Address 
 amazon ec2 instance url 
 https://52.90.13.219:443/login
 
@@ -63,15 +64,3 @@ grant all privileges on hmsdb.* to 'hms_admin'@'localhost';
 alter user 'hms_admin'@'localhost' identified with mysql_native_password by 'Hope&Cure@123';
 
 root password for ec2 - mysql -u root -p Advait@12345
-
-alter table optometary_results add column current_complaints varchar(300);
-alter table optometary_results add column duration_current_complaints varchar(300);
-alter table optometary_results add column past_ocular_illness varchar(300);
-alter table optometary_results add column treatment_past_ocular_illness varchar(300);
-alter table optometary_results add column past_systemic_illness varchar(300);
-alter table optometary_results add column treatment_past_systemic_illness varchar(300);
-alter table optometary_results add column surgical_history_ocular varchar(300);
-alter table optometary_results add column surgical_history_other varchar(300);
-alter table optometary_results add column drug_allergies varchar(300);
-alter table optometary_results add column current_glass_prescription_right varchar(50);
-alter table optometary_results add column current_glass_prescription_left varchar(50);
