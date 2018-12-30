@@ -293,9 +293,10 @@ async function retrieveMedicalPrescription(req) {
         "msgtype" : "info",
         "message": "no Prescriptions type found"
       }
+      console.log("Exiting retrieveMedicalPrescription...");
       return JSON.stringify(NoPrescriptionTypesFound);
     }
-    
+    // success response
     console.log("Exiting retrieveMedicalPrescription...");
     return PrescriptionTypesJson;
   }

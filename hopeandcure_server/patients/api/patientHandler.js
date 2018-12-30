@@ -95,127 +95,25 @@ console.log("Exiting apiHandlerSearchPatient========>");
 return res.send(JSON.parse(response));
 }
 
-async function apiHandlerAddMedicalFacts(req, res) {
-		console.log("Entering apiHandlerAddMedicalFacts========>");
-		let response = await mysqlFunctions.createPatientMedicalFacts(req);
-    console.log("inside apiHandlerAddMedicalFacts:  ", response);
-
-		if (response === false) {
-			var returnJsonObj = {
-				"msgtype" : "error",
-				"message": "There was an error is adding medical facts for the patient"
-			}
-			console.log("Exiting apiHandlerAddMedicalFacts========>");
-			return res.send(returnJsonObj);
-		}
-		console.log("Exiting apiHandlerAddMedicalFacts========>");
-		return res.json(response);
-}
-
-async function apiHandlerUpdateMedicalFacts(req, res) {
-		console.log("Entering apiHandlerUpdateMedicalFacts========>");
-		let response = await mysqlFunctions.updatePatientMedicalFacts(req);
-    console.log("inside apiHandlerUpdateMedicalFacts:  ", response);
-
-		if (response === false) {
-			var returnJsonObj = {
-				"msgtype" : "error",
-				"message": "There was an error is updating medical facts for the patient"
-			}
-			console.log("Exiting apiHandlerUpdateMedicalFacts========>");
-			return res.send(returnJsonObj);
-		}
-		console.log("Exiting apiHandlerUpdateMedicalFacts========>");
-		return res.json(response);
-}
-
-async function apiHandlerRetrieveMedicalFacts(req,res) {
-	console.log("Entering apiHandlerRetrieveMedicalFacts========>");
-	let response = await mysqlFunctions.retrievePatientMedicalFacts(req);
-	console.log("inside apiHandlerRetrieveMedicalFacts:  ", response);
-
+// added by Parag on 30 Dec 2018
+async function apiHandlerRetrievPatientAddressDetails(req, res) {
+	console.log("Entering apiHandlerRetrievPatientAddressDetails========>");
+	let response = await mysqlFunctions.retrievePatientAndAddressDetails(req);
+	console.log("inside apiHandlerRetrievPatientAddressDetails:  ", response);
 	if (response === false) {
 		var returnJsonObj = {
 			"msgtype" : "error",
-			"message": "There was an error in retrieving medical facts for the patient"
+			"message": "There was an error is searching the patient and address details"
 		}
-		console.log("Exiting apiHandlerRetrieveMedicalFacts========>");
 		return res.send(returnJsonObj);
 	}
-
-	console.log("Exiting apiHandlerRetrieveMedicalFacts========>");
+	console.log("Exiting apiHandlerRetrievPatientAddressDetails========>");
 	return res.send(JSON.parse(response));
 }
 
-async function apiHandlerAddPatientDrugAllergies(req, res) {
-	console.log("Entering apiHandlerAddPatientDrugAllergies========>");
-	let response = await mysqlFunctions.addPatientDrugAllergies(req);
-	console.log("inside apiHandlerAddPatientDrugAllergies:  ", response);
-
-	if (response === false) {
-		var returnJsonObj = {
-			"msgtype" : "error",
-			"message": "There was an error in adding drug allergies for the patient"
-		}
-		console.log("Exiting apiHandlerAddPatientDrugAllergies========>");
-		return res.send(returnJsonObj);
-	}
-
-	var returnJsonObj = {
-		"msgtype" : "success",
-		"message": "patient drug allergies added successfully"
-	  }
-	  console.log("Exiting apiHandlerAddPatientDrugAllergies========>");
-	  return res.json(returnJsonObj);
-}
-
-async function apiHandlerRetrieveSurgicalHistory(req, res){
-	console.log("Entering apiHandlerRetrieveSurgicalHistory========>");
-	let response = await mysqlFunctions.retrievePatientSurgicalHistory(req);
-	console.log("inside apiHandlerRetrieveSurgicalHistory:  ", response);
-
-	if (response === false) {
-		var returnJsonObj = {
-			"msgtype" : "error",
-			"message": "There was an error in retrieving surgical history for the patient"
-		}
-		console.log("Exiting apiHandlerRetrieveSurgicalHistory========>");
-		return res.send(returnJsonObj);
-	}
-
-	console.log("Exiting apiHandlerRetrieveSurgicalHistory========>");
-	return res.send(JSON.parse(response));
-}
-
-async function apiHandlerAddSurgicalHistory(req, res) {
-	console.log("Entering apiHandlerAddSurgicalHistory========>");
-	let response = await mysqlFunctions.addPatientSurgicalHistory(req);
-	console.log("inside apiHandlerAddSurgicalHistory:  ", response);
-
-	if (response === false) {
-		var returnJsonObj = {
-			"msgtype" : "error",
-			"message": "There was an error in adding surgical history for the patient"
-		}
-		console.log("Exiting apiHandlerAddSurgicalHistory========>");
-		return res.send(returnJsonObj);
-	}
-
-	var returnJsonObj = {
-		"msgtype" : "success",
-		"message": "patient surgical history added successfully"
-	  }
-	  console.log("Exiting apiHandlerAddSurgicalHistory========>");
-	  return res.json(returnJsonObj);
-}
 
 exports.apiHandlerCreatePatient = apiHandlerCreatePatient;
-exports.apiHandlerAddMedicalFacts = apiHandlerAddMedicalFacts;
-exports.apiHandlerUpdateMedicalFacts = apiHandlerUpdateMedicalFacts;
-exports.apiHandlerRetrieveMedicalFacts = apiHandlerRetrieveMedicalFacts;
 exports.apiHandlerAddPatientAddress = apiHandlerAddPatientAddress;
 exports.apiHandlerSearchPatient = apiHandlerSearchPatient;
-exports.apiHandlerAddPatientDrugAllergies = apiHandlerAddPatientDrugAllergies;
-exports.apiHandlerRetrieveSurgicalHistory = apiHandlerRetrieveSurgicalHistory;
-exports.apiHandlerAddSurgicalHistory = apiHandlerAddSurgicalHistory;
 exports.apiHandlerUpdatePatientDetails = apiHandlerUpdatePatientDetails;
+exports.apiHandlerRetrievPatientAddressDetails = apiHandlerRetrievPatientAddressDetails;
