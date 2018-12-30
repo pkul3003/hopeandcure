@@ -147,6 +147,35 @@ async function addPatientProgressStatus(req) {
   }
 }
 
+// To update appointment
+async function updateAppointment(req) {
+  console.log("Entering updateAppointment...");
+
+  let UHID = req.body.appointment.UHID;
+  let OldDateofAppointment = req.body.appointment.old_appointment_date;
+  let DateOfAppointment = req.body.appointment.appointment_date;
+  let TimeOfAppointment = req.body.appointment.TimeOfAppointment;
+  let consultant = req.body.appointment.consultant;
+
+  let query = "update appointments set dateofappointment = '" +DateOfAppointment+ "', timeofappointment= '" +TimeOfAppointment+ 
+  "', consultant = '" + consultant +"' Where UHID = '" +UHID+ "' AND dateofappointment= '" +OldDateofAppointment+ "' ;";
+
+  console.log(query);
+
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    await con.query(query);
+    con.release();
+    return true;
+  }
+  catch(err) {
+    console.log("Error ====== updateAppointment");
+    console.log("Error code is: ", err.code);
+    return false;
+  }
+}
+
 async function updatePatientProgressStatus(req) {
 
   console.log("Entering updatePatientProgressStatus...");
@@ -209,3 +238,4 @@ exports.createAppointment = createAppointment;
 exports.retrieveAppointmentsByDate = retrieveAppointmentsByDate;
 exports.addPatientProgressStatus = addPatientProgressStatus;
 exports.updatePatientProgressStatus = updatePatientProgressStatus;
+exports.updateAppointment=updateAppointment;

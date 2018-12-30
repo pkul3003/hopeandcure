@@ -102,6 +102,10 @@ app.get("/retrieve-minor-opd-procedures", async function(req, res) {
 	await apiGenericController.apiHandlerRetrieveMinorPorcedures(req, res);
 });
 
+app.get("/retrieve-patient-status-master", async function(req, res) {
+	await apiGenericController.apiHandlerRetrievePatientStatusMaster(req, res);
+});
+
 app.get("/search-medicine-by-name", async function(req, res) {
 	await apiGenericController.apiHandlerSearchMedicineByName(req, res);
 });
@@ -148,6 +152,16 @@ app.post('/appointments', async function (req, res){
 			break;
 		case 'update-patient-progress-status' :
 			await apiAppointmentsController.apiHandlerUpdatePatientProgressStatus(req, res);
+			break;
+		default:
+			var returnJsonObj = {
+				"msgtype" : "info",
+				"message" : "Invalid intentName specified"
+			}
+			res.send(returnJsonObj);
+
+		case 'update-appointment':
+			await apiAppointmentsController.apiHandlerUpdateAppointments(req, res);
 			break;
 		default:
 			var returnJsonObj = {

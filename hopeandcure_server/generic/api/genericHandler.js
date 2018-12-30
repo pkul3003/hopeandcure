@@ -277,6 +277,24 @@ console.log("Exiting apiHandlerRetrieveMinorPorcedures========>");
 return res.send(JSON.parse(result));
 }
 
+async function apiHandlerRetrievePatientStatusMaster(req, res){
+  console.log("Entering apiHandlerRetrievePatientStatusMaster========>");
+  let result = {};
+
+  result = await mysqlFunctions.retrievePatientStatusMaster (req);
+  console.log("inside apiHandlerRetrievePatientStatusMaster:  ", result);
+  if (result === false) {
+    var returnJsonObj = {
+      "msgtype" : "error",
+      "message": "There was an error is fetching Patient Status from master"
+    }
+    console.log("Exiting apiHandlerRetrievePatientStatusMaster========>");
+    return res.send(returnJsonObj);
+  }
+console.log("Exiting apiHandlerRetrievePatientStatusMaster========>");
+return res.send(JSON.parse(result));
+}
+
 async function apiHandlerSearchMedicineByName(req, res) {
   console.log("Entering apiHandlerSearchMedicineByName========>");
   let result = {};
@@ -695,20 +713,17 @@ async function apiHandlerRetriveSpecialPrecaution(req,res){
 }
 
 
-
-
 exports.apiHandlerCreateComplaint = apiHandlerCreateComplaint;
 exports.apiHandlerCreateInvestigation = apiHandlerCreateInvestigation;
 exports.apiHandlerCreateProcedure = apiHandlerCreateProcedure;
 exports.apiHandlerSpecialPrecaution = apiHandlerSpecialPrecaution;
 exports.apiHandlerCreateNewDiagnosis = apiHandlerCreateNewDiagnosis;
 exports.apiHandlerCreateNewInstruction = apiHandlerCreateNewInstruction;
-exports.apiHandlerCreateAdvice = apiHandlerCreateAdvice;
+exports.apiHandlerCreateAdvice = apiHandlerCreateAdvice ;
 exports.apiHandlerDosageInstruction = apiHandlerDosageInstruction;
 exports.apiHandlerMinorOpdProcedure = apiHandlerMinorOpdProcedure;
 exports.apiHandlerMedicine = apiHandlerMedicine;
 exports.apiHandlerMedicalPrescription = apiHandlerMedicalPrescription;
-
 
 exports.apiHandlerRetrieveComplaintTypes = apiHandlerRetrieveComplaintTypes;
 exports.apiHandlerRetrieveProcedureTypes = apiHandlerRetrieveProcedureTypes;
@@ -720,3 +735,4 @@ exports.apiHandlerRetrievePrescription = apiHandlerRetrievePrescription;
 exports.apiHandlerRetrieveMedicalAdvice = apiHandlerRetrieveMedicalAdvice;
 exports.apiHandlerRetrieveMinorPorcedures = apiHandlerRetrieveMinorPorcedures;
 exports.apiHandlerSearchMedicineByName = apiHandlerSearchMedicineByName;
+exports.apiHandlerRetrievePatientStatusMaster=apiHandlerRetrievePatientStatusMaster;
