@@ -1,6 +1,7 @@
 let mysql = require('mysql2');
 let config = require("../../config.js");
 let callmysqlpool = require("../../mysql-functions/createMysqlSingleton.js");
+let SearchStringParsing = require("../../common-functions/commonFunctions.js");
 
 async function getConnectionPool() {
   try {
@@ -233,9 +234,93 @@ async function updatePatientProgressStatus(req) {
 
 }
 
+// Retrieve appointments based on any search criteria
+async function searchAppointment(req) {
+  console.log("Entering searchAppointment...");
+
+  var tentFirstName1 = "";
+  var tentLastName1 = "";
+  var tentFirstName2 = "";
+  var tentLastName2 = "";
+  var mobile = "";
+  var UHID = "";
+  returnJsonObj = [];
+
+  let search_string = req.body.patient.search_string;
+  let parsedSearchString = await SearchStringParsing.getParsedSearchString (search_string);
+  //var validReqObjects = {};
+
+  for (var key in parsedSearchString) {
+        console.log("key: "+key+", value: " + parsedSearchString[key]);
+        switch (key) {
+          case 'mobile':
+              mobile = parsedSearchString[key];
+              break;
+          case 'UHID':
+              UHID = parsedSearchString[key];
+              break;
+          case 'tentFirstName1':
+              tentFirstName1 = parsedSearchString[key];
+              break;
+          case 'tentLastName1':
+              tentLastName1 = parsedSearchString[key];
+              break;
+          case 'tentFirstName2':
+              tentFirstName2 = parsedSearchString[key];
+              break;
+          case 'tentLastName2':
+              tentLastName2 = parsedSearchString[key];
+              break;
+          default:
+        }
+      }
+
+    let query = "SELECT * FROM appointments_view where FirstName like '"+ tentFirstName1 +"' or Lastname like '" +tentLastName1 +
+                  "' or FirstName like '" + tentFirstName2 + "' and LastName like '" +tentLastName2 + "' or ContactNumber = '"+
+                  mobile + "' or UHID = '"+ UHID + "';";
+
+    try {
+        let pool = await getConnectionPool();
+        let con = await pool.getConnection();
+
+          console.log(query);
+          let [result,fields] = await con.execute(query);
+
+        let patientJson = JSON.stringify(result);
+        console.log(patientJson);
+        con.release();
+
+        if(patientJson === "[]") {
+          console.log(" it seems no appointments were found .........");
+          var NoAppointmentsFound = {
+            "msgtype" : "info",
+            "message": "no appointments found for the given criteria"
+          }
+          returnJsonObj[0] = NoAppointmentsFound;
+          //icount++;
+          return JSON.stringify(NoAppointmentsFound);
+        }
+        return patientJson;
+      }
+      catch(err) {
+        console.log("Error ====== searchAppointment");
+        console.log("error code is: " + err.code);
+        var ErrorFromDB = {
+          "msgtype" : "failed",
+          "message": "There was an error while searching the appointments"
+        }
+        returnJsonObj[0] = ErrorFromDB;
+        return JSON.stringify(ErrorFromDB);
+        //icount++;
+      }
+  return false;
+}
+
+
 exports.retrieveAppointments = retrieveAppointments;
 exports.createAppointment = createAppointment;
 exports.retrieveAppointmentsByDate = retrieveAppointmentsByDate;
 exports.addPatientProgressStatus = addPatientProgressStatus;
 exports.updatePatientProgressStatus = updatePatientProgressStatus;
 exports.updateAppointment=updateAppointment;
+exports.searchAppointment=searchAppointment;

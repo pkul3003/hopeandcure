@@ -153,22 +153,19 @@ app.post('/appointments', async function (req, res){
 		case 'update-patient-progress-status' :
 			await apiAppointmentsController.apiHandlerUpdatePatientProgressStatus(req, res);
 			break;
-		default:
-			var returnJsonObj = {
-				"msgtype" : "info",
-				"message" : "Invalid intentName specified"
-			}
-			res.send(returnJsonObj);
-
 		case 'update-appointment':
 			await apiAppointmentsController.apiHandlerUpdateAppointments(req, res);
 			break;
+		case 'search-appointment':
+			await apiAppointmentsController.apiHandlerSearchAppointment(req, res);
+			break;	
 		default:
 			var returnJsonObj = {
 				"msgtype" : "info",
 				"message" : "Invalid intentName specified"
 			}
-			res.send(returnJsonObj);
+			res.send(returnJsonObj);		
+		
 	}
 });
 
