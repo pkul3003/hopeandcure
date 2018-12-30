@@ -129,6 +129,21 @@ async function apiHandlerUpdateAppointments(req, res) {
 	  console.log("Exiting apiHandlerUpdateAppointments========>");
 	  return res.json(returnJsonObj);
 }
+// find all appointments based on either UHID, first_name, last_name or mobile
+async function apiHandlerSearchAppointment(req, res) {
+	console.log("Entering apiHandlerSearchAppointment========>");
+	let response = await mysqlFunctions.searchAppointment(req);
+	console.log("inside apiHandlerSearchAppointment:  ", response);
+	if (response === false) {
+		var returnJsonObj = {
+			"msgtype" : "error",
+			"message": "There was an error is searching the appointment"
+		}
+		return res.send(returnJsonObj);
+	}
+console.log("Exiting apiHandlerSearchAppointment========>");
+return res.send(JSON.parse(response));
+}
 
 //exporing all apiHandler functions
 exports.apiHandlerForAppointments = apiHandlerForAppointments;
@@ -136,3 +151,4 @@ exports.apiHandlerCreateAppointment = apiHandlerCreateAppointment;
 exports.apiHandlerForAppointmentsByDate = apiHandlerForAppointmentsByDate;
 exports.apiHandlerUpdatePatientProgressStatus = apiHandlerUpdatePatientProgressStatus;
 exports.apiHandlerUpdateAppointments=apiHandlerUpdateAppointments;
+exports.apiHandlerSearchAppointment=apiHandlerSearchAppointment;

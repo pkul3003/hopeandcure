@@ -159,6 +159,45 @@ async function addPatientAddress(req) {
     return false;
   }
 }
+// To update Patient address
+async function updatePatientAddress(req) {
+  console.log("Entering updatePatientAddress...");
+  let UHID = req.body.patientAddress.UHID;
+  let address_line1 = req.body.patientAddress.address_line1;
+  let address_line2 = req.body.patientAddress.address_line2;
+  let landmark = req.body.patientAddress.landmark;
+  let area = req.body.patientAddress.area;
+  let city = req.body.patientAddress.city;
+  let district = req.body.patientAddress.district;
+  let state = req.body.patientAddress.state;
+  let pincode = req.body.patientAddress.pincode;
+  let emergency_conact_number = req.body.patientAddress.emergency_conact_number;
+
+  let query = "UPDATE patient_address set AddressLine1 = '" + address_line1 + "', AddressLine2 = '"+ address_line2 + "',Landmark = '"+
+              landmark +"', Area = '" + area +"', City ='" + city +"', District = '" + district +"',State = '"+ state +"', PINCode = '"+ pincode +"', EmergencyContactNumber = '"+
+              emergency_conact_number +"', Where UHID = '" + UHID +"' ;";
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    await con.execute(query);
+    con.release();
+    console.log("Exiting updatePatientAddress...");
+    var success = {
+      "msgtype" : "success",
+      "message": "patient address updated successfully"
+    }
+    console.log("Exiting updatePatientAddress...");
+    return success;
+  }
+  catch(err) {
+    console.log("Error ====== updatePatientAddress");
+    console.log("Error code is: ", err.code);
+    console.log("Exiting updatePatientAddress...");
+    return false;
+  }
+}
+
 
 async function retrievePatients(req) {
   console.log("Entering retrievePatients...");

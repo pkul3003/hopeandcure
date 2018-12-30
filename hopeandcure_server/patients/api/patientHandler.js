@@ -51,8 +51,21 @@ async function apiHandlerUpdatePatientDetails(req,res){
 				"msgtype" : "error",
 				"message": "There was an error in updating the patient details"
 			}
+		
   		console.log("Exiting apiHandlerUpdatePatientDetails========>");
 		return res.send(returnJsonObj);
+		}
+		else {
+			if (response.msgtype === "success") {
+				req.body.patientAddress.UHID = response.UHID;
+				let addressResponse = await mysqlFunctions.updatePatientAddress(req);
+				if (addressResponse === false || addressResponse.msgtype !== "success") {
+					response.msgtype = "info";
+					response.message = "Patient information updated successfully but there was an error in updating address";
+					console.log("Exiting apiHandlerUpdatePatientDetails========>");
+					return res.json(response);
+				}
+			}
 		}
   	console.log("Exiting apiHandlerUpdatePatientDetails========>");
 	return res.json(response);
@@ -75,6 +88,25 @@ async function apiHandlerAddPatientAddress(req, res) {
 			return res.send(returnJsonObj);
 		}
   	console.log("Exiting apiHandlerAddPatientAddress========>");
+		return res.json(response);
+}
+
+// update patient Address
+async function apiHandlerUpdatePatientAddress(req, res) {
+	console.log("Entering apiHandlerUpdatePatientAddress========>");
+
+    let response = await mysqlFunctions.updatePatientAddress(req);
+    console.log("inside apiHandlerUpdatePatientAddress:  ", response);
+
+		if (response === false) {
+			var returnJsonObj = {
+				"msgtype" : "error",
+				"message": "There was an error is updating patient address"
+			}
+  	console.log("Exiting apiHandlerUpdatePatientAddress========>");
+			return res.send(returnJsonObj);
+		}
+  	console.log("Exiting apiHandlerUpdatePatientAddress========>");
 		return res.json(response);
 }
 

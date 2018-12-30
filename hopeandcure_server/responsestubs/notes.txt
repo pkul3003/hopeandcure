@@ -54,8 +54,6 @@ add filter for sorting by Consultant, Date
 10. Prasad: update patient API - merge edit patient with edit address
 11. Nikhil: At Consultant Entry Screen - Call filter records by date, status (With_Consultant)
 12. Parag: Retrieve Patient detail - combine with Address 
-
-
 amazon ec2 instance url 
 https://52.90.13.219:443/login
 
