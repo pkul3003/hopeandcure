@@ -63,15 +63,3 @@ grant all privileges on hmsdb.* to 'hms_admin'@'localhost';
 alter user 'hms_admin'@'localhost' identified with mysql_native_password by 'Hope&Cure@123';
 
 root password for ec2 - mysql -u root -p Advait@12345
-
-alter table optometary_results add column current_complaints varchar(300);
-alter table optometary_results add column duration_current_complaints varchar(300);
-alter table optometary_results add column past_ocular_illness varchar(300);
-alter table optometary_results add column treatment_past_ocular_illness varchar(300);
-alter table optometary_results add column past_systemic_illness varchar(300);
-alter table optometary_results add column treatment_past_systemic_illness varchar(300);
-alter table optometary_results add column surgical_history_ocular varchar(300);
-alter table optometary_results add column surgical_history_other varchar(300);
-alter table optometary_results add column drug_allergies varchar(300);
-alter table optometary_results add column current_glass_prescription_right varchar(50);
-alter table optometary_results add column current_glass_prescription_left varchar(50);
