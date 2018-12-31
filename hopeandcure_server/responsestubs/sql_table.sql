@@ -446,3 +446,13 @@ CREATE TABLE IF NOT EXISTS patient_progress_status(
     RecordTouchDate Timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,   
     PRIMARY KEY (status_code)
 );  
+
+CREATE TABLE `special_precautions_master` (
+  `precaution_id` int(11) NOT NULL AUTO_INCREMENT,
+  `precaution_type` varchar(50) NOT NULL,
+  `precaution_sub_type` varchar(100) NOT NULL,
+  `precaution_desc` varchar(255),
+  `RecordTouchDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`precaution_id`)
+  );
+  

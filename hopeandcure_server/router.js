@@ -16,7 +16,8 @@ var apiAppointmentsController = require('./appointments/api/apptHandler.js');
 var apiPatientController = require('./patients/api/patientHandler.js');
 var apiStaffController = require('./staff/api/staffHandler.js');
 var apiOcularController = require('./ocular/api/ocularHandler.js');
-var apiGenericController = require('./generic/api/genericHandler.js');
+var apiGenericRetrieveController = require('./generic/api/retrieveGenericTypesHandler.js');
+var apiGenericCreateController = require('./generic/api/createGenericTypesHandler.js')
 var apiBillingController = require('./billing/api/billingHandler.js');
 
 
@@ -64,50 +65,50 @@ app.get("/retrieve-modes-of-payment", async function(req, res) {
 
 // complaint-types
 app.get("/retrieve-complaint-types", async function(req, res) {
-	await apiGenericController.apiHandlerRetrieveComplaintTypes(req, res);
+	await apiGenericRetrieveController.apiHandlerRetrieveComplaintTypes(req, res);
 });
 
 // procedure or surgery types
 app.get("/retrieve-procedure-types", async function(req, res) {
-	await apiGenericController.apiHandlerRetrieveProcedureTypes(req, res);
+	await apiGenericRetrieveController.apiHandlerRetrieveProcedureTypes(req, res);
 });
 
 // investigation types (optical or systemic)
 app.get("/retrieve-investigation-types", async function(req, res) {
-	await apiGenericController.apiHandlerRertrieveInvestigationTypes(req, res);
+	await apiGenericRetrieveController.apiHandlerRertrieveInvestigationTypes(req, res);
 });
 
 // special precaution types
-app.get("/retrieve-special-precautions", async function(req, res){
-	await apiGenericController.apiHandlerRetrieveSpecialPrecautions(req, res);
+app.get("/retrieve-special-precaution-types", async function(req, res){
+	await apiGenericRetrieveController.apiHandlerRetrieveSpecialPrecautionTypes(req, res);
 });
 
 app.get("/retrieve-diagnosis-types", async function(req, res) {
-	await apiGenericController.apiHandlerRetrieveDiagnosisTypes(req, res);
+	await apiGenericRetrieveController.apiHandlerRetrieveDiagnosisTypes(req, res);
 });
 
-app.get("/retrieve-instructions", async function(req, res){
-	await apiGenericController.apiHandlerRetrieveInstructions(req, res);
+app.get("/retrieve-instruction-types", async function(req, res){
+	await apiGenericRetrieveController.apiHandlerRetrieveInstructionTypes(req, res);
 });
 
 app.get("/retrieve-prescription-by-diagnosis-id", async function(req, res){
-	await apiGenericController.apiHandlerRetrievePrescription(req, res);
+	await apiGenericRetrieveController.apiHandlerRetrievePrescriptionTypes(req, res);
 });
 
 app.get("/retrieve-medical-advice", async function(req, res){
-	await apiGenericController.apiHandlerRetrieveMedicalAdvice(req, res);
+	await apiGenericRetrieveController.apiHandlerRetrieveMedicalAdviceTypes(req, res);
 });
 
 app.get("/retrieve-minor-opd-procedures", async function(req, res) {
-	await apiGenericController.apiHandlerRetrieveMinorPorcedures(req, res);
+	await apiGenericRetrieveController.apiHandlerRetrieveMinorPorcedures(req, res);
 });
 
 app.get("/retrieve-patient-status-master", async function(req, res) {
-	await apiGenericController.apiHandlerRetrievePatientStatusMaster(req, res);
+	await apiGenericRetrieveController.apiHandlerRetrievePatientStatusMaster(req, res);
 });
 
 app.get("/search-medicine-by-name", async function(req, res) {
-	await apiGenericController.apiHandlerSearchMedicineByName(req, res);
+	await apiGenericRetrieveController.apiHandlerSearchMedicineByName(req, res);
 });
 
 // GET interface for Optometry results
@@ -129,7 +130,7 @@ app.post('/login', async function(req,res){
 
 // Retrive Patient and Address Details together
 // added on 30 Dec 2018 by Parag
-app.get("/retrieve-ptient-address-details", async function(req, res) {
+app.get("/retrieve-patient-address-details", async function(req, res) {
 	await apiPatientController.apiHandlerRetrievPatientAddressDetails(req, res);
 });
 
@@ -211,23 +212,23 @@ app.post('/patients', async function (req, res){
 app.post('/generic', async function(req, res){
 	console.log("inside router app.post/generic: "+ JSON.stringify(req.body.intentName));
 	switch (req.body.intentName) {
-		case 'create-complaint' :
-			await apiGenericController.apiHandlerCreateComplaint(req, res);
+		case 'create-complaint-type' :
+			await apiGenericCreateController.apiHandlerCreateComplaint(req, res);
 			break;
-		case 'create-investigation' :
-			await apiGenericController.apiHandlerCreateInvestigation(req, res);
+		case 'create-investigation-type' :
+			await apiGenericCreateController.apiHandlerCreateInvestigation(req, res);
 			break;
-		case 'create-procedure':
-			await apiGenericController.apiHandlerCreateProcedure(req,res);
+		case 'create-procedure-type':
+			await apiGenericCreateController.apiHandlerCreateProcedure(req,res);
 			break;
-		case 'create-special-precaution':
-			await apiGenericController.apiHandlerSpecialPrecaution(req, res);
+		case 'create-special-precaution-type':
+			await apiGenericCreateController.apiHandlerSpecialPrecaution(req, res);
 			break;
 		case 'crate-new-diagnosis':
-			await apiGenericController.apiHandlerCreateNewDiagnosis(req,res);
+			await apiGenericCreateController.apiHandlerCreateNewDiagnosis(req,res);
 			break;
 		case 'create-new-instruction':
-			await apiGenericController.apiHandlerCreateNewInstruction(req,res);
+			await apiGenericCreateController.apiHandlerCreateNewInstruction(req,res);
 			break;
 		default:
 			var returnJsonObj = {

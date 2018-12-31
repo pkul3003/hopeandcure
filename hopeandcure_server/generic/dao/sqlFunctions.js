@@ -115,8 +115,8 @@ async function retrieveSystemicProcedureTypes(req) {
 async function retrieveOcularProcedureTypes(req) {
   console.log("Entering retrieveOcularProcedureTypes...");
 
-  let query = "SELECT procedure_desc FROM procedures_master WHERE procedure_type = 'ocular' "+
-              "ORDER BY procedure_desc; ";
+  let query = "SELECT procedure_sub_type FROM procedures_master WHERE procedure_type = 'ocular' "+
+              "ORDER BY procedure_sub_type; ";
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -148,8 +148,8 @@ async function retrieveOcularProcedureTypes(req) {
 async function retrieveOpticalInvestigations(req) {
   console.log("Entering retrieveOpticalInvestigations...");
   
-  let query = "SELECT investigation_desc FROM investigation_master where investigation_type = 'optical'"+ 
-              "ORDER BY investigation_desc; ";
+  let query = "SELECT investigation_sub_type FROM investigation_master WHERE investigation_type = 'ocular'" +
+              "ORDER BY investigation_sub_type; ";
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -163,6 +163,8 @@ async function retrieveOpticalInvestigations(req) {
         "msgtype" : "info",
         "message": "no optical investigation types found"
       }
+      con.release();
+      console.log("Exiting retrieveOpticalInvestigations...");
       return JSON.stringify(NoSurgeryTypesFound);
     }
     
@@ -210,10 +212,11 @@ async function retrieveAllPrecautionTypes(req) {
   }
 }
 
-async function retrieveAllDiagnosisTypes(req) {
-  console.log("Entering retrieveAllDiagnosisTypes...");
+async function retrieveOcularDiagnosisTypes(req) {
+  console.log("Entering retrieveOcularDiagnosisTypes...");
   
-  let query = "SELECT diagnosis_id, diagnosis_type FROM diagnosis_master; ";
+  let query = "SELECT diagnosis_sub_type FROM diagnosis_master WHERE diagnosis_type= 'ocular' "+
+              "ORDER BY diagnosis_sub_type;";
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -229,23 +232,24 @@ async function retrieveAllDiagnosisTypes(req) {
       }
       return JSON.stringify(NoDiagnosisTypesFound);
     }
-    
-    console.log("Exiting retrieveAllDiagnosisTypes...");
+    con.release();
+    console.log("Exiting retrieveOcularDiagnosisTypes...");
     return DiagnosisTypesJson;
   }
   catch(err) {
-    console.log("Error ====== retrieveAllDiagnosisTypes");
+    console.log("Error ====== retrieveOcularDiagnosisTypes");
     console.log("Error code is: ", err.code);
-
-    console.log("Exiting retrieveAllDiagnosisTypes...");
+    con.release();
+    console.log("Exiting retrieveOcularDiagnosisTypes...");
     return false;
   }
 }
 
-async function retrieveInstructions(req){
-  console.log("Entering retrieveInstructions...");
+async function retrieveOcularInstructionTypes(req){
+  console.log("Entering retrieveOcularInstructionTypes...");
   
-  let query = "SELECT instruction_desc FROM instructions_master ORDER BY instruction_desc; ";
+  let query = "SELECT instruction_sub_type FROM instructions_master WHERE instruction_type = 'ocular'" +
+              "ORDER BY instruction_sub_type; ";
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -259,24 +263,25 @@ async function retrieveInstructions(req){
         "msgtype" : "info",
         "message": "no instructions type found"
       }
+      con.release();
       return JSON.stringify(NoInstructionTypesFound);
     }
     
-    console.log("Exiting retrieveInstructions...");
+    console.log("Exiting retrieveOcularInstructionTypes...");
     return InstructionTypesJson;
   }
   catch(err) {
-    console.log("Error ====== retrieveInstructions");
+    console.log("Error ====== retrieveOcularInstructionTypes");
     console.log("Error code is: ", err.code);
 
-    console.log("Exiting retrieveInstructions...");
+    console.log("Exiting retrieveOcularInstructionTypes...");
     return false;
   }
 }
 
 
-async function retrieveMedicalPrescription(req) {
-  console.log("Entering retrieveMedicalPrescription...");
+async function retrieveMedicalPrescriptionTypes(req) {
+  console.log("Entering retrieveMedicalPrescriptionTypes...");
   let diagnosis_id = req.query['diagnosis-id'];
 
   let query = "select * from prescription_diagnosis_view where diagnosis_id = '" +diagnosis_id+ "';";
@@ -293,26 +298,28 @@ async function retrieveMedicalPrescription(req) {
         "msgtype" : "info",
         "message": "no Prescriptions type found"
       }
-      console.log("Exiting retrieveMedicalPrescription...");
+      
+      console.log("Exiting retrieveMedicalPrescriptionTypes...");
       return JSON.stringify(NoPrescriptionTypesFound);
     }
     // success response
-    console.log("Exiting retrieveMedicalPrescription...");
+    con.release();
+    console.log("Exiting retrieveMedicalPrescriptionTypes...");
     return PrescriptionTypesJson;
   }
   catch(err) {
-    console.log("Error ====== retrieveMedicalPrescription");
+    console.log("Error ====== retrieveMedicalPrescriptionTypes");
     console.log("Error code is: ", err.code);
-
-    console.log("Exiting retrieveMedicalPrescription...");
+    con.release();
+    console.log("Exiting retrieveMedicalPrescriptionTypes...");
     return false;
   }
 }
 
-async function retrieveAdvice(req) {
-  console.log("Entering retrieveAdvice...");
+async function retrieveOcularAdviceTypes(req) {
+  console.log("Entering retrieveOcularAdviceTypes...");
 
-  let query = "SELECT advice_desc FROM advice_master ORDER BY advice_desc;";
+  let query = "SELECT advice_sub_type FROM advice_master WHERE advice_type='ocular' ORDER BY advice_desc;";
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -326,26 +333,27 @@ async function retrieveAdvice(req) {
         "msgtype" : "info",
         "message": "no advice type found"
       }
-      console.log("Exiting retrieveAdvice...");
+      console.log("Exiting retrieveOcularAdviceTypes...");
       return JSON.stringify(NoDataFound);
     }
     
-    console.log("Exiting retrieveAdvice...");
+    console.log("Exiting retrieveOcularAdviceTypes...");
     return MysqlResponseJson;
   }
   catch(err) {
-    console.log("Error ====== retrieveAdvice");
+    console.log("Error ====== retrieveOcularAdviceTypes");
     console.log("Error code is: ", err.code);
 
-    console.log("Exiting retrieveAdvice...");
+    console.log("Exiting retrieveOcularAdviceTypes...");
     return false;
   }
 }
 
-async function retrieveMinorOPDProcedures(req){
-  console.log("Entering retrieveMinorOPDProcedures...");
+async function retrieveOcularMinorOPDProcedureTypes(req){
+  console.log("Entering retrieveOcularMinorOPDProcedureTypes...");
 
-  let query = "SELECT min_procedure_type FROM minor_opd_procedures_master;";
+  let query = "SELECT min_procedure_sub_type FROM minor_opd_procedures_master WHERE " +
+              " min_procedure_type = 'ocular' ORDER BY min_procedure_sub_type;";
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -359,18 +367,18 @@ async function retrieveMinorOPDProcedures(req){
         "msgtype" : "info",
         "message": "no minor OPD procedures type found"
       }
-      console.log("Exiting retrieveMinorOPDProcedures...");
+      console.log("Exiting retrieveOcularMinorOPDProcedureTypes...");
       return JSON.stringify(NoDataFound);
     }
-    
-    console.log("Exiting retrieveMinorOPDProcedures...");
+    con.release();
+    console.log("Exiting retrieveOcularMinorOPDProcedureTypes...");
     return MysqlResponseJson;
   }
   catch(err) {
-    console.log("Error ====== retrieveMinorOPDProcedures");
+    console.log("Error ====== retrieveOcularMinorOPDProcedureTypes");
     console.log("Error code is: ", err.code);
-
-    console.log("Exiting retrieveMinorOPDProcedures...");
+    con.release();
+    console.log("Exiting retrieveOcularMinorOPDProcedureTypes...");
     return false;
   }
 }
@@ -899,11 +907,11 @@ exports.retrieveOcularComplaintTypes = retrieveOcularComplaintTypes;
 exports.retrieveSystemicProcedureTypes = retrieveSystemicProcedureTypes;
 exports.retrieveOcularProcedureTypes = retrieveOcularProcedureTypes;
 exports.retrieveOpticalInvestigations = retrieveOpticalInvestigations;
-exports.retrieveAllPrecautionTypes = retrieveAllPrecautionTypes;
-exports.retrieveAllDiagnosisTypes = retrieveAllDiagnosisTypes;
-exports.retrieveInstructions = retrieveInstructions;
-exports.retrieveMedicalPrescription = retrieveMedicalPrescription;
-exports.retrieveAdvice = retrieveAdvice;
-exports.retrieveMinorOPDProcedures = retrieveMinorOPDProcedures;
+exports.retrieveOpticalPrecautionTypes = retrieveAllPrecautionTypes;
+exports.retrieveOcularDiagnosisTypes = retrieveOcularDiagnosisTypes;
+exports.retrieveOcularInstructionTypes = retrieveOcularInstructionTypes;
+exports.retrieveMedicalPrescriptionTypes = retrieveMedicalPrescriptionTypes;
+exports.retrieveOcularAdviceTypes = retrieveOcularAdviceTypes;
+exports.retrieveOcularMinorOPDProcedureTypes = retrieveOcularMinorOPDProcedureTypes;
 exports.searchMedicineByName = searchMedicineByName;
 exports.retrievePatientStatusMaster=retrievePatientStatusMaster;

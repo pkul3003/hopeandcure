@@ -42,3 +42,11 @@ or LastName like 'kulkarni' or ContactNumber = '' or UHID= '';
 
 INSERT INTO appointments values('1272','Prasad','Dattatray','Joshi','1981-06-06','male','Dr Prakash Rasal','2018-07-09','12:00',
   '9567750288','joship18@gmail.com','null','Pune','Dhayari','','',9911223222,DEFAULT);
+
+
+31 Dec 2018
+
+alter table investigations_master add column investigation_sub_type varchar(100) after investigation_type;
+insert into investigations_master values (DEFAULT, 'ocular', 'test investigation1', 'test 1 desc', DEFAULT);
+insert into investigations_master values (DEFAULT, 'ocular', 'test investigation2', 'test 2 desc', DEFAULT);
+insert into investigations_master values (DEFAULT, 'ocular', 'test investigation3', 'test 3 desc', DEFAULT);
