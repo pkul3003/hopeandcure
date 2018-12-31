@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2018-12-31T11:17:59.337Z",
+	"__export_date": "2018-12-31T11:45:53.774Z",
 	"__export_source": "insomnia.desktop.app:v6.3.2",
 	"resources": [
 		{
@@ -1525,7 +1525,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"intentName\": \"search-appointments\",\n\t\"patient\": {\n\t\"search_String\": \"Kulkarni\"\n\t\t}\n}"
+				"text": "{\n\t\"intentName\": \"search-appointments\",\n\t\"patient\": {\n\t\"search_string\": \"Kulkarni\"\n\t\t}\n}"
 			},
 			"created": 1546254197421,
 			"description": "",
@@ -1539,7 +1539,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1546254197421,
 			"method": "POST",
-			"modified": 1546254328495,
+			"modified": 1546256623518,
 			"name": "search-appointments",
 			"parameters": [],
 			"parentId": "wrk_53a6d7ff232d4eddb433811092bee19a",
