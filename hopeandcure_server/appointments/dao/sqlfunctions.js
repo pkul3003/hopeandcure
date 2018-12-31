@@ -104,6 +104,7 @@ async function createAppointment(req) {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
     await con.query(query1);
+    con.release();
     return true;
   }
   catch(err) {

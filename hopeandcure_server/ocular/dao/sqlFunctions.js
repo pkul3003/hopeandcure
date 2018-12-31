@@ -322,6 +322,7 @@ async function addPatientPrescription(req){
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
     await con.query(query);
+    con.release();
     if (iCount === json_data.length) {
       console.log("Exiting addPatientPrescription...");
       return true;

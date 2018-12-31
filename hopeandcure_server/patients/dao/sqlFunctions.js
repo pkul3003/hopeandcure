@@ -49,6 +49,7 @@ async function createNewPatient(req) {
       "message": "patient created successfully",
       "UHID" : newUHID
     }
+    con.release();
     console.log("Exiting createNewPatient...");
     return response;
   }
@@ -95,6 +96,7 @@ async function updatePatientDetails(req) {
       "message": "patient details updated successfully"
     }
     console.log("Exiting updatePatientDetails...");
+    con.release();
     return response;
   }
   catch(err) {
@@ -303,6 +305,7 @@ async function retrievePatientAndAddressDetails(req) {
     }
     // success response
     console.log("Exiting retrievePatientAndAddressDetails...");
+    con.release();
     return PatientDetailsJson;
   }
   catch(err) {

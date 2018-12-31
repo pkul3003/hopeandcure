@@ -8,7 +8,7 @@ module.exports = {
       if (pool) return pool;
       pool = mysql.createPool({
 
-        connectionLimit: 20,
+        connectionLimit: 40,
         host: config.mysqlUrl,
         user: config.mysqlUser,
         password: config.mysqlPassword,
