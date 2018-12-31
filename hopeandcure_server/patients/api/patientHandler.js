@@ -57,7 +57,7 @@ async function apiHandlerUpdatePatientDetails(req,res){
 		}
 		else {
 			if (response.msgtype === "success") {
-				req.body.patientAddress.UHID = response.UHID;
+				req.body.patientAddress.UHID = req.body.patient.UHID;
 				let addressResponse = await mysqlFunctions.updatePatientAddress(req);
 				if (addressResponse === false || addressResponse.msgtype !== "success") {
 					response.msgtype = "info";

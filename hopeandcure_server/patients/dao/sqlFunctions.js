@@ -177,7 +177,7 @@ async function updatePatientAddress(req) {
 
   let query = "UPDATE patient_address set AddressLine1 = '" + address_line1 + "', AddressLine2 = '"+ address_line2 + "',Landmark = '"+
               landmark +"', Area = '" + area +"', City ='" + city +"', District = '" + district +"',State = '"+ state +"', PINCode = '"+ pincode +"', EmergencyContactNumber = '"+
-              emergency_conact_number +"', Where UHID = '" + UHID +"' ;";
+              emergency_conact_number +"' Where UHID = '" + UHID +"' ;";
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -324,3 +324,4 @@ exports.addPatientAddress = addPatientAddress;
 exports.retrievePatients = retrievePatients;
 exports.updatePatientDetails = updatePatientDetails;
 exports.retrievePatientAndAddressDetails = retrievePatientAndAddressDetails;
+exports.updatePatientAddress = updatePatientAddress;

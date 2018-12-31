@@ -248,7 +248,8 @@ async function searchAppointment(req) {
   returnJsonObj = [];
 
   let search_string = req.body.patient.search_string;
-  let parsedSearchString = await SearchStringParsing.getParsedSearchString (search_string);
+  console.log("Search_String: ", req.body.patient);
+  let parsedSearchString = await SearchStringParsing.getParsedSearchString(search_string);
   //var validReqObjects = {};
 
   for (var key in parsedSearchString) {

@@ -162,7 +162,7 @@ app.post('/appointments', async function (req, res){
 		case 'update-appointment':
 			await apiAppointmentsController.apiHandlerUpdateAppointments(req, res);
 			break;
-		case 'search-appointment':
+		case 'search-appointments':
 			await apiAppointmentsController.apiHandlerSearchAppointment(req, res);
 			break;	
 		default:
