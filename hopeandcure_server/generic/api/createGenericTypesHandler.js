@@ -1,7 +1,7 @@
 'use strict'
 let stubResponse = require('../../responsestubs/StubResponse.js');
 let config = require("../../config.js");
-let mysqlFunctions = require('../dao/sqlFunctions.js');
+let mysqlFunctions = require('../dao/createGenericTypesSQLFunctions.js');
 
 // create a new complaint
 async function apiHandlerCreateComplaint(req,res){

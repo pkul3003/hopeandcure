@@ -44,7 +44,7 @@ app.get("/days-of-week", function(req, res) {
 });
 
 // retrieve-appointments
-app.get("/retrieve-appointments", async function(req, res) {
+app.get("/retrieve-all-appointments", async function(req, res) {
 	await apiAppointmentsController.apiHandlerForAppointments(req, res);
 });
 
@@ -69,8 +69,9 @@ app.get("/retrieve-complaint-types", async function(req, res) {
 });
 
 // procedure or surgery types
-app.get("/retrieve-procedure-types", async function(req, res) {
-	await apiGenericRetrieveController.apiHandlerRetrieveProcedureTypes(req, res);
+app.get("/retrieve-surgical-procedure-types", async function(req, res) {
+	console.log("inside GET - retrieve-procedure-types ");
+	await apiGenericRetrieveController.apiHandlerRetrieveSurgicalProcedureTypes(req, res);
 });
 
 // investigation types (optical or systemic)
@@ -99,8 +100,8 @@ app.get("/retrieve-medical-advice", async function(req, res){
 	await apiGenericRetrieveController.apiHandlerRetrieveMedicalAdviceTypes(req, res);
 });
 
-app.get("/retrieve-minor-opd-procedures", async function(req, res) {
-	await apiGenericRetrieveController.apiHandlerRetrieveMinorPorcedures(req, res);
+app.get("/retrieve-minor-opd-procedure-types", async function(req, res) {
+	await apiGenericRetrieveController.apiHandlerRetrieveMinorPorcedureTypes(req, res);
 });
 
 app.get("/retrieve-patient-status-master", async function(req, res) {
