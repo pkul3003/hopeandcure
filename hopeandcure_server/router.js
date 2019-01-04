@@ -68,15 +68,29 @@ app.get("/retrieve-complaint-types", async function(req, res) {
 	await apiGenericRetrieveController.apiHandlerRetrieveComplaintTypes(req, res);
 });
 
+app.get("/retrieve-complaint-master", async function(req, res) {
+	await apiGenericRetrieveController.apiHandlerRetrieveComplaintMaster(req, res);
+});
+
 // procedure or surgery types
 app.get("/retrieve-surgical-procedure-types", async function(req, res) {
 	console.log("inside GET - retrieve-procedure-types ");
 	await apiGenericRetrieveController.apiHandlerRetrieveSurgicalProcedureTypes(req, res);
 });
 
+app.get("/retrieve-surgical-procedure-master", async function(req, res) {
+	console.log("inside GET - retrieve-procedure-master ");
+	await apiGenericRetrieveController.apiHandlerRetrieveSurgicalProcedureMaster(req, res);
+});
+
+
 // investigation types (optical or systemic)
 app.get("/retrieve-investigation-types", async function(req, res) {
 	await apiGenericRetrieveController.apiHandlerRertrieveInvestigationTypes(req, res);
+});
+
+app.get("/retrieve-investigation-master", async function(req, res) {
+	await apiGenericRetrieveController.apiHandlerRetrieveInvestigationMaster(req, res);
 });
 
 // special precaution types
@@ -84,26 +98,51 @@ app.get("/retrieve-special-precaution-types", async function(req, res){
 	await apiGenericRetrieveController.apiHandlerRetrieveSpecialPrecautionTypes(req, res);
 });
 
+app.get("/retrieve-special-precaution-master", async function(req, res){
+	await apiGenericRetrieveController.apiHandlerRetrieveSpecialPrecautionMaster(req, res);
+});
+
+// Diagnosis Master
 app.get("/retrieve-diagnosis-types", async function(req, res) {
 	await apiGenericRetrieveController.apiHandlerRetrieveDiagnosisTypes(req, res);
 });
 
+app.get("/retrieve-diagnosis-master", async function(req, res) {
+	await apiGenericRetrieveController.apiHandlerRetrieveDiagnosisMaster(req, res);
+});
+
+// Instruction 
 app.get("/retrieve-instruction-types", async function(req, res){
 	await apiGenericRetrieveController.apiHandlerRetrieveInstructionTypes(req, res);
 });
 
+app.get("/retrieve-instruction-master", async function(req, res){
+	await apiGenericRetrieveController.apiHandlerRetrieveInstructionMaster(req, res);
+});
+
+// Medical prescription by diagnosis ID
 app.get("/retrieve-prescription-by-diagnosis-id", async function(req, res){
 	await apiGenericRetrieveController.apiHandlerRetrievePrescriptionTypes(req, res);
 });
 
+// Medical Advice
 app.get("/retrieve-medical-advice-types", async function(req, res){
 	await apiGenericRetrieveController.apiHandlerRetrieveMedicalAdviceTypes(req, res);
 });
 
+app.get("/retrieve-medical-advice-master", async function(req, res){
+	await apiGenericRetrieveController.apiHandlerRetrieveMedicalAdviceMaster(req, res);
+});
+
+// Minor Opd procedure
 app.get("/retrieve-minor-opd-procedure-types", async function(req, res) {
 	await apiGenericRetrieveController.apiHandlerRetrieveMinorPorcedureTypes(req, res);
 });
 
+app.get("/retrieve-minor-opd-procedure-master", async function(req, res) {
+	await apiGenericRetrieveController.apiHandlerRetrieveMinorPorcedureMaster(req, res);
+});
+// Patient Status Master
 app.get("/retrieve-patient-status-master", async function(req, res) {
 	await apiGenericRetrieveController.apiHandlerRetrievePatientStatusMaster(req, res);
 });
