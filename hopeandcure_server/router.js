@@ -96,7 +96,7 @@ app.get("/retrieve-prescription-by-diagnosis-id", async function(req, res){
 	await apiGenericRetrieveController.apiHandlerRetrievePrescriptionTypes(req, res);
 });
 
-app.get("/retrieve-medical-advice", async function(req, res){
+app.get("/retrieve-medical-advice-types", async function(req, res){
 	await apiGenericRetrieveController.apiHandlerRetrieveMedicalAdviceTypes(req, res);
 });
 

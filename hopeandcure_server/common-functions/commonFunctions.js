@@ -74,4 +74,28 @@ async function getParsedSearchString(search_string) {
     return jsonSrchObject;
 }
 
+async function compareStrings(string1, string2, ignoreCase) {
+  console.log("inside compareString function ...");
+
+  if(ignoreCase === true) {
+    string1 = string1.toString().toLowerCase();
+    string2 = string2.toString().toLowerCase();
+    console.log("string1: ", string1);
+    console.log("string2: ", string2);
+  }
+  if(string1 === string2) {
+    console.log("true");
+    console.log("exiting compareString function ...");
+    return true;
+  } else {
+    console.log("false");
+    console.log("exiting compareString function ...");
+    return false;
+  }
+  console.log("final false");
+  console.log("exiting compareString function ...");
+  return false;
+}
+
 exports.getParsedSearchString = getParsedSearchString;
+exports.compareStrings = compareStrings;

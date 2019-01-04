@@ -25,31 +25,9 @@ async function apiHandlerRetrieveComplaintTypes(req, res) {
 
   async function apiHandlerRetriveSurgicalProcedureTypes(req, res){
     console.log("Entering apiHandlerRetriveSurgicalProcedureTypes========>");
-    let procedure_type = req.query['procedure-type'];
-    let result = {};
-
-    switch(procedure_type) {
-      case 'systemic':
-        result = await mysqlFunctions.retrieveSystemicProcedureTypes(req);
-        break;
-      case 'ocular':
-        result = await mysqlFunctions.retrieveOcularProcedureTypes(req);
-        break;
-      case 'optical':
-        result = await mysqlFunctions.retrieveOcularProcedureTypes(req);
-        break;
-      case 'all':
-        result = await mysqlFunctions.retrieveAllProcedureTypes(req);
-        break;
-      default:
-        var returnJsonObj = {
-          "msgtype" : "info",
-          "message" : "Invalid procedure type specified. current valid values: systemic, ocular"
-        }
-        console.log("Exiting apiHandlerRetriveSurgicalProcedureTypes========>");
-        return res.send(returnJsonObj);
-      }
     
+    let result = await mysqlFunctions.retrieveSurgicalProcedureTypes(req);
+        
     console.log("inside apiHandlerRetriveSurgicalProcedureTypes:  ", result);
     if (result === false) {
       var returnJsonObj = {
@@ -102,31 +80,9 @@ async function apiHandlerRetrieveSpecialPrecautionTypes(req, res) {
 
 async function apiHandlerRetrieveDiagnosisTypes(req, res) {
   console.log("Entering apiHandlerRetrieveDiagnosisTypes========>");
-  let diagnosis_type = req.query['diagnosis-type'];
-  let result = {};
-
-  switch(diagnosis_type) {
-    case 'systemic':
-      result = await mysqlFunctions.retrieveSystemicDiagnosisTypes(req);
-      break;
-    case 'ocular':
-      result = await mysqlFunctions.retrieveOcularDiagnosisTypes(req);
-      break;
-    case 'optical':
-      result = await mysqlFunctions.retrieveOcularDiagnosisTypes(req);
-      break;
-    case 'all':
-      result = await mysqlFunctions.retrieveAllDiagnosisTypes(req);
-      break;
-    default:
-      var returnJsonObj = {
-        "msgtype" : "info",
-        "message" : "Invalid diagnosis type specified. current valid values: systemic, optical, all"
-      }
-      console.log("Exiting apiHandlerRetrieveDiagnosisTypes========>");
-      return res.send(returnJsonObj);
-    }
   
+  let result =  await mysqlFunctions.retrieveDiagnosisTypes(req);
+     
   console.log("inside apiHandlerRetrieveDiagnosisTypes:  ", result);
   if (result === false) {
     var returnJsonObj = {
@@ -142,30 +98,8 @@ return res.send(JSON.parse(result));
 
 async function apiHandlerRetrieveInstructionTypes(req, res){
   console.log("Entering apiHandlerRetrieveInstructionTypes========>");
-  let instruction_type = req.query['instruction-type'];
-  let result = {};
-
-  switch(instruction_type) {
-    case 'systemic':
-      result = await mysqlFunctions.retrieveSystemicInstructionTypes(req);
-      break;
-    case 'ocular':
-      result = await mysqlFunctions.retrieveOcularInstructionTypes(req);
-      break;
-    case 'optical':
-      result = await mysqlFunctions.retrieveOcularInstructionTypes(req);
-      break;
-    case 'all':
-      result = await mysqlFunctions.retrieveAllInstructionTypes(req);
-      break;
-    default:
-      var returnJsonObj = {
-        "msgtype" : "info",
-        "message" : "Invalid instruction type specified. current valid values: systemic, optical, all"
-      }
-      console.log("Exiting apiHandlerRetrieveInstructionTypes========>");
-      return res.send(returnJsonObj);
-    }
+  
+  let result = await mysqlFunctions.retrieveInstructionTypes(req);
   
   console.log("inside apiHandlerRetrieveInstructionTypes:  ", result);
   if (result === false) {
@@ -202,30 +136,7 @@ return res.send(JSON.parse(result));
 async function apiHandlerRetrieveMedicalAdviceTypes(req, res) {
   console.log("Entering apiHandlerRetrieveMedicalAdviceTypes========>");
   
-  let advice_type = req.query['advice-type'];
-  let result = {};
-
-  switch(advice_type) {
-    case 'systemic':
-      result = await mysqlFunctions.retrieveSystemicAdviceTypes(req);
-      break;
-    case 'ocular':
-      result = await mysqlFunctions.retrieveOcularAdviceTypes(req);
-      break;
-    case 'optical':
-      result = await mysqlFunctions.retrieveOcularAdviceTypes(req);
-      break;
-    case 'all':
-      result = await mysqlFunctions.retrieveAllAdviceTypes(req);
-      break;
-    default:
-      var returnJsonObj = {
-        "msgtype" : "info",
-        "message" : "Invalid advice type specified. current valid values: systemic, optical, all"
-      }
-      console.log("Exiting apiHandlerRetrieveMedicalAdviceTypes========>");
-      return res.send(returnJsonObj);
-    }
+  let result = await mysqlFunctions.retrieveMedicalAdviceTypes(req);
   
   console.log("inside apiHandlerRetrieveMedicalAdviceTypes:  ", result);
   if (result === false) {
@@ -242,31 +153,8 @@ return res.send(JSON.parse(result));
 
 async function apiHandlerRetrieveMinorPorcedureTypes(req, res){
   console.log("Entering apiHandlerRetrieveMinorPorcedureTypes========>");
-
-  let min_proc_type = req.query['minor-procedure-type'];
-  let result = {};
-
-  switch(min_proc_type) {
-    case 'systemic':
-      result = await mysqlFunctions.retrieveSystemicMinorOPDProcedureTypes(req);
-      break;
-    case 'ocular':
-      result = await mysqlFunctions.retrieveOcularMinorOPDProcedureTypes(req);
-      break;
-    case 'optical':
-      result = await mysqlFunctions.retrieveOcularMinorOPDProcedureTypes(req);
-      break;
-    case 'all':
-      result = await mysqlFunctions.retrieveAllMinorOPDProcedureTypes(req);
-      break;
-    default:
-      var returnJsonObj = {
-        "msgtype" : "info",
-        "message" : "Invalid minor OPD Procedure type specified. current valid values: systemic, optical, all"
-      }
-      console.log("Exiting apiHandlerRetrieveMinorPorcedureTypes========>");
-      return res.send(returnJsonObj);
-    }
+  let result = await mysqlFunctions.retrieveMinorOPDProcedureTypes(req);
+      
   console.log("inside apiHandlerRetrieveMinorPorcedureTypes:  ", result);
   if (result === false) {
     var returnJsonObj = {

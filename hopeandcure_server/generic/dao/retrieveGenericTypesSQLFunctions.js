@@ -1,6 +1,7 @@
 let mysql = require('mysql2');
 let config = require("../../config.js");
 let callmysqlpool = require("../../mysql-functions/createMysqlSingleton.js");
+let common_functions = require("../../common-functions/commonFunctions.js");
 
 async function getConnectionPool() {
   try {
@@ -14,15 +15,15 @@ async function getConnectionPool() {
   }
 }
 
-async function retrieveComplaintTypes(Req) {
+async function retrieveComplaintTypes(req) {
   
     console.log("Entering retrieveComplaintTypes...");
     let complaint_type = req.query['complaint-type'];
     let query = "";
-    if (complaint_type === 'all' || complaint_type === 'All') {
+    if (common_functions.compareStrings(complaint_type, "all", true) === true) {
       query = "SELECT complaint_sub_type FROM complaint_master ORDER BY complaint_sub_type; ";
     } else {
-      query = "SELECT complaint_sub_type FROM complaint_master WHERE complaint_sub_type ='"+ complaint_type+ 
+      query = "SELECT complaint_sub_type FROM complaint_master WHERE complaint_type ='"+ complaint_type+ 
               "' ORDER BY complaint_sub_type; ";
     }
   
@@ -62,7 +63,7 @@ async function retrieveSurgicalProcedureTypes(req) {
     let procedure_type = req.query['procedure-type'];
     let query = "";
   
-    if (procedure_type === 'all' || procedure_type === 'All') {
+    if (common_functions.compareStrings(procedure_type, "all", true) === true) {
       query = "SELECT procedure_sub_type FROM procedures_master ORDER BY procedure_sub_type; ";
     } else {
       query = "SELECT procedure_sub_type FROM procedures_master WHERE procedure_type = '"+ procedure_type+
@@ -80,7 +81,7 @@ async function retrieveSurgicalProcedureTypes(req) {
         console.log(" it seems no previous procedures were found .........");
         var NoSurgeryTypesFound = {
           "msgtype" : "info",
-          "message": "no systemic procedures types found"
+          "message": "no surgical procedures types found"
         }
         con.release();
         console.log("Exiting retrieveSurgicalProcedureTypes...");
@@ -105,7 +106,7 @@ async function retrieveInvestigationTypes(req) {
   let investigation_type = req.query['investigation-type'];
 
   let query = "";
-  if (investigation_type === 'all' || investigation_type === 'All') {
+  if (common_functions.compareStrings(investigation_type, "all", true) === true) {
       query = "SELECT investigation_sub_type FROM investigation_master ORDER BY investigation_sub_type;";
   } else {
     query = "SELECT investigation_sub_type FROM investigation_master WHERE investigation_type ='" +investigation_type+ 
@@ -146,7 +147,7 @@ async function retrieveSpecialPrecautionTypes(req) {
   console.log("Entering retrieveSpecialPrecautionTypes...");
   let precaution_type = req.query['precaution-type'];
   let query = "";
-  if (precaution_type === 'all' || precaution_type === 'All') {
+  if (common_functions.compareStrings(precaution_type, "all", true) === true) {
       query = "SELECT precaution_sub_type FROM special_precautions_master ORDER BY precaution_sub_type;";
   } else {
     query = "SELECT precaution_sub_type FROM special_precautions_master WHERE precaution_type ='" +precaution_type+ 
@@ -183,11 +184,16 @@ async function retrieveSpecialPrecautionTypes(req) {
   }
 }
 
-async function retrieveOcularDiagnosisTypes(req) {
-  console.log("Entering retrieveOcularDiagnosisTypes...");
-  
-  let query = "SELECT diagnosis_sub_type FROM diagnosis_master WHERE diagnosis_type= 'ocular' "+
-              "ORDER BY diagnosis_sub_type;";
+async function retrieveDiagnosisTypes(req) {
+  console.log("Entering retrieveDiagnosisTypes...");
+  let diagnosis_type = req.query['diagnosis-type'];
+  let query = ""
+  if (common_functions.compareStrings(diagnosis_type, "all", true) === true) {
+      query = "SELECT diagnosis_sub_type FROM diagnosis_master ORDER BY diagnosis_sub_type;";
+  } else {
+    query = "SELECT diagnosis_sub_type FROM diagnosis_master WHERE diagnosis_type= '"+ diagnosis_type+
+              "' ORDER BY diagnosis_sub_type;";
+  }
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -201,26 +207,34 @@ async function retrieveOcularDiagnosisTypes(req) {
         "msgtype" : "info",
         "message": "no diagnosis type found"
       }
+      con.release();
+      console.log("Exiting retrieveDiagnosisTypes...");
       return JSON.stringify(NoDiagnosisTypesFound);
     }
     con.release();
-    console.log("Exiting retrieveOcularDiagnosisTypes...");
+    console.log("Exiting retrieveDiagnosisTypes...");
     return DiagnosisTypesJson;
   }
   catch(err) {
-    console.log("Error ====== retrieveOcularDiagnosisTypes");
+    console.log("Error ====== retrieveDiagnosisTypes");
     console.log("Error code is: ", err.code);
     con.release();
-    console.log("Exiting retrieveOcularDiagnosisTypes...");
+    console.log("Exiting retrieveDiagnosisTypes...");
     return false;
   }
 }
 
-async function retrieveOcularInstructionTypes(req){
-  console.log("Entering retrieveOcularInstructionTypes...");
-  
-  let query = "SELECT instruction_sub_type FROM instructions_master WHERE instruction_type = 'ocular'" +
-              "ORDER BY instruction_sub_type; ";
+async function retrieveInstructionTypes(req){
+  console.log("Entering retrieveInstructionTypes...");
+  let instruction_type = req.query['instruction-type'];
+  let query = "";
+
+  if (common_functions.compareStrings(instruction_type, "all", true) === true) {
+      query = "SELECT instruction_sub_type FROM instructions_master ORDER BY instruction_sub_type; ";
+  } else {
+    query = "SELECT instruction_sub_type FROM instructions_master WHERE instruction_type = '" +instruction_type+
+            "' ORDER BY instruction_sub_type; ";
+  }
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -235,17 +249,18 @@ async function retrieveOcularInstructionTypes(req){
         "message": "no instructions type found"
       }
       con.release();
+      console.log("Exiting retrieveInstructionTypes...");
       return JSON.stringify(NoInstructionTypesFound);
     }
-    
-    console.log("Exiting retrieveOcularInstructionTypes...");
+    con.release();
+    console.log("Exiting retrieveInstructionTypes...");
     return InstructionTypesJson;
   }
   catch(err) {
-    console.log("Error ====== retrieveOcularInstructionTypes");
+    console.log("Error ====== retrieveInstructionTypes");
     console.log("Error code is: ", err.code);
-
-    console.log("Exiting retrieveOcularInstructionTypes...");
+    con.release();
+    console.log("Exiting retrieveInstructionTypes...");
     return false;
   }
 }
@@ -287,10 +302,17 @@ async function retrieveMedicalPrescriptionTypes(req) {
   }
 }
 
-async function retrieveOcularAdviceTypes(req) {
-  console.log("Entering retrieveOcularAdviceTypes...");
+async function retrieveMedicalAdviceTypes(req) {
+  console.log("Entering retrieveMedicalAdviceTypes...");
+  let advice_type = req.query['advice-type'];
+  let query = "";
 
-  let query = "SELECT advice_sub_type FROM advice_master WHERE advice_type='ocular' ORDER BY advice_desc;";
+  if (common_functions.compareStrings(advice_type, "all", true) === true) { 
+    query = "SELECT advice_sub_type FROM advice_master ORDER BY advice_sub_type;";
+  } else {
+    query = "SELECT advice_sub_type FROM advice_master WHERE advice_type= '" +advice_type+ 
+            "' ORDER BY advice_sub_type;";
+  }
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -304,27 +326,34 @@ async function retrieveOcularAdviceTypes(req) {
         "msgtype" : "info",
         "message": "no advice type found"
       }
-      console.log("Exiting retrieveOcularAdviceTypes...");
+      con.release();
+      console.log("Exiting retrieveMedicalAdviceTypes...");
       return JSON.stringify(NoDataFound);
     }
-    
-    console.log("Exiting retrieveOcularAdviceTypes...");
+    con.release();
+    console.log("Exiting retrieveMedicalAdviceTypes...");
     return MysqlResponseJson;
   }
   catch(err) {
-    console.log("Error ====== retrieveOcularAdviceTypes");
+    console.log("Error ====== retrieveMedicalAdviceTypes");
     console.log("Error code is: ", err.code);
-
-    console.log("Exiting retrieveOcularAdviceTypes...");
+    con.release();
+    console.log("Exiting retrieveMedicalAdviceTypes...");
     return false;
   }
 }
 
-async function retrieveOcularMinorOPDProcedureTypes(req){
-  console.log("Entering retrieveOcularMinorOPDProcedureTypes...");
-
-  let query = "SELECT min_procedure_sub_type FROM minor_opd_procedures_master WHERE " +
-              " min_procedure_type = 'ocular' ORDER BY min_procedure_sub_type;";
+async function retrieveMinorOPDProcedureTypes(req){
+  console.log("Entering retrieveMinorOPDProcedureTypes...");
+  let min_proc_type = req.query['minor-procedure-type'];
+  let query = "";
+  if (common_functions.compareStrings(min_proc_type, "all", true) === true) {
+    query = "SELECT min_procedure_sub_type FROM minor_opd_procedures_master ORDER BY min_procedure_sub_type";
+  } else {
+    query = "SELECT min_procedure_sub_type FROM minor_opd_procedures_master WHERE " +
+              " min_procedure_type = '"+ min_proc_type+ "' ORDER BY min_procedure_sub_type;";
+  }
+  
   console.log(query);
   try {
     let pool = await getConnectionPool();
@@ -338,18 +367,19 @@ async function retrieveOcularMinorOPDProcedureTypes(req){
         "msgtype" : "info",
         "message": "no minor OPD procedures type found"
       }
-      console.log("Exiting retrieveOcularMinorOPDProcedureTypes...");
+      con.release();
+      console.log("Exiting retrieveMinorOPDProcedureTypes...");
       return JSON.stringify(NoDataFound);
     }
     con.release();
-    console.log("Exiting retrieveOcularMinorOPDProcedureTypes...");
+    console.log("Exiting retrieveMinorOPDProcedureTypes...");
     return MysqlResponseJson;
   }
   catch(err) {
-    console.log("Error ====== retrieveOcularMinorOPDProcedureTypes");
+    console.log("Error ====== retrieveMinorOPDProcedureTypes");
     console.log("Error code is: ", err.code);
     con.release();
-    console.log("Exiting retrieveOcularMinorOPDProcedureTypes...");
+    console.log("Exiting retrieveMinorOPDProcedureTypes...");
     return false;
   }
 }
@@ -430,10 +460,10 @@ exports.retrieveComplaintTypes = retrieveComplaintTypes;
 exports.retrieveSurgicalProcedureTypes = retrieveSurgicalProcedureTypes;
 exports.retrieveInvestigationTypes = retrieveInvestigationTypes;
 exports.retrieveSpecialPrecautionTypes = retrieveSpecialPrecautionTypes;
-exports.retrieveOcularDiagnosisTypes = retrieveOcularDiagnosisTypes;
-exports.retrieveOcularInstructionTypes = retrieveOcularInstructionTypes;
+exports.retrieveDiagnosisTypes = retrieveDiagnosisTypes;
+exports.retrieveInstructionTypes = retrieveInstructionTypes;
 exports.retrieveMedicalPrescriptionTypes = retrieveMedicalPrescriptionTypes;
-exports.retrieveOcularAdviceTypes = retrieveOcularAdviceTypes;
-exports.retrieveOcularMinorOPDProcedureTypes = retrieveOcularMinorOPDProcedureTypes;
+exports.retrieveMedicalAdviceTypes = retrieveMedicalAdviceTypes;
+exports.retrieveMinorOPDProcedureTypes = retrieveMinorOPDProcedureTypes;
 exports.searchMedicineByName = searchMedicineByName;
 exports.retrievePatientStatusMaster=retrievePatientStatusMaster;
