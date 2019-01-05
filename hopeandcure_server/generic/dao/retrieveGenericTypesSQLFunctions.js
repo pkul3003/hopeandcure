@@ -51,7 +51,7 @@ async function retrieveComplaintTypes(req) {
     catch(err) {
       console.log("Error ====== retrieveComplaintTypes");
       console.log("Error code is: ", err.code);
-  
+      con.release();
       console.log("Exiting retrieveComplaintTypes...");
       return false;
     }
@@ -130,14 +130,14 @@ async function retrieveInvestigationTypes(req) {
       console.log("Exiting retrieveInvestigationTypes...");
       return JSON.stringify(NoSurgeryTypesFound);
     }
-    
+    con.release();
     console.log("Exiting retrieveInvestigationTypes...");
     return InvestigationTypesJson;
   }
   catch(err) {
     console.log("Error ====== retrieveInvestigationTypes");
     console.log("Error code is: ", err.code);
-
+    con.release();
     console.log("Exiting retrieveInvestigationTypes...");
     return false;
   }
@@ -284,7 +284,7 @@ async function retrieveMedicalPrescriptionTypes(req) {
         "msgtype" : "info",
         "message": "no Prescriptions type found"
       }
-      
+      con.release();
       console.log("Exiting retrieveMedicalPrescriptionTypes...");
       return JSON.stringify(NoPrescriptionTypesFound);
     }
@@ -402,17 +402,18 @@ async function retrievePatientStatusMaster(req){
         "msgtype" : "info",
         "message": "no Patient status found"
       }
+      con.release();
       console.log("Exiting retrievePatientStatusMaster...");
       return JSON.stringify(NoDataFound);
     }
-    
+    con.release();
     console.log("Exiting retrievePatientStatusMaster...");
     return MysqlResponseJson;
   }
   catch(err) {
     console.log("Error ====== retrievePatientStatusMaster");
     console.log("Error code is: ", err.code);
-
+    con.release();
     console.log("Exiting retrievePatientStatusMaster...");
     return false;
   }
@@ -438,18 +439,19 @@ async function searchMedicineByName(req) {
         "msgtype" : "info",
         "message": "no medicine found"
       }
+      con.release();
       console.log("Exiting searchMedicineByName...");
       return JSON.stringify(NoDataFound);
     }
-    
+    con.release();
     console.log("Exiting searchMedicineByName...");
     return MysqlResponseJson;
   }
   catch(err) {
     console.log("Error ====== searchMedicineByName");
     console.log("Error code is: ", err.code);
-
-    console.log("Exiting searchMedicineByName...");
+    con.release();
+    console.log("Exiting   searchMedicineByName...");
     return false;
   }
 }

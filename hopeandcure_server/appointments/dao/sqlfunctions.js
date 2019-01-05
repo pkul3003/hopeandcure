@@ -33,6 +33,7 @@ async function retrieveAppointments(req) {
   catch(err) {
     console.log("Error ====== retrieveAppointments");
     console.log("Error code is: ", err.code);
+    con.release();
     return false;
   }
 }
@@ -57,6 +58,7 @@ async function retrieveAppointmentsByDate(req) {
   catch(err) {
     console.log("Error ====== retrieveAppointments");
     console.log("Error code is: ", err.code);
+    con.release();
     return false;
   }
 }
@@ -114,9 +116,11 @@ async function createAppointment(req) {
       var duplicate_entry = "ER_DUP_ENTRY";
       console.log("appointment already exists for the patient for the given day ");
       console.log("Exiting createAppointment...");
+      con.release();
       return duplicate_entry;
     } else {
       console.log("Exiting createAppointment...");
+      con.release();
       return false;
     }
   }
@@ -145,6 +149,7 @@ async function addPatientProgressStatus(req) {
   catch(err) {
     console.log("Error ====== addPatientProgressStatus");
     console.log("Error code is: ", err.code);
+    con.release();
     return false;
   }
 }
@@ -174,6 +179,7 @@ async function updateAppointment(req) {
   catch(err) {
     console.log("Error ====== updateAppointment");
     console.log("Error code is: ", err.code);
+    con.release();
     return false;
   }
 }
@@ -230,6 +236,7 @@ async function updatePatientProgressStatus(req) {
     console.log("Error ====== addPatientProgressStatus");
     console.log("Error code is: ", err.code);
     console.log("Exiting updatePatientProgressStatus...");
+    con.release();
     return false;
   }
 
@@ -307,6 +314,7 @@ async function searchAppointment(req) {
       catch(err) {
         console.log("Error ====== searchAppointment");
         console.log("error code is: " + err.code);
+        con.release();
         var ErrorFromDB = {
           "msgtype" : "failed",
           "message": "There was an error while searching the appointments"

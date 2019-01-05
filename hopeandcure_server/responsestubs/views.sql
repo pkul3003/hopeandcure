@@ -15,18 +15,34 @@ dmr.diagnosis_id, dmr.diagnosis_type from medicine_master m, medical_prescriptio
 diagnosis_master dmr where mpr.medicine_id=m.medicine_id AND mpr.diagnosis_id=dmr.diagnosis_id
 );
 
-CREATE VIEW `patient_address_details_view` AS 
-(select `p`.`UHID` AS `UHID`,`p`.`FirstName` AS `FirstName`,`p`.`MiddleName` AS `MiddleName`,
-`p`.`LastName` AS `LastName`,`p`.`DOB` AS `DOB`,`p`.`Gender` AS `Gender`,
-`p`.`ContactNumber` AS `ContactNumber`,`p`.`EmailId` AS `EmailId`,`p`.`Aadhar` AS `Aadhar`, `a`.`AddressLine1`,' ',`a`.`AddressLine2`,' ',`a`.`Landmark`,' ',`a`.`Area`,' ',`a`.`City`,' ',
-`a`.`District`,' ',`a`.`State`,' ',`a`.`PINCode`,' ',`a`.`EmergencyContactNumber`,
-concat(`a`.`AddressLine1`,' ',`a`.`AddressLine2`,' ',`a`.`Landmark`,' ',`a`.`Area`,' ',`a`.`City`,' ',
-`a`.`District`,' ',`a`.`State`,' ',`a`.`PINCode`,' ',`a`.`EmergencyContactNumber`) AS `concat_address` 
-from (`patients` `p` join `patient_address` `a`) where (`p`.`UHID` = `a`.`UHID`));
 
-CREATE VIEW `prescription_diagnosis_view` AS 
-(select `m`.`medicine_name` AS `medicine_name`,`m`.`recommended_dosage` AS `recommended_dosage`,
-`m`.`medicine_id` AS `medicine_id`,`mpr`.`prescription_type` AS `prescription_type`,
-`dmr`.`diagnosis_id` AS `diagnosis_id`,`dmr`.`diagnosis_type` AS `diagnosis_type` 
-from ((`medicine_master` `m` join `medical_prescriptions_master` `mpr`) join `diagnosis_master` `dmr`) 
-where ((`mpr`.`medicine_id` = `m`.`medicine_id`) and (`mpr`.`diagnosis_id` = `dmr`.`diagnosis_id`)));
+CREATE VIEW patient_address_details_view AS 
+(select p.UHID, p.FirstName as first_name, p.MiddleName as middle_name, p.LastName as last_name, p.DOB, 
+p.Gender as gender, p.ContactNumber as contact_number, p.EmailId as email_name, 
+p.Aadhar as aadhar, a.AddressLine1 as address_line1, a.AddressLine2 as address_line2, a.Landmark as landmark, 
+a.Area as area, a.City as city, a.District as district, a.State as state, a.PINCode as pin_code, 
+a.EmergencyContactNumber as emergency_contact_number, concat(a.AddressLine1, ' ', a.AddressLine2, ' ', 
+a.Landmark, ' ', a.Area, ' ', a.City, ' ', a.District, ' ', a.State, ' ', a.PINCode, ' ', 
+a.EmergencyContactNumber) AS concat_address, ap.DateOfAppointment as date_of_appointment from 
+(patients p join patient_address a join appointments_view ap) 
+where (p.UHID = a.UHID and p.UHID = ap.UHID));
+
+CREATE VIEW patient_address_details_view AS 
+(select p.UHID, p.FirstName, p.MiddleName, p.LastName, p.DOB, 
+p.Gender, p.ContactNumber, p.EmailId, p.Aadhar, a.AddressLine1, a.AddressLine2, a.Landmark, 
+a.Area, a.City, a.District, a.State, a.PINCode, a.EmergencyContactNumber, 
+concat(a.AddressLine1, ' ', a.AddressLine2, ' ', 
+a.Landmark, ' ', a.Area, ' ', a.City, ' ', a.District, ' ', a.State, ' ', a.PINCode, ' ', 
+a.EmergencyContactNumber) AS concat_address, ap.DateOfAppointment from 
+(patients p join patient_address a join appointments_view ap) 
+where (p.UHID = a.UHID and p.UHID = ap.UHID));
+
+CREATE VIEW prescription_diagnosis_view AS 
+(select m.medicine_name AS medicine_name,m.recommended_dosage AS recommended_dosage,
+m.medicine_id AS medicine_id,mpr.prescription_type AS prescription_type,
+dmr.diagnosis_id AS diagnosis_id,dmr.diagnosis_type AS diagnosis_type 
+from ((medicine_master m join medical_prescriptions_master mpr) join diagnosis_master dmr) 
+where ((mpr.medicine_id = m.medicine_id) and (mpr.diagnosis_id = dmr.diagnosis_id)));
+
+select p.UHID, p.FirstName, p.MiddleName, p.LastName, ap.DateOfAppointment from Patients p
+INNER JOIN  appointments_view ap on p.UHID = ap.UHID;

@@ -92,9 +92,6 @@ async function compareStrings(string1, string2, ignoreCase) {
     console.log("exiting compareString function ...");
     return false;
   }
-  console.log("final false");
-  console.log("exiting compareString function ...");
-  return false;
 }
 
 exports.getParsedSearchString = getParsedSearchString;

@@ -61,11 +61,11 @@ async function createNewPatient(req) {
         "msgtype" : "info",
 				"message": "patient already exists"
 			}
-      //con.release();
+      con.release();
       console.log("Exiting createNewPatient...");
       return response;
     }
-  //  con.release();
+    con.release();
     console.log("Exiting createNewPatient...");
     return false;
   }
@@ -103,6 +103,7 @@ async function updatePatientDetails(req) {
       console.log("Error ====== updatePatientDetails");
       console.log("Error code is: ", err.code);
       console.log("Exiting updatePatientDetails...");
+      con.release();
       return false;
   }
 }
@@ -146,6 +147,7 @@ async function addPatientAddress(req) {
 				"message": "patient address already exists"
 			}
       console.log("Exiting addPatientAddress...");
+      con.release();
       return errMessage;
     }
     if(err.code === "ER_NO_REFERENCED_ROW_2") {
@@ -155,9 +157,11 @@ async function addPatientAddress(req) {
         "message": "patient UHID not valid to add address"
       }
       console.log("Exiting addPatientAddress...");
+      con.release();
       return errMessage;
     }
     console.log("Exiting addPatientAddress...");
+    con.release();
     return false;
   }
 }
@@ -196,6 +200,7 @@ async function updatePatientAddress(req) {
     console.log("Error ====== updatePatientAddress");
     console.log("Error code is: ", err.code);
     console.log("Exiting updatePatientAddress...");
+    con.release();
     return false;
   }
 }
@@ -276,6 +281,7 @@ async function retrievePatients(req) {
           "message": "There was an error while searching the patient"
         }
         returnJsonObj[0] = ErrorFromDB;
+        con.release();
         return JSON.stringify(ErrorFromDB);
         //icount++;
       }
@@ -311,7 +317,7 @@ async function retrievePatientAndAddressDetails(req) {
   catch(err) {
     console.log("Error ====== retrievePatientAndAddressDetails");
     console.log("Error code is: ", err.code);
-
+    con.release();
     console.log("Exiting retrievePatientAndAddressDetails...");
     return false;
   }
