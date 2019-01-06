@@ -456,6 +456,47 @@ async function searchMedicineByName(req) {
   }
 }
 
+async function retrievepPastHistoryTypes(req){
+  console.log("Entering retrievepPastHistoryTypes...");
+  let past_history_type = req.query['past-history-type'];
+  let query = "";
+
+  if (common_functions.compareStrings(past_history_type, "all", true) === true) {
+      query = "SELECT past_history_subtype  FROM past_history_master ORDER BY instruction_sub_type; ";
+  } else {
+    query = "SELECT past_history_subtype FROM past_history_master WHERE past_history_type  = '" +past_history_type+
+            "' ORDER BY past_history_subtype; ";
+  }
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let PastHistoryTypesJson = JSON.stringify(result);
+    console.log("stringified json object is: ", PastHistoryTypesJson);
+    if(PastHistoryTypesJson === "[]") {
+      console.log(" it seems no previous past history types were found .........");
+      var NoPastHistoryTypesFound = {
+        "msgtype" : "info",
+        "message": "no past history type found"
+      }
+      con.release();
+      console.log("Exiting retrievepPastHistoryTypes...");
+      return JSON.stringify(NoPastHistoryTypesFound);
+    }
+    con.release();
+    console.log("Exiting retrievepPastHistoryTypes...");
+    return PastHistoryTypesJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrievepPastHistoryTypes");
+    console.log("Error code is: ", err.code);
+    con.release();
+    console.log("Exiting retrievepPastHistoryTypes...");
+    return false;
+  }
+}
+
 // To retrive entire data from Complaint master
 async function retrieveComplaintMaster(req) {
   
@@ -816,6 +857,7 @@ exports.retrieveMedicalAdviceTypes = retrieveMedicalAdviceTypes;
 exports.retrieveMinorOPDProcedureTypes = retrieveMinorOPDProcedureTypes;
 exports.searchMedicineByName = searchMedicineByName;
 exports.retrievePatientStatusMaster=retrievePatientStatusMaster;
+exports.retrievepPastHistoryTypes=retrievepPastHistoryTypes;
 
 exports.retrieveComplaintMaster=retrieveComplaintMaster;
 exports.retrieveSurgicalProcedureMaster=retrieveSurgicalProcedureMaster;

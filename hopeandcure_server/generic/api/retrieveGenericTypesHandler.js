@@ -168,6 +168,23 @@ console.log("Exiting apiHandlerRetrieveMinorPorcedureTypes========>");
 return res.send(JSON.parse(result));
 }
 
+async function apiHandlerRetrievePastHistoryTypes(req, res){
+  console.log("Entering apiHandlerRetrieveMinorPorcedureTypes========>");
+  let result = await mysqlFunctions.retrievepPastHistoryTypes(req);
+      
+  console.log("inside apiHandlerRetrievePastHistoryTypes:  ", result);
+  if (result === false) {
+    var returnJsonObj = {
+      "msgtype" : "error",
+      "message": "There was an error is fetching Past History Types"
+    }
+    console.log("Exiting apiHandlerRetrievePastHistoryTypes========>");
+    return res.send(returnJsonObj);
+  }
+console.log("Exiting apiHandlerRetrievePastHistoryTypes========>");
+return res.send(JSON.parse(result));
+}
+
 async function apiHandlerRetrievePatientStatusMaster(req, res){
   console.log("Entering apiHandlerRetrievePatientStatusMaster========>");
   let result = {};
@@ -362,6 +379,7 @@ return res.send(JSON.parse(result));
   exports.apiHandlerRetrieveMinorPorcedureTypes = apiHandlerRetrieveMinorPorcedureTypes;
   exports.apiHandlerSearchMedicineByName = apiHandlerSearchMedicineByName;
   exports.apiHandlerRetrievePatientStatusMaster = apiHandlerRetrievePatientStatusMaster;
+  exports.apiHandlerRetrievePastHistoryTypes=apiHandlerRetrievePastHistoryTypes;
 
   exports.apiHandlerRetrieveComplaintMaster=apiHandlerRetrieveComplaintMaster;
   exports.apiHandlerRetrieveInvestigationMaster=apiHandlerRetrieveInvestigationMaster;  
