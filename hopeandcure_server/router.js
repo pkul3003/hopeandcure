@@ -142,6 +142,12 @@ app.get("/retrieve-minor-opd-procedure-types", async function(req, res) {
 app.get("/retrieve-minor-opd-procedure-master", async function(req, res) {
 	await apiGenericRetrieveController.apiHandlerRetrieveMinorPorcedureMaster(req, res);
 });
+
+// Past History Types
+app.get("/retrieve-past-history-types", async function(req, res) {
+	await apiGenericRetrieveController.apiHandlerRetrievePastHistoryTypes(req, res);
+});
+
 // Patient Status Master
 app.get("/retrieve-patient-status-master", async function(req, res) {
 	await apiGenericRetrieveController.apiHandlerRetrievePatientStatusMaster(req, res);
