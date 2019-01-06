@@ -362,6 +362,7 @@ return res.send(JSON.parse(result));
   exports.apiHandlerRetrieveMinorPorcedureTypes = apiHandlerRetrieveMinorPorcedureTypes;
   exports.apiHandlerSearchMedicineByName = apiHandlerSearchMedicineByName;
   exports.apiHandlerRetrievePatientStatusMaster = apiHandlerRetrievePatientStatusMaster;
+  exports.apiHandlerRetrieveInvestigationTypes = apiHandlerRetrieveInvestigationTypes;
 
   exports.apiHandlerRetrieveComplaintMaster=apiHandlerRetrieveComplaintMaster;
   exports.apiHandlerRetrieveInvestigationMaster=apiHandlerRetrieveInvestigationMaster;  

@@ -86,7 +86,7 @@ app.get("/retrieve-surgical-procedure-master", async function(req, res) {
 
 // investigation types (optical or systemic)
 app.get("/retrieve-investigation-types", async function(req, res) {
-	await apiGenericRetrieveController.apiHandlerRertrieveInvestigationTypes(req, res);
+	await apiGenericRetrieveController.apiHandlerRetrieveInvestigationTypes(req, res);
 });
 
 app.get("/retrieve-investigation-master", async function(req, res) {
