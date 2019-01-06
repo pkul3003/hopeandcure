@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2019-01-06T05:44:25.515Z",
+	"__export_date": "2019-01-06T07:39:50.861Z",
 	"__export_source": "insomnia.desktop.app:v6.3.2",
 	"resources": [
 		{
@@ -161,6 +161,29 @@
 			"_type": "request"
 		},
 		{
+			"_id": "req_1eaf869f66014dbebf5df1ff731edfa2",
+			"authentication": {},
+			"body": {},
+			"created": 1546756486901,
+			"description": "",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1546756486901,
+			"method": "GET",
+			"modified": 1546756535911,
+			"name": "past-history-types",
+			"parameters": [],
+			"parentId": "wrk_53a6d7ff232d4eddb433811092bee19a",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "http://localhost:8082/retrieve-past-history-types?past-history-type=ocular",
+			"_type": "request"
+		},
+		{
 			"_id": "req_251d7fa2661041e39dbe8c0944a2cb23",
 			"authentication": {},
 			"body": {
@@ -197,7 +220,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"intentName\" : \"create-appointment\",\n\t\"appointment\" : {\n\t\t\"UHID\" : \"1284\",\n\t\t\"first_name\" : \"Barak\",\n\t\t\"middle_name\" : \"p\",\n\t\t\"last_name\" : \"Obama\",\n\t\t\"DOB\" : \"2001-06-06\",\n\t\t\"gender\" : \"male\",\n\t\t\"consultant\" : \"Dr Prakash Rasal\",\n\t\t\"appointment_date\" : \"2019-04-04\",\n\t\t\"appointment_time\" : \"12:00\",\n\t\t\"contact_number\" : \"9567750288\",\n\t\t\"email_id\" : \"barak@gmail.com\",\n\t\t\"referred_by\" : null,\n\t\t\"patient_city\" : \"Pune\",\n\t\t\"patient_area\" : \"kothrud\",\n\t\t\"relative_name\" : \"parag\",\n\t\t\"relation_with_patient\" : \"brother\",\n\t\t\"relative_contact_no\" : \"9922962322\",\n\t\t\"RunningNotes\" : \"Patient needs wheel chair\"\n\t}\n\t\n}"
+				"text": "{\n\t\"intentName\" : \"create-appointment\",\n\t\"appointment\" : {\n\t\t\"UHID\" : \"1284\",\n\t\t\"first_name\" : \"Barak\",\n\t\t\"middle_name\" : \"p\",\n\t\t\"last_name\" : \"Obama\",\n\t\t\"DOB\" : \"2001-06-06\",\n\t\t\"gender\" : \"male\",\n\t\t\"consultant\" : \"Dr Prakash Rasal\",\n\t\t\"appointment_date\" : \"2019-01-06\",\n\t\t\"appointment_time\" : \"12:00\",\n\t\t\"contact_number\" : \"9567750288\",\n\t\t\"email_id\" : \"barak@gmail.com\",\n\t\t\"referred_by\" : null,\n\t\t\"patient_city\" : \"Pune\",\n\t\t\"patient_area\" : \"kothrud\",\n\t\t\"relative_name\" : \"parag\",\n\t\t\"relation_with_patient\" : \"brother\",\n\t\t\"relative_contact_no\" : \"9922962322\",\n\t\t\"RunningNotes\" : \"Patient needs wheel chair\"\n\t}\n\t\n}"
 			},
 			"created": 1526224464548,
 			"description": "",
@@ -211,7 +234,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1546415652641,
 			"method": "POST",
-			"modified": 1546751668468,
+			"modified": 1546757058551,
 			"name": "create-appointment",
 			"parameters": [],
 			"parentId": "fld_65e05818e0d940dca0442f1622cb3a08",
@@ -890,7 +913,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"intentName\" : \"add-optometry-results\",\n\t\"patient\" : {\n\t\t\"UHID\" : \"1277\",\n\t\t\"auto_refractometer_reading_right\" : \"afr123\",\n\t\t\"auto_refractometer_reading_left\" : \"afl123\",\n\t\t\"keratometry_reading_right\" : \"krr123\",\n\t\t\"keratometry_reading_left\" : \"krl123\",\n\t\t\"unaided_vision_right\" : \"15/20\",\n\t\t\"unaided_vision_left\" : \"13/20\",\n\t\t\"vision_with_pinhole\" : \"not sure\",\n\t\t\"retinoscopy\" : \"not sure\",\n\t\t\"acceptance\" : \"not sure\",\n\t\t\"intra_ocular_pressure\" : \"APPLANATION\",\n\t\t\"iop_record_timestamp\": \"2018-10-19 12:23:45\",\n\t\t\"SAC\" : \"CDMR\",\n\t\t\"dilatation\": \"TBD\",\n\t\t\"dilatation_time\" : \"15\",\n\t\t\"optical_investigation\": \"cornea\",\n\t\t\"procedures_done\" : \"left eye cataract\",\n\t\t\"blood_pressure\" : \"110/165\",\n\t\t\"special_precautions\" : \"dark glasses\",\n\t\t\"refer_to_consultant\" : \"Prakash.Rasal\",\n\t\t\"xylocaine_test\": \"POSITIVE\"\n\t\t\n\t}\n}"
+				"text": "{\n\t\"intentName\" : \"add-optometry-results\",\n\t\"patient\" : {\n\t\t\"UHID\" : \"1277\",\n\t\t\"auto_refractometer_reading_right\" : \"afr123\",\n\t\t\"auto_refractometer_reading_left\" : \"afl123\",\n\t\t\"keratometry_reading_right\" : \"krr123\",\n\t\t\"keratometry_reading_left\" : \"krl123\",\n\t\t\"unaided_vision_right\" : \"15/20\",\n\t\t\"unaided_vision_left\" : \"13/20\",\n\t\t\"vision_with_pinhole\" : \"not sure\",\n\t\t\"retinoscopy\" : \"not sure\",\n\t\t\"acceptance\" : \"not sure\",\n\t\t\"intra_ocular_pressure\" : \"APPLANATION\",\n\t\t\"iop_record_timestamp\": \"2019-01-06 12:23:45\",\n\t\t\"SAC\" : \"CDMR\",\n\t\t\"dilatation\": \"TBD\",\n\t\t\"dilatation_time\" : \"15:00\",\n\t\t\"optical_investigation\": \"cornea\",\n\t\t\"procedures_done\" : \"left eye cataract\",\n\t\t\"blood_pressure\" : \"110/165\",\n\t\t\"special_precautions\" : \"dark glasses\",\n\t\t\"refer_to_consultant\" : \"Prakash.Rasal\",\n\t\t\"xylocaine_test\": \"POSITIVE\",\n\t\t\"user\": \"prakash.rasal\"\n\t\t\n\t}\n}"
 			},
 			"created": 1527348474436,
 			"description": "",
@@ -904,7 +927,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1536432373502,
 			"method": "POST",
-			"modified": 1546671889546,
+			"modified": 1546759091274,
 			"name": "add-optometary-results",
 			"parameters": [],
 			"parentId": "fld_8ac80da4a41f46ceadc323a47bf35294",

@@ -103,6 +103,8 @@ async function addOptometryResults(req) {
   let current_glass_prescription_left = req.body.patient.current_glass_prescription_left;
   let user = req.body.patient.user;
 
+  let query1 = "SELECT UHID FROM optometry_results WHERE UHID = "+ UHID+ " AND DATE(RecordTouchDate) = CURRENT_DATE; ";
+
   let query = "INSERT INTO optometry_results (UHID, auto_refractometer_reading_right, auto_refractometer_reading_left, " +
   "keratometry_reading_right, keratometry_reading_left, unaided_vision_right, unaided_vision_left, " +
   "vision_with_pinhole, retinoscopy, acceptance, intra_ocular_pressure, SAC, iop_record_timestamp, " +
@@ -123,10 +125,29 @@ async function addOptometryResults(req) {
               "', '"+ drug_allergies+ "', '"+ current_glass_prescription_right+ 
               "', '"+ current_glass_prescription_left+ "', DEFAULT,'"+ user +"' );";
   console.log(query);
+  console.log(query1);
+
   try {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
-    await con.execute(query);
+    let [result,fields] = await con.execute(query1);
+    let UHIDJson = JSON.stringify(result);
+    if (UHIDJson === "[]") {
+      console.log("No records found: result: ", UHIDJson);
+      await con.execute(query);
+    } else {
+      console.log("records found: result: ", UHIDJson);
+      let result2 = await updateOptometryResults(req);
+      if (result2 === true) {
+        con.release();
+        console.log("Exiting addOptometryResults...");
+        return true;
+      } else { 
+        con.release();
+        console.log("Exiting addOptometryResults...");
+        return false;
+      }
+    }
     con.release();
     console.log("Exiting addOptometryResults...");
     return true;
@@ -382,14 +403,14 @@ async function updateOptometryResults(req) {
   let user = req.body.patient.user;
 
 
-  let query = "UPDATE  optometry_results set auto_refractometer_reading_right='" + auto_refractometer_reading_right + "', auto_refractometer_reading_left= '"+ auto_refractometer_reading_left + "', " +
-  ", keratometry_reading_right='"+ keratometry_reading_right +"', keratometry_reading_left='"+keratometry_reading_left+"', unaided_vision_right='" + unaided_vision_right +"', unaided_vision_left='"+ unaided_vision_left +"', " +
-  "vision_with_pinhole='"+ vision_with_pinhole +"', retinoscopy='"+ retinoscopy +"', acceptance='"+ acceptance +"', intra_ocular_pressure'"+ intra_ocular_pressure + "', SAC='"+ SAC +"', iop_record_timestamp'"+ iop_record_timestamp + "', " +
+  let query = "UPDATE  optometry_results set auto_refractometer_reading_right='" + auto_refractometer_reading_right + "', auto_refractometer_reading_left= '"+ auto_refractometer_reading_left +
+  "', keratometry_reading_right='"+ keratometry_reading_right +"', keratometry_reading_left='"+keratometry_reading_left+"', unaided_vision_right='" + unaided_vision_right +"', unaided_vision_left='"+ unaided_vision_left +"', " +
+  "vision_with_pinhole='"+ vision_with_pinhole +"', retinoscopy='"+ retinoscopy +"', acceptance='"+ acceptance +"', intra_ocular_pressure = '"+ intra_ocular_pressure + "', SAC='"+ SAC +"', iop_record_timestamp ='"+ iop_record_timestamp + "', " +
   "dilatation='"+ dilatation+ "', dilatation_time='"+dilatation_time + "', optical_investigation='"+optical_investigation+"', procedures_done='"+ procedures_done + "', blood_pressure='"+ blood_pressure+ "', special_precautions= '"+special_precautions +"', "+
-  "refer_to_consultant='"+ refer_to_consultant + "', xylocaine_test='"+ xylocaine_test+ "', current_complaints='"+current_complaints+ "', duration_current_complaints'"+duration_current_complaints +"', " + 
-  "past_ocular_illness='"+ past_ocular_illness+ "', treatment_past_ocular_illness='"+treatment_past_ocular_illness+ "', past_systemic_illness='" + past_systemic_illness+", treatment_past_systemic_illness='"+ treatment_past_systemic_illness+ "', "+
-  "surgical_history_ocular'"+ surgical_history_ocular+ "', surgical_history_other='"+ surgical_history_other+"', drug_allergies='"+ drug_allergies+ "', current_glass_prescription_right ='"+ current_glass_prescription_right+ "'," +
-  "current_glass_prescription_left='"+ current_glass_prescription_left+ "',  RecordTouchDate=DEFAULT, user = '" + user +"' Where UHID='"+ UHID +"' ;";
+  "refer_to_consultant='"+ refer_to_consultant + "', xylocaine_test='"+ xylocaine_test+ "', current_complaints='"+current_complaints+ "', duration_current_complaints='"+duration_current_complaints +"', " + 
+  "past_ocular_illness='"+ past_ocular_illness+ "', treatment_past_ocular_illness='"+treatment_past_ocular_illness+ "', past_systemic_illness='" + past_systemic_illness+"', treatment_past_systemic_illness='"+ treatment_past_systemic_illness+ "', "+
+  "surgical_history_ocular='"+ surgical_history_ocular+ "', surgical_history_other='"+ surgical_history_other+"', drug_allergies='"+ drug_allergies+ "', current_glass_prescription_right ='"+ current_glass_prescription_right+ "'," +
+  "current_glass_prescription_left='"+ current_glass_prescription_left+ "',  RecordTouchDate=DEFAULT, user = '" + user +"' Where UHID="+ UHID +";";
 
   console.log(query);
   try {
