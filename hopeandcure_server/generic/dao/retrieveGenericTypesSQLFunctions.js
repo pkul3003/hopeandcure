@@ -107,9 +107,9 @@ async function retrieveInvestigationTypes(req) {
 
   let query = "";
   if (common_functions.compareStrings(investigation_type, "all", true) === true) {
-      query = "SELECT investigation_sub_type FROM investigation_master ORDER BY investigation_sub_type;";
+      query = "SELECT investigation_sub_type FROM investigations_master ORDER BY investigation_sub_type;";
   } else {
-    query = "SELECT investigation_sub_type FROM investigation_master WHERE investigation_type ='" +investigation_type+ 
+    query = "SELECT investigation_sub_type FROM investigations_master WHERE investigation_type ='" +investigation_type+ 
             "' ORDER BY investigation_sub_type;";
   }
 

@@ -43,7 +43,7 @@ app.get("/days-of-week", function(req, res) {
 	 res.send(DaysOfWeek);
 });
 
-// retrieve-appointments
+// retrieve-all-appointments
 app.get("/retrieve-all-appointments", async function(req, res) {
 	await apiAppointmentsController.apiHandlerForAppointments(req, res);
 });

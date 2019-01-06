@@ -34,8 +34,8 @@ a.Area, a.City, a.District, a.State, a.PINCode, a.EmergencyContactNumber,
 concat(a.AddressLine1, ' ', a.AddressLine2, ' ', 
 a.Landmark, ' ', a.Area, ' ', a.City, ' ', a.District, ' ', a.State, ' ', a.PINCode, ' ', 
 a.EmergencyContactNumber) AS concat_address, ap.DateOfAppointment from 
-(patients p join patient_address a join appointments_view ap) 
-where (p.UHID = a.UHID and p.UHID = ap.UHID));
+patients p inner join patient_address a on (p.UHID = a.UHID)
+left outer join appointments_view ap on (p.UHID = ap.UHID));
 
 CREATE VIEW prescription_diagnosis_view AS 
 (select m.medicine_name AS medicine_name,m.recommended_dosage AS recommended_dosage,
@@ -44,5 +44,6 @@ dmr.diagnosis_id AS diagnosis_id,dmr.diagnosis_type AS diagnosis_type
 from ((medicine_master m join medical_prescriptions_master mpr) join diagnosis_master dmr) 
 where ((mpr.medicine_id = m.medicine_id) and (mpr.diagnosis_id = dmr.diagnosis_id)));
 
-select p.UHID, p.FirstName, p.MiddleName, p.LastName, ap.DateOfAppointment from Patients p
-INNER JOIN  appointments_view ap on p.UHID = ap.UHID;
+select p.UHID, p.FirstName, p.MiddleName, p.LastName, a.AddressLine1, ap.DateOfAppointment from Patients p
+INNER JOIN patient_address a on (p.UHID = a.UHID)
+LEFT OUTER JOIN appointments_view ap on p.UHID = ap.UHID;
