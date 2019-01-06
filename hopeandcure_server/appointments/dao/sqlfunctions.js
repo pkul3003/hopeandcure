@@ -19,7 +19,7 @@ async function getConnectionPool() {
 async function retrieveAppointments(req) {
   console.log("Entering retrieveAppointments...");
 
-  let query = "SELECT * FROM appointments_view WHERE DateOfAppointment >= CURDATE();";
+  let query = "SELECT * FROM appointments_view WHERE DateOfAppointment >= CURDATE() ORDER BY DateOfAppointment;";
   console.log(query);
   try {
     let pool = await getConnectionPool();
