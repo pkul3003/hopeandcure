@@ -380,6 +380,7 @@ return res.send(JSON.parse(result));
   exports.apiHandlerSearchMedicineByName = apiHandlerSearchMedicineByName;
   exports.apiHandlerRetrievePatientStatusMaster = apiHandlerRetrievePatientStatusMaster;
   exports.apiHandlerRetrievePastHistoryTypes=apiHandlerRetrievePastHistoryTypes;
+  exports.apiHandlerRetrieveInvestigationTypes = apiHandlerRetrieveInvestigationTypes;
 
   exports.apiHandlerRetrieveComplaintMaster=apiHandlerRetrieveComplaintMaster;
   exports.apiHandlerRetrieveInvestigationMaster=apiHandlerRetrieveInvestigationMaster;  
