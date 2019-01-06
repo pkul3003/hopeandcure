@@ -456,6 +456,353 @@ async function searchMedicineByName(req) {
   }
 }
 
+// To retrive entire data from Complaint master
+async function retrieveComplaintMaster(req) {
+  
+  console.log("Entering retrieveComplaintMaster...");
+  
+  let query = "";
+  
+  query = "SELECT * FROM complaint_master ORDER BY complaint_sub_type; ";
+  
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let complaintsJson = JSON.stringify(result);
+    console.log("stringified json object is: ", complaintsJson);
+    if(complaintsJson === "[]") {
+      console.log(" it seems master data not available for complaints .........");
+      var NoComplaintTypesFound = {
+        "msgtype" : "info",
+        "message": "no complaint master data found"
+      }
+      con.release();
+      console.log("Exiting retrieveComplaintMaster...");
+      return JSON.stringify(NoComplaintTypesFound);
+    }
+    con.release();
+    console.log("Exiting retrieveComplaintTypes...");
+    return complaintsJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrieveComplaintMaster");
+    console.log("Error code is: ", err.code);
+
+    console.log("Exiting retrieveComplaintMaster...");
+    return false;
+  }
+}
+
+// To retrive entire data from Procedure master
+async function retrieveSurgicalProcedureMaster(req) {
+  
+  console.log("Entering retrieveSurgicalProcedureMaster...");
+  
+  let query = "";
+  
+  query = "SELECT * FROM procedures_master ORDER BY procedure_sub_type; ";
+  
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let masterJson = JSON.stringify(result);
+    console.log("stringified json object is: ", masterJson);
+    if(masterJson === "[]") {
+      console.log(" it seems master data not available for Procedure Master .........");
+      var NoMasterDataFound = {
+        "msgtype" : "info",
+        "message": "no procedure master data found"
+      }
+      con.release();
+      console.log("Exiting retrieveSurgicalProcedureMaster...");
+      return JSON.stringify(NoMasterDataFound);
+    }
+    con.release();
+    console.log("Exiting retrieveSurgicalProcedureMaster...");
+    return masterJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrieveSurgicalProcedureMaster");
+    console.log("Error code is: ", err.code);
+
+    console.log("Exiting retrieveSurgicalProcedureMaster...");
+    return false;
+  }
+}
+
+// To retrive entire data from Investigation master
+async function retrieveInvestigationMaster(req) {
+  
+  console.log("Entering retrieveInvestigationMaster...");
+  
+  let query = "";
+  
+  query = "SELECT * FROM investigation_master ORDER BY investigation_sub_type; ";
+  
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let masterJson = JSON.stringify(result);
+    console.log("stringified json object is: ", masterJson);
+    if(masterJson === "[]") {
+      console.log(" it seems master data not available for Investigation Master .........");
+      var NoMasterDataFound = {
+        "msgtype" : "info",
+        "message": "no investigation master data found"
+      }
+      con.release();
+      console.log("Exiting retrieveInvestigationMaster...");
+      return JSON.stringify(NoMasterDataFound);
+    }
+    con.release();
+    console.log("Exiting retrieveInvestigationMaster...");
+    return masterJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrieveInvestigationMaster");
+    console.log("Error code is: ", err.code);
+
+    console.log("Exiting retrieveInvestigationMaster...");
+    return false;
+  }
+}
+
+// To retrive entire data from Special Precaution master
+async function retrieveSpecialPrecautionMaster(req) {
+  
+  console.log("Entering retrieveSpecialPrecautionMaster...");
+  
+  let query = "";
+  
+  query = "SELECT * FROM special_precautions_master ORDER BY precaution_sub_type;";
+      
+  
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let masterJson = JSON.stringify(result);
+    console.log("stringified json object is: ", masterJson);
+    if(masterJson === "[]") {
+      console.log(" it seems master data not available for Special Precaution Master .........");
+      var NoMasterDataFound = {
+        "msgtype" : "info",
+        "message": "no Special Precaution master data found"
+      }
+      con.release();
+      console.log("Exiting retrieveSpecialPrecautionMaster...");
+      return JSON.stringify(NoMasterDataFound);
+    }
+    con.release();
+    console.log("Exiting retrieveSpecialPrecautionMaster...");
+    return masterJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrieveSpecialPrecautionMaster");
+    console.log("Error code is: ", err.code);
+
+    console.log("Exiting retrieveSpecialPrecautionMaster...");
+    return false;
+  }
+}
+
+// To retrive entire data from Diagnosis master
+async function retrieveDiagnosisMaster(req) {
+  
+  console.log("Entering retrieveDiagnosisMaster...");
+  
+  let query = "";
+  
+  query = "SELECT * FROM diagnosis_master ORDER BY diagnosis_sub_type;";
+  
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let masterJson = JSON.stringify(result);
+    console.log("stringified json object is: ", masterJson);
+    if(masterJson === "[]") {
+      console.log(" it seems master data not available for Diagnosis Master .........");
+      var NoMasterDataFound = {
+        "msgtype" : "info",
+        "message": "no Diagnosis master data found"
+      }
+      con.release();
+      console.log("Exiting retrieveDiagnosisMaster...");
+      return JSON.stringify(NoMasterDataFound);
+    }
+    con.release();
+    console.log("Exiting retrieveDiagnosisMaster...");
+    return masterJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrieveDiagnosisMaster");
+    console.log("Error code is: ", err.code);
+
+    console.log("Exiting retrieveDiagnosisMaster...");
+    return false;
+  }
+}
+
+// To retrive entire data from Instruction master
+async function retrieveInstructionMaster(req) {
+  
+  console.log("Entering retrieveInstructionMaster...");
+  
+  let query = "";
+  
+  query = "SELECT * FROM instructions_master ORDER BY instruction_sub_type; ";
+  
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let masterJson = JSON.stringify(result);
+    console.log("stringified json object is: ", masterJson);
+    if(masterJson === "[]") {
+      console.log(" it seems master data not available for Instruction Master .........");
+      var NoMasterDataFound = {
+        "msgtype" : "info",
+        "message": "no Instruction master data found"
+      }
+      con.release();
+      console.log("Exiting retrieveInstructionMaster...");
+      return JSON.stringify(NoMasterDataFound);
+    }
+    con.release();
+    console.log("Exiting retrieveInstructionMaster...");
+    return masterJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrieveInstructionMaster");
+    console.log("Error code is: ", err.code);
+
+    console.log("Exiting retrieveInstructionMaster...");
+    return false;
+  }
+}
+
+// To retrive entire data from Medical Prescription Master master
+async function retrieveMedicalPrescriptionMaster(req) {
+  
+  console.log("Entering retrieveMedicalPrescriptionMaster...");
+  
+  let query = "select * from prescription_diagnosis_view order by diagnosis_id ;";
+  
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let masterJson = JSON.stringify(result);
+    console.log("stringified json object is: ", masterJson);
+    if(masterJson === "[]") {
+      console.log(" it seems master data not available for Medical Prescription Master .........");
+      var NoMasterDataFound = {
+        "msgtype" : "info",
+        "message": "no Medical Prescription master data found"
+      }
+      con.release();
+      console.log("Exiting retrieveMedicalPrescriptionMaster...");
+      return JSON.stringify(NoMasterDataFound);
+    }
+    con.release();
+    console.log("Exiting retrieveMedicalPrescriptionMaster...");
+    return masterJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrieveMedicalPrescriptionMaster");
+    console.log("Error code is: ", err.code);
+
+    console.log("Exiting retrieveMedicalPrescriptionMaster...");
+    return false;
+  }
+}
+
+// To retrive entire data from Medical Advice Master master
+async function retrieveMedicalAdviceMaster(req) {
+  
+  console.log("Entering retrieveMedicalAdviceMaster...");
+  
+  let query = "";
+  query = "SELECT * FROM advice_master ORDER BY advice_sub_type;";
+  
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let masterJson = JSON.stringify(result);
+    console.log("stringified json object is: ", masterJson);
+    if(masterJson === "[]") {
+      console.log(" it seems master data not available for Medical Advice Master .........");
+      var NoMasterDataFound = {
+        "msgtype" : "info",
+        "message": "no Medical Advice master data found"
+      }
+      con.release();
+      console.log("Exiting retrieveMedicalAdviceMaster...");
+      return JSON.stringify(NoMasterDataFound);
+    }
+    con.release();
+    console.log("Exiting retrieveMedicalAdviceMaster...");
+    return masterJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrieveMedicalAdviceMaster");
+    console.log("Error code is: ", err.code);
+
+    console.log("Exiting retrieveMedicalAdviceMaster...");
+    return false;
+  }
+}
+
+// To retrive entire data from Minor OPD procedure Master master
+async function retrieveMinorOPDProcedureMaster(req) {
+  
+  console.log("Entering retrieveMinorOPDProcedureMaster...");
+  
+  let query = "";
+  query = "SELECT * FROM minor_opd_procedures_master ORDER BY min_procedure_sub_type";
+  
+  console.log(query);
+  try {
+    let pool = await getConnectionPool();
+    let con = await pool.getConnection();
+    let [result,fields] = await con.execute(query);
+    let masterJson = JSON.stringify(result);
+    console.log("stringified json object is: ", masterJson);
+    if(masterJson === "[]") {
+      console.log(" it seems master data not available for Minor OPD procedure Master .........");
+      var NoMasterDataFound = {
+        "msgtype" : "info",
+        "message": "no Minor OPD procedure master data found"
+      }
+      con.release();
+      console.log("Exiting retrieveMinorOPDProcedureMaster...");
+      return JSON.stringify(NoMasterDataFound);
+    }
+    con.release();
+    console.log("Exiting retrieveMinorOPDProcedureMaster...");
+    return masterJson;
+  }
+  catch(err) {
+    console.log("Error ====== retrieveMinorOPDProcedureMaster");
+    console.log("Error code is: ", err.code);
+
+    console.log("Exiting retrieveMinorOPDProcedureMaster...");
+    return false;
+  }
+}
 
 // export all functions to be used by NodeJS when imported in other functions
 exports.retrieveComplaintTypes = retrieveComplaintTypes;
@@ -469,3 +816,13 @@ exports.retrieveMedicalAdviceTypes = retrieveMedicalAdviceTypes;
 exports.retrieveMinorOPDProcedureTypes = retrieveMinorOPDProcedureTypes;
 exports.searchMedicineByName = searchMedicineByName;
 exports.retrievePatientStatusMaster=retrievePatientStatusMaster;
+
+exports.retrieveComplaintMaster=retrieveComplaintMaster;
+exports.retrieveSurgicalProcedureMaster=retrieveSurgicalProcedureMaster;
+exports.retrieveInvestigationMaster=retrieveInvestigationMaster;
+exports.retrieveSpecialPrecautionMaster=retrieveSpecialPrecautionMaster;
+exports.retrieveDiagnosisMaster=retrieveDiagnosisMaster;
+exports.retrieveInstructionMaster=retrieveInstructionMaster;
+exports.retrieveMedicalPrescriptionMaster=retrieveMedicalPrescriptionMaster;
+exports.retrieveMedicalAdviceMaster=retrieveMedicalAdviceMaster;
+exports.retrieveMinorOPDProcedureMaster=retrieveMinorOPDProcedureMaster;
