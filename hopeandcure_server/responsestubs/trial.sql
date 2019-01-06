@@ -50,3 +50,16 @@ alter table investigations_master add column investigation_sub_type varchar(100)
 insert into investigations_master values (DEFAULT, 'ocular', 'test investigation1', 'test 1 desc', DEFAULT);
 insert into investigations_master values (DEFAULT, 'ocular', 'test investigation2', 'test 2 desc', DEFAULT);
 insert into investigations_master values (DEFAULT, 'ocular', 'test investigation3', 'test 3 desc', DEFAULT);
+
+
+SELECT * FROM appointments_view WHERE DateOfAppointment >= CURDATE() ORDER BY DateOfAppointment;
+
+SELECT * FROM appointments_view WHERE DateOfAppointment >= CURDATE() 
+and PatientProgressStatus = 'Registered' ORDER BY DateOfAppointment;
+
+SELECT * FROM appointments_view WHERE DateOfAppointment >= CURDATE() 
+and PatientProgressStatus = 'Arrived' or PatientProgressStatus = 'With_Optometrist' ORDER BY DateOfAppointment;
+
+SELECT * FROM appointments_view WHERE (DateOfAppointment >= CURDATE())
+and (PatientProgressStatus = 'Arrived' or PatientProgressStatus = 'With_Optometrist' 
+or PatientProgressStatus = 'With_Consultant') ORDER BY DateOfAppointment;

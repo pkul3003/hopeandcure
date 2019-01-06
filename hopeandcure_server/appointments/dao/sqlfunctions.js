@@ -15,11 +15,36 @@ async function getConnectionPool() {
   }
 }
 
-// This function retrieves all current and future appointments
+// This function retrieves all current and future appointments based on view-type
 async function retrieveAppointments(req) {
   console.log("Entering retrieveAppointments...");
+  let view_type = req.query['view-type'];
+  let query = "";
 
-  let query = "SELECT * FROM appointments_view WHERE DateOfAppointment >= CURDATE() ORDER BY DateOfAppointment;";
+  switch(view_type) {
+    case "reception":
+      query = "SELECT * FROM appointments_view WHERE (DateOfAppointment >= CURDATE()) ORDER BY DateOfAppointment;";
+      break;
+    case "optometry":
+      query = "SELECT * FROM appointments_view WHERE (DateOfAppointment >= CURDATE())" + 
+              "and (PatientProgressStatus = 'Arrived' or PatientProgressStatus = 'With_Optometrist')"+
+              " ORDER BY DateOfAppointment; ";
+      break;
+    case "consultant":
+      query = "SELECT * FROM appointments_view WHERE (DateOfAppointment >= CURDATE())"+
+              "and (PatientProgressStatus = 'Arrived' or PatientProgressStatus = 'With_Optometrist' "+
+              "or PatientProgressStatus = 'With_Consultant') ORDER BY DateOfAppointment; " ;
+      break;
+    default:
+      var responseJson = {
+        "msgType" : "warning",
+        "message" : "invalid view-type specified"
+      }
+      console.log("Exiting retrieveAppointments...");
+      return JSON.stringify(responseJson);
+  }
+
+
   console.log(query);
   try {
     let pool = await getConnectionPool();
