@@ -462,10 +462,10 @@ async function retrievepPastHistoryTypes(req){
   let query = "";
 
   if (common_functions.compareStrings(past_history_type, "all", true) === true) {
-      query = "SELECT past_history_subtype  FROM past_history_master ORDER BY instruction_sub_type; ";
+      query = "SELECT past_history_sub_type  FROM past_history_master ORDER BY past_history_sub_type; ";
   } else {
-    query = "SELECT past_history_subtype FROM past_history_master WHERE past_history_type  = '" +past_history_type+
-            "' ORDER BY past_history_subtype; ";
+    query = "SELECT past_history_sub_type FROM past_history_master WHERE past_history_type  = '" +past_history_type+
+            "' ORDER BY past_history_sub_type; ";
   }
   console.log(query);
   try {
