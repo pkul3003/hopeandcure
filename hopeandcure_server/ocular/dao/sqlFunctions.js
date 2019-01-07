@@ -76,10 +76,15 @@ async function addOptometryResults(req) {
   let keratometry_reading_left = req.body.patient.keratometry_reading_left;
   let unaided_vision_right = req.body.patient.unaided_vision_right;
   let unaided_vision_left = req.body.patient.unaided_vision_left;
-  let vision_with_pinhole = req.body.patient.vision_with_pinhole;
-  let retinoscopy = req.body.patient.retinoscopy;
-  let acceptance = req.body.patient.acceptance;
-  let intra_ocular_pressure = req.body.patient.intra_ocular_pressure;
+  let vision_with_pinhole_right = req.body.patient.vision_with_pinhole_right;
+  let vision_with_pinhole_left = req.body.patient.vision_with_pinhole_left;
+  let retinoscopy_right = req.body.patient.retinoscopy_right;
+  let retinoscopy_left = req.body.patient.retinoscopy_left;
+  let acceptance_right = req.body.patient.acceptance_right;
+  let acceptance_left = req.body.patient.acceptance_left;
+  let iop_measurement_technique = req.body.patient.iop_measurement_technique;
+  let intra_ocular_pressure_right = req.body.patient.intra_ocular_pressure_right;
+  let intra_ocular_pressure_left = req.body.patient.intra_ocular_pressure_left;
   let iop_record_timestamp = req.body.patient.iop_record_timestamp;
   let SAC = req.body.patient.SAC;
   let dilatation = req.body.patient.dilatation;
@@ -99,6 +104,8 @@ async function addOptometryResults(req) {
   let surgical_history_ocular = req.body.patient.surgical_history_ocular;
   let surgical_history_other = req.body.patient.surgical_history_other;
   let drug_allergies = req.body.patient.drug_allergies;
+  let using_specs = req.body.patient.using_specs;
+  //let using_contacts = req.body.patient.using_contacts;
   let current_glass_prescription_right = req.body.patient.current_glass_prescription_right;
   let current_glass_prescription_left = req.body.patient.current_glass_prescription_left;
   let user = req.body.patient.user;
@@ -107,22 +114,25 @@ async function addOptometryResults(req) {
 
   let query = "INSERT INTO optometry_results (UHID, auto_refractometer_reading_right, auto_refractometer_reading_left, " +
   "keratometry_reading_right, keratometry_reading_left, unaided_vision_right, unaided_vision_left, " +
-  "vision_with_pinhole, retinoscopy, acceptance, intra_ocular_pressure, SAC, iop_record_timestamp, " +
+  "vision_with_pinhole_right, vision_with_pinhole_left, retinoscopy_right, retinoscopy_left, "+
+  "acceptance_right, acceptance_left, iop_measurement_technique,  intra_ocular_pressure_right, "+ 
+  "intra_ocular_pressure_left, SAC, iop_record_timestamp, " +
   "dilatation, dilatation_time, optical_investigation, procedures_done, blood_pressure, special_precautions, "+
   "refer_to_consultant, xylocaine_test, current_complaints, duration_current_complaints, " + 
   "past_ocular_illness, treatment_past_ocular_illness, past_systemic_illness, treatment_past_systemic_illness, "+
-  "surgical_history_ocular, surgical_history_other, drug_allergies, current_glass_prescription_right," +
-  "current_glass_prescription_left,  RecordTouchDate,user) "+
+  "surgical_history_ocular, surgical_history_other, drug_allergies, using_specs, current_glass_prescription_right," +
+  "current_glass_prescription_left,  RecordTouchDate, user) "+
   "VALUES ('"+ UHID +"','" + auto_refractometer_reading_right + "','"+
               auto_refractometer_reading_left + "','"+ keratometry_reading_right +"', '"+ keratometry_reading_left +
-              "','" + unaided_vision_right +"', '"+ unaided_vision_left +"', '"+ vision_with_pinhole +
-              "', '"+ retinoscopy +"', '"+ acceptance +"', '"+ intra_ocular_pressure + "', '"+ SAC +
-              "', '"+ iop_record_timestamp + "', '"+ dilatation+ "', '"+dilatation_time + "', '"+optical_investigation + 
+              "','" + unaided_vision_right +"', '"+ unaided_vision_left +"', '"+ vision_with_pinhole_right +
+              "', '"+ vision_with_pinhole_left +"','" +retinoscopy_right +"', '"+retinoscopy_left+ "','"+ acceptance_right +
+              "', '"+ acceptance_left+ "', '"+iop_measurement_technique + "', '"+intra_ocular_pressure_right+ 
+              "', '"+ intra_ocular_pressure_left + "', '"+ SAC + "', '"+ iop_record_timestamp + "', '"+ dilatation+ "', '"+dilatation_time + "', '"+optical_investigation + 
               "', '"+ procedures_done + "', '"+ blood_pressure+ "', '"+special_precautions +
               "', '"+ refer_to_consultant + "', '"+ xylocaine_test+ "', '"+current_complaints+ "', '"+duration_current_complaints+
               "', '"+ past_ocular_illness+ "', '"+treatment_past_ocular_illness+ "', '" + past_systemic_illness +
               "', '"+ treatment_past_systemic_illness+ "', '"+ surgical_history_ocular+ "', '"+ surgical_history_other+
-              "', '"+ drug_allergies+ "', '"+ current_glass_prescription_right+ 
+              "', '"+ drug_allergies+ "', '"+using_specs+ "', '"+ current_glass_prescription_right+ 
               "', '"+ current_glass_prescription_left+ "', DEFAULT,'"+ user +"' );";
   console.log(query);
   console.log(query1);
@@ -375,10 +385,15 @@ async function updateOptometryResults(req) {
   let keratometry_reading_left = req.body.patient.keratometry_reading_left;
   let unaided_vision_right = req.body.patient.unaided_vision_right;
   let unaided_vision_left = req.body.patient.unaided_vision_left;
-  let vision_with_pinhole = req.body.patient.vision_with_pinhole;
-  let retinoscopy = req.body.patient.retinoscopy;
-  let acceptance = req.body.patient.acceptance;
-  let intra_ocular_pressure = req.body.patient.intra_ocular_pressure;
+  let vision_with_pinhole_right = req.body.patient.vision_with_pinhole_right;
+  let vision_with_pinhole_left = req.body.patient.vision_with_pinhole_left;
+  let retinoscopy_right = req.body.patient.retinoscopy_right;
+  let retinoscopy_left = req.body.patient.retinoscopy_left;
+  let acceptance_right = req.body.patient.acceptance_right;
+  let acceptance_left = req.body.patient.acceptance_left;
+  let iop_measurement_technique = req.body.patient.iop_measurement_technique;
+  let intra_ocular_pressure_right = req.body.patient.intra_ocular_pressure_right;
+  let intra_ocular_pressure_left = req.body.patient.intra_ocular_pressure_left;
   let iop_record_timestamp = req.body.patient.iop_record_timestamp;
   let SAC = req.body.patient.SAC;
   let dilatation = req.body.patient.dilatation;
@@ -398,19 +413,30 @@ async function updateOptometryResults(req) {
   let surgical_history_ocular = req.body.patient.surgical_history_ocular;
   let surgical_history_other = req.body.patient.surgical_history_other;
   let drug_allergies = req.body.patient.drug_allergies;
+  let using_specs = req.body.patient.using_specs;
+  //let using_contacts = req.body.patient.using_contacts;
   let current_glass_prescription_right = req.body.patient.current_glass_prescription_right;
   let current_glass_prescription_left = req.body.patient.current_glass_prescription_left;
   let user = req.body.patient.user;
 
 
-  let query = "UPDATE  optometry_results set auto_refractometer_reading_right='" + auto_refractometer_reading_right + "', auto_refractometer_reading_left= '"+ auto_refractometer_reading_left +
-  "', keratometry_reading_right='"+ keratometry_reading_right +"', keratometry_reading_left='"+keratometry_reading_left+"', unaided_vision_right='" + unaided_vision_right +"', unaided_vision_left='"+ unaided_vision_left +"', " +
-  "vision_with_pinhole='"+ vision_with_pinhole +"', retinoscopy='"+ retinoscopy +"', acceptance='"+ acceptance +"', intra_ocular_pressure = '"+ intra_ocular_pressure + "', SAC='"+ SAC +"', iop_record_timestamp ='"+ iop_record_timestamp + "', " +
-  "dilatation='"+ dilatation+ "', dilatation_time='"+dilatation_time + "', optical_investigation='"+optical_investigation+"', procedures_done='"+ procedures_done + "', blood_pressure='"+ blood_pressure+ "', special_precautions= '"+special_precautions +"', "+
-  "refer_to_consultant='"+ refer_to_consultant + "', xylocaine_test='"+ xylocaine_test+ "', current_complaints='"+current_complaints+ "', duration_current_complaints='"+duration_current_complaints +"', " + 
-  "past_ocular_illness='"+ past_ocular_illness+ "', treatment_past_ocular_illness='"+treatment_past_ocular_illness+ "', past_systemic_illness='" + past_systemic_illness+"', treatment_past_systemic_illness='"+ treatment_past_systemic_illness+ "', "+
-  "surgical_history_ocular='"+ surgical_history_ocular+ "', surgical_history_other='"+ surgical_history_other+"', drug_allergies='"+ drug_allergies+ "', current_glass_prescription_right ='"+ current_glass_prescription_right+ "'," +
-  "current_glass_prescription_left='"+ current_glass_prescription_left+ "',  RecordTouchDate=DEFAULT, user = '" + user +"' Where UHID="+ UHID +";";
+  let query = "UPDATE  optometry_results set auto_refractometer_reading_right='" + auto_refractometer_reading_right + 
+  "', auto_refractometer_reading_left= '"+ auto_refractometer_reading_left + "', keratometry_reading_right='"+ keratometry_reading_right +
+  "', keratometry_reading_left='"+keratometry_reading_left+"', unaided_vision_right='" + unaided_vision_right +
+  "', unaided_vision_left='"+ unaided_vision_left +"', vision_with_pinhole_right='"+ vision_with_pinhole_right +
+  "', vision_with_pinhole_left='"+ vision_with_pinhole_left + "', retinoscopy_right='"+ retinoscopy_right +
+  "', retinoscopy_left='"+ retinoscopy_left +"', acceptance_right='"+ acceptance_right +"', acceptance_left='"+ acceptance_left +
+  "', iop_measurement_technique = '"+ iop_measurement_technique + "', intra_ocular_pressure_right= '"+intra_ocular_pressure_right+
+  "', intra_ocular_pressure_left='"+intra_ocular_pressure_left+"',SAC='"+ SAC +"', iop_record_timestamp ='"+ iop_record_timestamp +
+  "', dilatation='"+ dilatation+ "', dilatation_time='"+dilatation_time + "', optical_investigation='"+optical_investigation +
+  "', procedures_done='"+ procedures_done + "', blood_pressure='"+ blood_pressure+ "', special_precautions= '"+special_precautions +
+  "', refer_to_consultant='"+ refer_to_consultant + "', xylocaine_test='"+ xylocaine_test+ "', current_complaints='"+current_complaints+ 
+  "', duration_current_complaints='"+duration_current_complaints +"', past_ocular_illness='"+ past_ocular_illness+ 
+  "', treatment_past_ocular_illness='"+treatment_past_ocular_illness+ "', past_systemic_illness='" + past_systemic_illness+
+  "', treatment_past_systemic_illness='"+ treatment_past_systemic_illness+ "', surgical_history_ocular='"+ surgical_history_ocular+ 
+  "', surgical_history_other='"+ surgical_history_other+"', drug_allergies='"+ drug_allergies+ "', using_specs='"+using_specs+
+  "', current_glass_prescription_right ='"+ current_glass_prescription_right+ "', current_glass_prescription_left='"+ current_glass_prescription_left+ 
+  "',  RecordTouchDate=DEFAULT, user = '" + user +"' Where UHID="+ UHID +";";
 
   console.log(query);
   try {
