@@ -245,6 +245,15 @@ async function addConsultantResults(req) {
   let Indirect_OpthalmLeft   = req.body.patient.Indirect_OpthalmLeft  ;
   let NinetyD_SeventyeightDRight    = req.body.patient.NinetyD_SeventyeightDRight  ;
   let NinetyD_SeventyeightDLeft   = req.body.patient.NinetyD_SeventyeightDLeft  ;
+  let Optical_Investigation = req.body.patient.Optical_Investigation;
+  let Lab_Investigation = req.body.patient.Lab_Investigation;
+  let Diagnosis = req.body.patient.Diagnosis;
+  let Treatment= req.body.patient.Treatment;
+  let Additional_Treatment= req.body.patient.Additional_Treatment;
+  let Advice = req.body.patient.Advice;
+  let Minor_Opd_Procedure = req.body.ptient.Minor_Opd_Procedure;
+  let Instructions = req.body.patient.Instructions;
+
   let user = req.body.patient.user;
 
   let query = "INSERT INTO ophthalmologist_examination_record VALUES ('"+ UHID +"', '" + VisionRight + "','"+
@@ -254,7 +263,8 @@ async function addConsultantResults(req) {
                Intraocular_PressureRight +"','"+ Intraocular_PressureLeft + "', '"+ GonioscopyRight +"', '"+ GonioscopyLeft + "', '"+SlitLamp_ExamRight +"', '" +
                SlitLamp_ExamLeft + "','" +ConjuctivaRight + "', '" +ConjuctivaLeft +"', '"+CorneaRight +"','"+ CorneaLeft+"','"+Anterior_ChamberRight+"','"+
                Anterior_ChamberLeft +"','"+Lenticular_statusRight +"','"+Lenticular_statusLeft +"','"+GlowRight +"','"+ GlowLeft +"','"+ Direct_OpthalmRight +"','" +
-               Direct_OpthalmLeft+"', '"+Inirect_OpthalmRight +"','"+Indirect_OpthalmLeft +"', '"+NinetyD_SeventyeightDRight +"', '"+ NinetyD_SeventyeightDLeft +"', DEFAULT,'"+user+"');";
+               Direct_OpthalmLeft+"', '"+Inirect_OpthalmRight +"','"+Indirect_OpthalmLeft +"', '"+NinetyD_SeventyeightDRight +"', '"+ NinetyD_SeventyeightDLeft +"', DEFAULT,'" +
+               user+"', '"+ Optical_Investigation +"','"+ Lab_Investigation +"','"+ Diagnosis +"','"+Treatment+"','"+ Additional_Treatment +"','"+ Advice +"','"+ Minor_Opd_Procedure +"','"+ Instructions +"' );";
 
   console.log(query);
   try {
@@ -502,6 +512,15 @@ async function updateConsultantResults(req) {
   let Indirect_OpthalmLeft   = req.body.patient.Indirect_OpthalmLeft  ;
   let NinetyD_SeventyeightDRight    = req.body.patient.NinetyD_SeventyeightDRight  ;
   let NinetyD_SeventyeightDLeft   = req.body.patient.NinetyD_SeventyeightDLeft  ;
+  let Optical_Investigation = req.body.patient.Optical_Investigation;
+  let Lab_Investigation = req.body.patient.Lab_Investigation;
+  let Diagnosis = req.body.patient.Diagnosis;
+  let Treatment= req.body.patient.Treatment;
+  let Additional_Treatment= req.body.patient.Additional_Treatment;
+  let Advice = req.body.patient.Advice;
+  let Minor_Opd_Procedure = req.body.ptient.Minor_Opd_Procedure;
+  let Instructions = req.body.patient.Instructions;
+
   let user = req.body.patient.user;
    
   let query = "Update ophthalmologist_examination_record set VisionRight = '" + VisionRight + "',VisionLeft = '"+
@@ -511,7 +530,9 @@ async function updateConsultantResults(req) {
               Intraocular_PressureRight +"', Intraocular_PressureLeft = '"+ Intraocular_PressureLeft + "',GonioscopyRight = '"+ GonioscopyRight +"', GonioscopyLeft = '"+ GonioscopyLeft + "', SlitLamp_ExamRight= '"+SlitLamp_ExamRight +"', SlitLamp_ExamLeft='" +
               SlitLamp_ExamLeft + "',ConjuctivaRight='" +ConjuctivaRight + "', ConjuctivaLeft='" +ConjuctivaLeft +"',CorneaRight= '"+CorneaRight +"', CorneaLeft='"+ CorneaLeft+"',Anterior_ChamberRight ='"+Anterior_ChamberRight+"', Anterior_ChamberLeft ='"+
               Anterior_ChamberLeft +"', Lenticular_statusRight ='"+Lenticular_statusRight +"', Lenticular_statusLeft='"+Lenticular_statusLeft +"', GlowRight ='"+GlowRight +"', GlowLeft = '"+ GlowLeft +"', Direct_OpthalmRight='"+ Direct_OpthalmRight +"',Direct_OpthalmLeft = '" +
-              Direct_OpthalmLeft+"', Inirect_OpthalmRight='"+Inirect_OpthalmRight +"',Indirect_OpthalmLeft='"+Indirect_OpthalmLeft +"', NinetyD_SeventyeightDRight= '"+NinetyD_SeventyeightDRight +"', NinetyD_SeventyeightDLeft= '"+ NinetyD_SeventyeightDLeft +"', RecordTouchDate = DEFAULT, user = '" + user +"'   Where UHID = '"+UHID +"'";
+              Direct_OpthalmLeft+"', Inirect_OpthalmRight='"+Inirect_OpthalmRight +"',Indirect_OpthalmLeft='"+Indirect_OpthalmLeft +"', NinetyD_SeventyeightDRight= '"+NinetyD_SeventyeightDRight +"', NinetyD_SeventyeightDLeft= '"+ NinetyD_SeventyeightDLeft +"', RecordTouchDate = DEFAULT, user = '" + 
+              user +"', Optical_investigation = '"+ Optical_Investigation +"', Lab_investigations = '"+ Lab_Investigation +"', Diagnosis = '"+ Diagnosis +"',Treatment ='"+ Treatment +"', Additional_treatment ='" + Additional_Treatment +"',Advice = '" + Advice +"',Minor_opd_procedure = '"+
+              Minor_Opd_Procedure +"',Instructions ='"+ Instructions +"'  Where UHID = '"+UHID +"'";
 
               console.log(query);
   try {
