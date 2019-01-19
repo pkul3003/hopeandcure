@@ -16,3 +16,6 @@ mysqldump -u root -p hmsdb > hmsdb_export.sql
 
 to import it back, use the command
 mysql -u root -p hmsdb < hmsdb_export.sql
+
+if there is an ASCII '\0' issue during the import, then use the below command:
+mysql -uroot -p -h localhost -D hmsdb --binary-mode -o < hmsdb_export.sql
