@@ -355,7 +355,7 @@ async function addPatientPrescription(req){
     let query = "INSERT into patient_prescription_record (UHID, medicine_name, recommended_dosage,"+
     "quantity, additional_instructions, date_of_prescription, consultant_name, RecordTouchDate) "+
     "VALUES (" +UHID+ ", '" + prescription.medicine_name + "', '"+ prescription.recommended_dosage + 
-    "', '"+ prescription.quantity + "', '"prescription.additional_instructions+"', '"+date_of_prescription+ 
+    "', '"+ prescription.quantity + "', '" +prescription.additional_instructions+"', '"+date_of_prescription+ 
     "', '" + consultant_name + "', NOW());";
     
   console.log(query);
