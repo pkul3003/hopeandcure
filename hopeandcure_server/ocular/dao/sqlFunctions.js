@@ -251,10 +251,13 @@ async function addConsultantResults(req) {
   let Treatment= req.body.patient.Treatment;
   let Additional_Treatment= req.body.patient.Additional_Treatment;
   let Advice = req.body.patient.Advice;
-  let Minor_Opd_Procedure = req.body.ptient.Minor_Opd_Procedure;
+  //let Minor_Opd_Procedure = req.body.ptient.Minor_Opd_Procedure;
+  let Minor_Opd_Procedure = "";
   let Instructions = req.body.patient.Instructions;
 
   let user = req.body.patient.user;
+
+  let query1 = "SELECT UHID FROM ophthalmologist_examination_record WHERE UHID = "+ UHID+ " AND DATE(RecordTouchDate) = CURRENT_DATE; ";
 
   let query = "INSERT INTO ophthalmologist_examination_record VALUES ('"+ UHID +"', '" + VisionRight + "','"+
               VisionLeft + "','"+ acceptanceRight +"', '"+ 
@@ -267,10 +270,29 @@ async function addConsultantResults(req) {
                user+"', '"+ Optical_Investigation +"','"+ Lab_Investigation +"','"+ Diagnosis +"','"+Treatment+"','"+ Additional_Treatment +"','"+ Advice +"','"+ Minor_Opd_Procedure +"','"+ Instructions +"' );";
 
   console.log(query);
+  console.log(query1);
+
   try {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
-    await con.execute(query);
+    let [result,fields] = await con.execute(query1);
+    let UHIDJson = JSON.stringify(result);
+    if (UHIDJson === "[]") {
+      console.log("No records found: result: ", UHIDJson);
+      await con.execute(query);
+    } else {
+      console.log("records found: result: ", UHIDJson);
+      let result2 = await updateConsultantResults(req);
+      if (result2 === true) {
+        con.release();
+        console.log("Exiting addConsultantResults...");
+        return true;
+      } else { 
+        con.release();
+        console.log("Exiting addConsultantResults...");
+        return false;
+      }
+    }
     con.release();
     console.log("Exiting addConsultantResults...");
     return true;
@@ -518,23 +540,35 @@ async function updateConsultantResults(req) {
   let Treatment= req.body.patient.Treatment;
   let Additional_Treatment= req.body.patient.Additional_Treatment;
   let Advice = req.body.patient.Advice;
-  let Minor_Opd_Procedure = req.body.ptient.Minor_Opd_Procedure;
+  //let Minor_Opd_Procedure = req.body.patient.Minor_Opd_Procedure;
+  let Minor_Opd_Procedure ="";
   let Instructions = req.body.patient.Instructions;
 
   let user = req.body.patient.user;
    
-  let query = "Update ophthalmologist_examination_record set VisionRight = '" + VisionRight + "',VisionLeft = '"+
-              VisionLeft + "',AcceptanceRight= '"+ acceptanceRight +"', AcceptanceLeft = '"+ 
-              acceptanceLeft +"', Finalglass_presRight= '"+ Finalglass_presRight +"', Finalglass_presLeft='"+ Finalglass_presLeft + "', EyebrowRight = '"+EyebrowRight +"', EyebrowLeft ='"+ EyebrowLeft +"', Extraocular_moveRight= '"+ Extraocular_moveRight + "', Extraocular_moveLeft= '"+ Extraocular_moveLeft +"', Pupillary_ReactionRight = '"+
-              Pupillary_ReactionRight +"', Pupillary_ReactionLeft= '" + Pupillary_ReactionLeft +"',Other_FindingRight='"+ Other_FindingRight +"',Other_FindingLeft='"+ Other_FindingLeft+"',Intraocular_PressureType='"+ Intraocular_PressureType +"',Intraocular_PressureRight = '"+ 
-              Intraocular_PressureRight +"', Intraocular_PressureLeft = '"+ Intraocular_PressureLeft + "',GonioscopyRight = '"+ GonioscopyRight +"', GonioscopyLeft = '"+ GonioscopyLeft + "', SlitLamp_ExamRight= '"+SlitLamp_ExamRight +"', SlitLamp_ExamLeft='" +
-              SlitLamp_ExamLeft + "',ConjuctivaRight='" +ConjuctivaRight + "', ConjuctivaLeft='" +ConjuctivaLeft +"',CorneaRight= '"+CorneaRight +"', CorneaLeft='"+ CorneaLeft+"',Anterior_ChamberRight ='"+Anterior_ChamberRight+"', Anterior_ChamberLeft ='"+
-              Anterior_ChamberLeft +"', Lenticular_statusRight ='"+Lenticular_statusRight +"', Lenticular_statusLeft='"+Lenticular_statusLeft +"', GlowRight ='"+GlowRight +"', GlowLeft = '"+ GlowLeft +"', Direct_OpthalmRight='"+ Direct_OpthalmRight +"',Direct_OpthalmLeft = '" +
-              Direct_OpthalmLeft+"', Inirect_OpthalmRight='"+Inirect_OpthalmRight +"',Indirect_OpthalmLeft='"+Indirect_OpthalmLeft +"', NinetyD_SeventyeightDRight= '"+NinetyD_SeventyeightDRight +"', NinetyD_SeventyeightDLeft= '"+ NinetyD_SeventyeightDLeft +"', RecordTouchDate = DEFAULT, user = '" + 
-              user +"', Optical_investigation = '"+ Optical_Investigation +"', Lab_investigations = '"+ Lab_Investigation +"', Diagnosis = '"+ Diagnosis +"',Treatment ='"+ Treatment +"', Additional_treatment ='" + Additional_Treatment +"',Advice = '" + Advice +"',Minor_opd_procedure = '"+
-              Minor_Opd_Procedure +"',Instructions ='"+ Instructions +"'  Where UHID = '"+UHID +"'";
+  let query = "Update ophthalmologist_examination_record set VisionRight = '" + VisionRight + 
+    "',VisionLeft = '"+ VisionLeft + "',AcceptanceRight= '"+ acceptanceRight +"',AcceptanceLeft = '"+ acceptanceLeft +
+    "',Finalglass_presRight = '" + Finalglass_presRight + "',Finalglass_presLeft ='"+  Finalglass_presLeft + 
+    "',EyebrowRight = '" + EyebrowRight +"',EyebrowLeft ='" + EyebrowLeft + "',Extraocular_moveRight= '"+ Extraocular_moveRight +
+    "',Extraocular_moveLeft= '"+ Extraocular_moveLeft +"',Pupillary_ReactionRight = '"+  Pupillary_ReactionRight +
+    "',Pupillary_ReactionLeft= '" + Pupillary_ReactionLeft +"',Other_FindingRight='"+ Other_FindingRight +
+    "',Other_FindingLeft='"+ Other_FindingLeft+"',Intraocular_PressureType='"+ Intraocular_PressureType +
+    "',Intraocular_PressureRight = '"+ Intraocular_PressureRight +"',Intraocular_PressureLeft = '"+ Intraocular_PressureLeft +
+    "',GonioscopyRight = '"+ GonioscopyRight +"',GonioscopyLeft = '"+ GonioscopyLeft + "',SlitLamp_ExamRight= '"+SlitLamp_ExamRight +
+    "',SlitLamp_ExamLeft='" + SlitLamp_ExamLeft + "',ConjuctivaRight='" +ConjuctivaRight + "',ConjuctivaLeft='" +ConjuctivaLeft +
+    "',CorneaRight= '"+CorneaRight +"',CorneaLeft='"+ CorneaLeft+"',Anterior_ChamberRight ='"+Anterior_ChamberRight+
+    "',Anterior_ChamberLeft ='"+ Anterior_ChamberLeft +"',Lenticular_statusRight ='"+Lenticular_statusRight +
+    "',Lenticular_statusLeft='"+Lenticular_statusLeft +"',GlowRight ='"+GlowRight +"',GlowLeft = '"+ GlowLeft +
+    "',Direct_OpthalmRight='"+ Direct_OpthalmRight +"',Direct_OpthalmLeft = '" +  Direct_OpthalmLeft +
+    "',Inirect_OpthalmRight='"+Inirect_OpthalmRight +"',Indirect_OpthalmLeft='"+Indirect_OpthalmLeft +
+    "',NinetyD_SeventyeightDRight= '"+NinetyD_SeventyeightDRight +"',NinetyD_SeventyeightDLeft= '"+ NinetyD_SeventyeightDLeft +
+    "',RecordTouchDate = DEFAULT,user = '" + user +"',Optical_investigation = '"+ Optical_Investigation +
+    "',Lab_investigations = '"+ Lab_Investigation +"',Diagnosis = '"+ Diagnosis +"',Treatment ='"+ Treatment +
+    "',Additional_treatment ='" + Additional_Treatment +"',Advice = '" + Advice +
+    "',Minor_opd_procedure = '"+   Minor_Opd_Procedure +"',Instructions ='"+ Instructions +
+    "' Where UHID = '"+UHID +"'";
 
-              console.log(query);
+console.log(query);
   try {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
@@ -598,3 +632,4 @@ exports.addPatientPrescription = addPatientPrescription;
 exports.updateOptometryResults=updateOptometryResults;
 exports.updateConsultantResults=updateConsultantResults;
 exports.retrievePatientlatestComplaintHistory=retrievePatientlatestComplaintHistory;
+
