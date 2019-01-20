@@ -39,7 +39,7 @@ left outer join appointments_view ap on (p.UHID = ap.UHID));
 
 CREATE VIEW prescription_diagnosis_view AS 
 (select m.medicine_name AS medicine_name,m.recommended_dosage AS recommended_dosage,
-m.medicine_id AS medicine_id,mpr.prescription_type AS prescription_type,
+m.medicine_id AS medicine_id, mpr.prescription_type AS prescription_type,
 dmr.diagnosis_id AS diagnosis_id,dmr.diagnosis_type AS diagnosis_type 
 from ((medicine_master m join medical_prescriptions_master mpr) join diagnosis_master dmr) 
 where ((mpr.medicine_id = m.medicine_id) and (mpr.diagnosis_id = dmr.diagnosis_id)));
