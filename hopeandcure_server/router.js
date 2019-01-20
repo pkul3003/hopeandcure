@@ -294,6 +294,9 @@ app.post('/ocular', async function (req, res){
 		case 'add-consultant-examination-record':
 			await apiOcularController.apiHandlerAddConsultantResults(req, res);
 			break;
+		case 'update-consultant-examination-record':
+			await apiOcularController.apiHandlerUpdateConsultantResults(req, res);
+			break;
 		case 'add-patient-prescription':
 			await apiOcularController.apiHandlerAddPrescription(req, res);
 			break;
