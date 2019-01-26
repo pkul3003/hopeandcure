@@ -159,14 +159,26 @@ async function addPatientProgressStatus(req) {
   let PatientProgressStatus = 'Registered';
   let DateOfAppointment = req.body.appointment.appointment_date;
 
-  let query = "INSERT INTO patient_progress_tracker values('" +UHID+ "', '" +PatientProgressStatus+ 
-  "', '" +RunningNotes+ "', '" +DateOfAppointment+ "', DEFAULT);";
+  let query1 = "SELECT RunningNotes FROM patient_progress_tracker WHERE UHID = " +UHID+ " AND " +
+                " DateOfAppointment = '" +DateOfAppointment+ "'; ";
 
-  console.log(query);
+  console.log(query1);
 
   try {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
+    let[result, fields] = await con.query(query1);
+
+    console.log("Existing notes from DB:", JSON.stringify(result));
+    if (result === RunningNotes) {
+        RunningNotes = "";
+    }
+
+    let query = "INSERT INTO patient_progress_tracker values('" +UHID+ "', '" +PatientProgressStatus+ 
+    "', '" +RunningNotes+ "', '" +DateOfAppointment+ "', DEFAULT);";
+  
+    console.log(query);
+
     await con.query(query);
     con.release();
     return true;
@@ -184,27 +196,30 @@ async function updateAppointment(req) {
   console.log("Entering updateAppointment...");
 
   let UHID = req.body.appointment.UHID;
-  let OldDateofAppointment = req.body.appointment.old_appointment_date;
-  let DateOfAppointment = req.body.appointment.appointment_date;
-  let TimeOfAppointment = req.body.appointment.TimeOfAppointment;
+  let old_appointment_date = req.body.appointment.old_appointment_date;
+  let appointment_date = req.body.appointment.appointment_date;
+  let appointment_time = req.body.appointment.appointment_time;
   let consultant = req.body.appointment.consultant;
 
-  let query = "update appointments set dateofappointment = '" +DateOfAppointment+ "', timeofappointment= '" +TimeOfAppointment+ 
-  "', consultant = '" + consultant +"' Where UHID = '" +UHID+ "' AND dateofappointment= '" +OldDateofAppointment+ "' ;";
+  let query = "update appointments set DateOfAppointment = '" +appointment_date+ "', TimeOfAppointment= '" +
+      appointment_time + "', Consultant = '" + consultant +"' Where UHID = '" +
+      UHID+ "' AND DateOfAppointment= '" +old_appointment_date+ "' ;";
 
-  console.log(query);
+  console.log("inside updateAppointment, query: ", query);
 
   try {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
     await con.query(query);
     con.release();
+    console.log("Exiting updateAppointment...");
     return true;
   }
   catch(err) {
     console.log("Error ====== updateAppointment");
     console.log("Error code is: ", err.code);
     con.release();
+    console.log("Exiting updateAppointment...");
     return false;
   }
 }
