@@ -58,7 +58,7 @@ async function retrieveAppointments(req) {
     let appointmentsJson = JSON.stringify(result);
     console.log(appointmentsJson);
     con.release();
-    return appointmentsJson;
+    return appointmentsJson ;
   }
   catch(err) {
     console.log("Error ====== retrieveAppointments");
