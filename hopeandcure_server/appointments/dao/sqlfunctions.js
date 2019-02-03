@@ -2,6 +2,7 @@ let mysql = require('mysql2');
 let config = require("../../config.js");
 let callmysqlpool = require("../../mysql-functions/createMysqlSingleton.js");
 let SearchStringParsing = require("../../common-functions/commonFunctions.js");
+let moment = require('moment');
 
 async function getConnectionPool() {
   try {
@@ -50,6 +51,10 @@ async function retrieveAppointments(req) {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
     let [result,fields] = await con.execute(query);
+    for (let i = 0;i<result.length;i++){
+      result[i].DOB=moment(result[i].DOB).format('YYYY-MM-DD');
+      result[i].DateOfAppointment=moment(result[i].DateOfAppointment).format('YYYY-MM-DD');
+    }
     let appointmentsJson = JSON.stringify(result);
     console.log(appointmentsJson);
     con.release();
@@ -70,11 +75,19 @@ async function retrieveAppointmentsByDate(req) {
   let DateOfAppointment = req.query['date'];
   
   let query = "SELECT * FROM appointments_view WHERE DateOfAppointment = '" + DateOfAppointment + "';";
+  //let query = "SELECT * FROM appointments_view ;";
   console.log(query);
   try {
     let pool = await getConnectionPool();
     let con = await pool.getConnection();
     let [result,fields] = await con.execute(query);
+    //result[0].DOB=moment(result[0].DOB).format('YYYY-MM-DD');
+    
+    for (let i = 0;i<result.length;i++){
+      result[i].DOB=moment(result[i].DOB).format('YYYY-MM-DD');
+      result[i].DateOfAppointment=moment(result[i].DateOfAppointment).format('YYYY-MM-DD');
+    }
+       
     let appointmentsJson = JSON.stringify(result);
     console.log(appointmentsJson);
     con.release();
